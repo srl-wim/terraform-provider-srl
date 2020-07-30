@@ -3,6 +3,8 @@
 ## go mod init
 
 go mod init github.com/srl-wim/terraform-provider-srl
+cd tf_srl
+go mod init github.com/srl-wim/terraform-provider-srl/tf_srl
 
 ## generate go structs
 
@@ -12,6 +14,8 @@ cd cfg && generator -path=../yang/ietf/ -generate_fakeroot -fakeroot_name config
 
 ## build
 
+export GIT_TERMINAL_PROMPT=1
+export GOPRIVATE=github.com/srl-wim/*
 go build -o terraform-provider-srl 
 
 
