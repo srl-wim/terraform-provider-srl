@@ -11,10 +11,11 @@ import (
 	"strings"
 	"time"
 
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
 	"github.com/google/gnxi/utils/xpath"
-	"google.golang.org/grpc"
+	//"google.golang.org/grpc"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
@@ -30,18 +31,18 @@ const (
 
 // BaseConfig represents the provider structure
 type BaseConfig struct {
-	username    string
-	password    string
-	target      string
-	proxy       bool
-	notls       bool
-	tls_ca      string
-	tls_cert    string
-	tls_key     string
-	skip_verify bool
-	insecure    bool
-	timeout     time.Duration
-	encoding    string
+	username   string
+	password   string
+	target     string
+	proxy      bool
+	notls      bool
+	tlsCA      string
+	tlsCert    string
+	tlsKey     string
+	skipVerify bool
+	insecure   bool
+	timeout    time.Duration
+	encoding   string
 }
 
 func createGrpcConn(meta interface{}) (*grpc.ClientConn, error) {

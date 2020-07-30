@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
+// Provider function
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
@@ -34,25 +35,25 @@ func Provider() *schema.Provider {
 				Description: "proxy to connect to the device",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_PROXY", false),
 			},
-			"tls_ca": {
+			"tlsCA": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls certificate authority",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CA", ""),
 			},
-			"tls_cert": {
+			"tlsCert": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls certificate",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CERT", ""),
 			},
-			"tls_key": {
+			"tlsKey": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls key",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_KEY", ""),
 			},
-			"skip_verify": {
+			"skipVerify": {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Description: "skip verify tls connection",

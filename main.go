@@ -5,6 +5,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	tf_srl "github.com/henderiw/srl-wim/terraform-provider-srl/tf_srl"
+	//"tf_srl tf_srl"
 )
 
 func main() {
