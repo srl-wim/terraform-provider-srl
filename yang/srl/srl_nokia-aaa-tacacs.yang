@@ -1,0 +1,84 @@
+submodule srl_nokia-aaa-tacacs {
+  yang-version 1.1;
+  belongs-to srl_nokia-aaa {
+    prefix srl-aaa;
+  }
+
+  import srl_nokia-common {
+    prefix srl-comm;
+  }
+  import srl_nokia-aaa-types {
+    prefix srl-aaa-types;
+  }
+  //import srl_nokia-extensions {
+  //  prefix srl-ext;
+  //}
+
+  description
+    "This module defines configuration and operational state data
+     related to the TACACS+ protocol for authentication,
+     authorization, and accounting.";
+
+  revision 2019-11-30 {
+    description
+      "SRLinux 19.11.1";
+  }
+
+  // extension statements
+  // feature statements
+  // identity statements
+  // typedef statements
+
+  typedef routing-password {
+    type string;
+    description
+      "This type is indicative of a password that is used within
+       a routing protocol which can be returned in plain text to the
+       NMS by the local system. Such passwords are typically stored
+       as encrypted strings. Since the encryption used is generally
+       well known, it is possible to extract the original value from
+       the string - and hence this format is not considered secure.
+       Leaves specified with this type should not be modified by
+       the system, and should be returned to the end-user in plain
+       text. This type exists to differentiate passwords, which
+       may be sensitive, from other string leaves. It could, for
+       example, be used by the NMS to censor this data when
+       viewed by particular users.";
+  }
+
+  // grouping statements
+
+  grouping aaa-tacacs-server-config {
+    description
+      "Configuration data for a TACACS+ server";
+    leaf port {
+      type string;
+      //type srl-comm:port-number;
+      default "49";
+      description
+        "The port number on which to contact the TACACS+ server";
+    }
+    leaf secret-key {
+      type string;
+      //type routing-password {
+      //  srl-ext:generated-class-name "SecretKey";
+      //}
+      description
+        "The unencrypted shared key used between the system and server";
+    }
+    // leaf source-address {
+    //     type srl-comm:ip-address;
+    //     description "Source IP address to use in messages to the TACACS server";
+    // }
+  }
+
+  grouping aaa-tacacs-server-top {
+    description
+      "Top-level grouping for TACACS+ server data";
+    container tacacs {
+      description
+        "Top-level container for TACACS+ server data";
+      uses aaa-tacacs-server-config;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+module srl_nokia-platform-psu {
+  yang-version 1.1;
+
+  // namespace
+
+  namespace "urn:srl_nokia/platform-psu";
+  prefix srl_nokia-platform-psu;
+
+  import srl_nokia-platform {
+    prefix srl-platform;
+  }
+
+  description
+    "This module defines configuration and operational state data related to power supplies.";
+
+  revision 2019-11-30 {
+    description
+      "SRLinux 19.11.1";
+  }
+
+  grouping psu-state-top {
+    description
+      "Grouping for power supply module state";
+    leaf id {
+      type uint8 {
+        range "1..255";
+      }
+      description
+        "Numeric identifier for the power supply module";
+    }
+    leaf type {
+      type string;
+      description
+        "Power-supply type, as translated from the components EEPROM";
+    }
+    leaf capacity {
+      type uint32;
+      description
+        "The total capacity the power supply module can provide";
+      units "watts";
+    }
+    container input {
+      description
+        "Top-level container for power-supply input state";
+      leaf voltage {
+        description
+          "Current input voltage for the power-supply";
+        units "volts";
+        type decimal64 {
+          fraction-digits 2;
+        }
+      }
+      leaf current {
+        description
+          "Current input amperage for the power-supply";
+        units "amps";
+        type decimal64 {
+          fraction-digits 2;
+        }
+      }
+      leaf power {
+        description
+          "Current input power for the power-supply";
+        units "watts";
+        type decimal64 {
+          fraction-digits 2;
+        }
+      }
+    }
+  }
+
+  grouping psu-top {
+    description
+      "Grouping for power supply module configuration and state";
+    list power-supply {
+      config false;
+      key "id";
+      description
+        "Top-level container for power supply module configuration and state";
+      uses psu-state-top;
+      uses srl-platform:component-common-state-top;
+      uses srl-platform:component-temperature-no-thresh-state-top;
+    }
+  }
+
+  augment "/srl-platform:platform" {
+    uses psu-top;
+  }
+}
