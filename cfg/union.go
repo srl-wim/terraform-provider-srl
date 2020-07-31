@@ -81,23 +81,8 @@ Imported modules were sourced from:
 package srl_yang
 
 import (
-	"encoding/json"
 	"fmt"
-	"reflect"
-
-	"github.com/openconfig/ygot/ygot"
-	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ytypes"
 )
-
-
-
-
-
-
-
-
-
 
 // SrlNokiaAcl_Acl_CaptureFilter_Ipv4Filter_Entry_Match_Protocol_Union is an interface that is implemented by valid types for the union
 // for the leaf /srl_nokia-acl/acl/capture-filter/ipv4-filter/entry/match/protocol within the YANG schema.
