@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Provider function
@@ -80,8 +80,13 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{},
 		ResourcesMap: map[string]*schema.Resource{
-			"srl_system_ntp":   resourceSystemNtp(),
-			"srl_system_clock": resourceSystemClock(),
+			"srl_system_ntp": resourceSystemNtp(),
+			"srl_system_clock": {
+				CreateContext: nil,
+				ReadContext:   nil,
+				UpdateContext: nil,
+				DeleteContext: nil,
+			},
 		},
 		ConfigureFunc: providerConfigure,
 	}

@@ -10,7 +10,8 @@ import (
 	"google.golang.org/grpc/metadata"
 
 	"github.com/google/gnxi/utils/xpath"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
 )
 
@@ -29,10 +30,10 @@ func resourceSystemClock() *schema.Resource {
 	return &schema.Resource{
 		Schema: s,
 
-		Create: resourceSystemClockCreate,
-		Read:   resourceSystemClockRead,
-		Update: resourceSystemClockUpdate,
-		Delete: resourceSystemClockDelete,
+		CreateContext: resourceSystemClockCreate,
+		ReadContext:   resourceSystemClockRead,
+		UpdateContext: resourceSystemClockUpdate,
+		DeleteContext: resourceSystemClockDelete,
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -47,15 +48,15 @@ func resourceSystemClock() *schema.Resource {
 	}
 }
 
-func resourceSystemClockCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemClockCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning create", resourceSystemClockString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -84,18 +85,18 @@ func resourceSystemClockCreate(d *schema.ResourceData, meta interface{}) error {
 
 	timezone := d.Get("timezone").(string)
 	d.SetId(timezone)
-	return resourceSystemClockRead(d, meta)
+	return resourceSystemClockRead(ctx, d, meta)
 }
 
-func resourceSystemClockRead(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning read", resourceSystemClockString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -137,15 +138,15 @@ func resourceSystemClockRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceSystemClockUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemClockUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning update", resourceSystemClockString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -174,18 +175,18 @@ func resourceSystemClockUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	timezone := d.Get("timezone").(string)
 	d.SetId(timezone)
-	return resourceSystemClockRead(d, meta)
+	return resourceSystemClockRead(ctx, d, meta)
 }
 
-func resourceSystemClockDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemClockDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning delete", resourceSystemClockString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
