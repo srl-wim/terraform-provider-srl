@@ -2,6 +2,7 @@ package tf_srl
 
 import (
 	"bytes"
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
@@ -50,7 +51,7 @@ func createGrpcConn(meta interface{}) (*grpc.ClientConn, error) {
 
 	opts := []grpc.DialOption{}
 
-	opts = append(opts, grpc.WithTimeout(config.timeout))
+	//opts = append(opts, grpc.WithTimeout(config.timeout))
 	opts = append(opts, grpc.WithBlock())
 	if maxMsgSize > 0 {
 		opts = append(opts, grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(maxMsgSize)))
@@ -84,7 +85,9 @@ func createGrpcConn(meta interface{}) (*grpc.ClientConn, error) {
 		opts = append(opts, grpc.WithDisableRetry())
 		opts = append(opts, grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig)))
 	}
-	conn, err := grpc.Dial(config.target, opts...)
+	ctx, cancel := context.WithTimeout(context.TODO(), config.timeout) // replace with parent context when createGrpcConn() gets a context in its signature
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, config.target, opts...)
 	if err != nil {
 		return nil, err
 	}

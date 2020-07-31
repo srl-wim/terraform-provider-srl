@@ -10,7 +10,8 @@ import (
 	"google.golang.org/grpc/metadata"
 
 	"github.com/google/gnxi/utils/xpath"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
 )
 
@@ -33,10 +34,10 @@ func resourceSystemNtp() *schema.Resource {
 	return &schema.Resource{
 		Schema: s,
 
-		Create: resourceSystemNtpCreate,
-		Read:   resourceSystemNtpRead,
-		Update: resourceSystemNtpUpdate,
-		Delete: resourceSystemNtpDelete,
+		CreateContext: resourceSystemNtpCreate,
+		ReadContext:   resourceSystemNtpRead,
+		UpdateContext: resourceSystemNtpUpdate,
+		DeleteContext: resourceSystemNtpDelete,
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -51,16 +52,16 @@ func resourceSystemNtp() *schema.Resource {
 	}
 }
 
-func resourceSystemNtpCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning create", resourceSystemNtpString(d))
 	log.Printf("[DEBUG] %v: meta", meta)
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -89,19 +90,20 @@ func resourceSystemNtpCreate(d *schema.ResourceData, meta interface{}) error {
 
 	adminState := d.Get("admin_state").(string)
 	d.SetId(adminState)
-	return resourceSystemNtpRead(d, meta)
+	return resourceSystemNtpRead(ctx, d, meta)
 }
 
-func resourceSystemNtpRead(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning read", resourceSystemNtpString(d))
 	log.Printf("[DEBUG] %v: meta", meta)
 
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -144,15 +146,15 @@ func resourceSystemNtpRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceSystemNtpUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemNtpUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning update", resourceSystemNtpString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
@@ -181,18 +183,18 @@ func resourceSystemNtpUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	adminState := d.Get("admin_state").(string)
 	d.SetId(adminState)
-	return resourceSystemNtpRead(d, meta)
+	return resourceSystemNtpRead(ctx, d, meta)
 }
 
-func resourceSystemNtpDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceSystemNtpDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] %s: beginning delete", resourceSystemNtpString(d))
-
+	diagnostics := make([]diag.Diagnostic, 0)
 	config := meta.(BaseConfig)
 
 	conn, err := createGrpcConn(meta)
 	if err != nil {
 		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return err
+		return diagnostics
 	}
 
 	client := gnmi.NewGNMIClient(conn)
