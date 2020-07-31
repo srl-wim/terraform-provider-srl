@@ -57,7 +57,7 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Description: "skip verify tls connection",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_SKIP_VERIFY", true),
+				DefaultFunc: schema.EnvDefaultFunc("SRL_SKIP_VERIFY", false),
 			},
 			"insecure": {
 				Type:        schema.TypeBool,
