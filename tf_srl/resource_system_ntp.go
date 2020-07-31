@@ -88,7 +88,7 @@ func resourceSystemNtpCreate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("[DEBUG] %v: set response", response)
 
 	adminState := d.Get("admin_state").(string)
-	d.SetId(admin_state)
+	d.SetId(adminState)
 	return resourceSystemNtpRead(d, meta)
 }
 
@@ -180,7 +180,7 @@ func resourceSystemNtpUpdate(d *schema.ResourceData, meta interface{}) error {
 	log.Printf("[DEBUG] %v: set response", response)
 
 	adminState := d.Get("admin_state").(string)
-	d.SetId(admin_state)
+	d.SetId(adminState)
 	return resourceSystemNtpRead(d, meta)
 }
 
