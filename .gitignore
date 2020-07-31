@@ -13,3 +13,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+#terraform
+*.terraform
+*.tfstate
+/test/example/tf.log
+/test/example/terraform-provider-srl
