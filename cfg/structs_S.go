@@ -80,17 +80,6 @@ Imported modules were sourced from:
 */
 package srl_yang
 
-import (
-	"encoding/json"
-	"fmt"
-	"reflect"
-
-	"github.com/openconfig/ygot/ygot"
-	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ytypes"
-)
-
-
 // SrlNokiaAcl_Acl represents the /srl_nokia-acl/acl YANG schema element.
 type SrlNokiaAcl_Acl struct {
 	CaptureFilter	*SrlNokiaAcl_Acl_CaptureFilter	`path:"capture-filter" module:"srl_nokia-acl"`

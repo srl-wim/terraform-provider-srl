@@ -80,16 +80,6 @@ Imported modules were sourced from:
 */
 package srl_yang
 
-import (
-	"encoding/json"
-	"fmt"
-	"reflect"
-
-	"github.com/openconfig/ygot/ygot"
-	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ytypes"
-)
-
 
 var (
 	// ySchema is a byte slice contain a gzip compressed representation of the

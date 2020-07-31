@@ -74,7 +74,7 @@ func createGrpcConn(meta interface{}) (*grpc.ClientConn, error) {
 			}
 			tlsConfig = &tls.Config{
 				Renegotiation:      tls.RenegotiateNever,
-				InsecureSkipVerify: config.skip_verify,
+				InsecureSkipVerify: config.skipVerify,
 				Certificates:       certificates,
 				RootCAs:            certPool,
 				ServerName:         "localhost",
@@ -93,17 +93,17 @@ func createGrpcConn(meta interface{}) (*grpc.ClientConn, error) {
 
 // loadCertificates loads certificates from file.
 func loadCertificates(config *BaseConfig) ([]tls.Certificate, *x509.CertPool, error) {
-	if config.tls_ca == "" || config.tls_cert == "" || config.tls_key == "" {
+	if config.tlsCA == "" || config.tlsCert == "" || config.tlsKey == "" {
 		return nil, nil, fmt.Errorf("tls_ca and tls_cert and tls_key are mandatory when using tls")
 	}
 
-	certificate, err := tls.LoadX509KeyPair(config.tls_ca, config.tls_key)
+	certificate, err := tls.LoadX509KeyPair(config.tlsCA, config.tlsKey)
 	if err != nil {
 		return nil, nil, fmt.Errorf("Could not load client key pair")
 	}
 
 	certPool := x509.NewCertPool()
-	caFile, err := ioutil.ReadFile(config.tls_ca)
+	caFile, err := ioutil.ReadFile(config.tlsCA)
 	if err != nil {
 		return nil, nil, fmt.Errorf("Could not read CA certificate")
 	}

@@ -81,15 +81,8 @@ Imported modules were sourced from:
 package srl_yang
 
 import (
-	"encoding/json"
-	"fmt"
-	"reflect"
-
 	"github.com/openconfig/ygot/ygot"
-	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ytypes"
 )
-
 
 // E_SrlNokiaAaaTypes_AaaAccountingEventType is a derived int64 type which is used to represent
 // the enumerated node SrlNokiaAaaTypes_AaaAccountingEventType. An additional value named
