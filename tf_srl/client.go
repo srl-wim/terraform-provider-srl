@@ -16,7 +16,6 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	"github.com/google/gnxi/utils/xpath"
-	//"google.golang.org/grpc"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )

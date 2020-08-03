@@ -19,3 +19,7 @@
 *.tfstate
 /test/example/tf.log
 /test/example/terraform-provider-srl
+
+#generator
+out/
+generator/
