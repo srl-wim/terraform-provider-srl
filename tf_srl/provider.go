@@ -80,13 +80,8 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{},
 		ResourcesMap: map[string]*schema.Resource{
-			"srl_system_ntp": resourceSystemNtp(),
-			"srl_system_clock": {
-				CreateContext: nil,
-				ReadContext:   nil,
-				UpdateContext: nil,
-				DeleteContext: nil,
-			},
+			"srl_system_ntp":   resourceSystemNtp(),
+			"srl_system_clock": resourceSystemClock(),
 		},
 		ConfigureFunc: providerConfigure,
 	}

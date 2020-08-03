@@ -21,11 +21,11 @@ func resourceSystemNtpString(d resourceIDStringer) string {
 
 func resourceSystemNtp() *schema.Resource {
 	s := map[string]*schema.Schema{
-		"admin_state": &schema.Schema{
+		"admin_state": {
 			Type:     schema.TypeString,
 			Optional: true,
 		},
-		"network_instance": &schema.Schema{
+		"network_instance": {
 			Type:     schema.TypeString,
 			Optional: true,
 		},
@@ -40,7 +40,7 @@ func resourceSystemNtp() *schema.Resource {
 		DeleteContext: resourceSystemNtpDelete,
 
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Timeouts: &schema.ResourceTimeout{

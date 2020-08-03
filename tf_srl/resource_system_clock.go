@@ -21,7 +21,7 @@ func resourceSystemClockString(d resourceIDStringer) string {
 
 func resourceSystemClock() *schema.Resource {
 	s := map[string]*schema.Schema{
-		"timezone": &schema.Schema{
+		"timezone": {
 			Type:     schema.TypeString,
 			Optional: true,
 		},
@@ -36,7 +36,7 @@ func resourceSystemClock() *schema.Resource {
 		DeleteContext: resourceSystemClockDelete,
 
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Timeouts: &schema.ResourceTimeout{
