@@ -1,0 +1,115 @@
+module srl_nokia-platform-ip-mpls-fwd-resources {
+  yang-version 1.1;
+  namespace "urn:srl_nokia/platform-ip-mpls-fwd-resources";
+  prefix srl_nokia-platform-ip-mpls-fwd-resources;
+
+  import srl_nokia-common { prefix srl_nokia-comm; }
+  import srl_nokia-platform {prefix srl_nokia-platform; }
+  import srl_nokia-platform-lc {prefix srl_nokia-platform-lc; }
+  import srl_nokia-platform-resource-monitoring {prefix srl_nokia-platform-res-mon; }
+
+  description
+    "This module defines configuration and operational state related to IP and MPLS forwarding resources in the system";
+
+  revision 2019-11-30 {
+    description
+      "SRLinux 19.11.1";
+  }
+
+  identity ip-mpls-forwarding-resources {
+    description
+      "Base type for routing resources";
+  }
+
+  identity ip-fib {
+    base ip-mpls-forwarding-resources;
+    description
+      "Each IP route (ECMP or non-ECMP) to an IPv4 or IPv6 prefix uses one of these resources. The underlying resource in J2 is the KAPS1 table.";
+  }
+
+  identity ip-arp-nd {
+    base ip-mpls-forwarding-resources;
+    description
+      "Each IPv4 ARP entry and each IPv6 neighbor entry uses one of these resources.";
+  }
+
+  identity direct-next-hops {
+    base ip-mpls-forwarding-resources;
+    description
+      "Each direct next-hop in a next-hop-group (static or dynamic) uses one of these resources. A direct next-hop is resolved by a local interface route. The same direct next-hop in two different NHGs still counts as one direct next-hop.";
+  }
+
+  identity indirect-next-hops {
+    base ip-mpls-forwarding-resources;
+    description
+      "Each indirect next-hop in a next-hop-group (static or dynamic) uses one of these resources. An indirect next-hop is resolved by any route other than a local interface route. The same indirect next-hop in two different NHGs still counts as one indirect next-hop.";
+  }
+
+  identity hardware-ecmp-fecs {
+    base ip-mpls-forwarding-resources;
+    description
+      "This represents the pool of resources used to support ECMP forwarding in hardware. On a J2 IMM the utilization for this pool of resources is calculated as the maximum utilization of the following tables: L1 ECMP FECs, L2 ECMP FECs, L1 ECMP member FECs and L2 ECMP member FECs";
+  }
+
+  identity hardware-fecs {
+    base ip-mpls-forwarding-resources;
+    description
+      "This represents the pool of resources used to support non-ECMP forwarding in hardware. On a J2 IMM the utilization for this pool of resources is calculated as the maximum utilization of the following tables: L1 non-ECMP FECs, L2 non-ECMP FECs.";
+  }
+
+  grouping ip-mpls-forwarding-resource-monitoring {
+    container ip-mpls-forwarding {
+      list resource {
+        key name;
+        leaf name {
+          type identityref  {
+            base ip-mpls-forwarding-resources;
+          }
+          description
+            "The name of the IP-MPLS forwarding resource";
+        }
+        leaf rising-threshold-log {
+          type srl_nokia-comm:percentage;
+          default "90";
+          description
+            "Sets the threshold that triggers the generation of a WARNING log whenever the utilization of the IP-MPLS forwarding resource in any linecard/complex/core reaches this value in a rising direction";
+        }
+        leaf falling-threshold-log {
+          type srl_nokia-comm:percentage;
+          default "70";
+          description
+            "Sets the threshold that triggers the generation of a NOTICE log whenever the utilization of the IP-MPLS forwarding resource in any linecard/complex/core reaches this value in a falling direction";
+        }
+      }
+    }
+  }
+
+  grouping ip-mpls-forwarding-utilization {
+    container ip-mpls-forwarding {
+      config false;
+      list resource {
+        key name;
+        leaf name {
+          type identityref  {
+            base ip-mpls-forwarding-resources;
+          }
+          description
+            "The name of the IP-MPLS forwarding resource";
+        }
+        leaf used {
+          type srl_nokia-comm:percentage;
+          description
+            "The percentage of the resource that is currently used";
+        }
+      }
+    }
+  }
+
+  augment "/srl_nokia-platform:platform/srl_nokia-platform-res-mon:resource-monitoring" {
+    uses ip-mpls-forwarding-resource-monitoring;
+  }
+
+  augment "/srl_nokia-platform:platform/srl_nokia-platform-lc:linecard/srl_nokia-platform-lc:forwarding-complex" {
+    uses ip-mpls-forwarding-utilization;
+  }
+}
