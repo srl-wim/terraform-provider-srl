@@ -1,0 +1,37 @@
+module srl_nokia-extensions {
+    yang-version 1.1;
+    namespace "urn:srl_nokia/extensions";
+    prefix "srl_nokia-ext";
+
+    description
+      "YANG module detailing SRLinux extensions";
+
+    revision "2018-10-21" {
+      description
+          "Initial";
+    }
+
+
+    extension generated-class-name {
+        description
+            "Takes as an argument a name string. Makes the telemetry code generator use the given name
+             as the name of the key or data class used for storing the content of this type
+
+             Currently the only class names supported are: IpAddress, IpPrefix, MacAddress, PasswordHash, SecretKey
+             ";
+        argument "name";
+    }
+
+    extension show-importance {
+        description
+            "Takes as an argument a string describing the importance of this leaf (and leaves
+             underneath it if it is a node) with respect to the info/show outputs. This field makes
+             it possible to hide the field by default. Any config field is by default medium.  Any
+             state field is low by default. Info displays anything medium and above. Show as table
+             displays only high. Inheritance is supported for this extension.
+
+             Currently the only values supported are: low, medium, high
+             ";
+        argument "level";
+    }
+}

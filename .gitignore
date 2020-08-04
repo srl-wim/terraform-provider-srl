@@ -21,5 +21,6 @@
 /test/example/terraform-provider-srl
 
 #generator
-out/
-generator/
+/out/
+/generator/
+/tf_generator/out/*

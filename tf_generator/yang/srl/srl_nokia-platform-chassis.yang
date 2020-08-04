@@ -1,0 +1,122 @@
+module srl_nokia-platform-chassis {
+  yang-version 1.1;
+
+  // namespace
+
+  namespace "urn:srl_nokia/platform-chassis";
+  prefix srl_nokia-platform-chassis;
+
+  import srl_nokia-platform {
+    prefix srl-platform;
+  }
+  import srl_nokia-common {
+    prefix srl-comm;
+  }
+
+  description
+    "This module defines configuration and operational state data related to chassis.";
+
+  revision 2019-11-30 {
+    description
+      "SRLinux 19.11.1";
+  }
+
+  typedef watts {
+    type uint32;
+    units watts;
+  }
+
+  grouping chassis-per-component-power {
+    leaf allocated {
+      type watts;
+      description
+        "Allocated power";
+    }
+    leaf used {
+      type watts;
+      description
+        "Used power";
+    }
+    leaf peak {
+      type watts;
+      description
+        "Peak power used";
+    }
+  }
+
+  grouping chassis-config-top {
+    description
+      "Grouping for chassis configuration.";
+  }
+
+  grouping chassis-state-top {
+    description
+      "Grouping for chassis state.";
+    leaf type {
+      description
+        "The chassis type";
+      type string;
+    }
+    leaf mac-address {
+      description
+        "The chassis MAC address";
+      type srl-comm:mac-address;
+    }
+    leaf slots {
+      description
+        "The number of line card slots supported by the chassis";
+      type uint8;
+    }
+    container power {
+      description
+        "Top-level container for chassis-wide power state";
+      container total {
+        description
+	        "Top-level container for total power usage and capacity";
+        leaf capacity {
+          type watts;
+          description
+            "Total power capacity provided by all power supplies";
+        }
+        uses chassis-per-component-power;
+      }
+      container fan-tray {
+        description
+	        "Top-level container for power usage of fan-trays";
+        uses chassis-per-component-power;
+      }
+      container control {
+        description
+	        "Top-level container for power usage of control modules";
+        uses chassis-per-component-power;
+      }
+      container linecard {
+        description
+	        "Top-level container for power usage of linecard modules";
+        uses chassis-per-component-power;
+      }
+      container fabric {
+        description
+	        "Top-level container for power usage of fabric modules";
+        uses chassis-per-component-power;
+      }
+    }
+    uses srl-platform:component-common-state-top;
+  }
+
+  grouping chassis-top {
+    description
+      "Grouping for chassis configuration and state";
+    container chassis {
+      config false;
+      description
+        "Top-level container for chassis configuration and state";
+      uses chassis-config-top;
+      uses chassis-state-top;
+    }
+  }
+
+  augment "/srl-platform:platform" {
+    uses chassis-top;
+  }
+}

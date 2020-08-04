@@ -1,0 +1,69 @@
+module srl_nokia-platform-lc {
+  yang-version 1.1;
+
+  // namespace
+
+  namespace "urn:srl_nokia/platform-lc";
+  prefix srl_nokia-platform-lc;
+
+  import srl_nokia-platform { prefix srl-platform; }
+  import srl_nokia-common { prefix srl-comm; }
+
+  description
+    "This module defines configuration and operational state data related to line cards.";
+
+  revision 2019-11-30 {
+    description
+      "SRLinux 19.11.1";
+  }
+
+  grouping linecard-top {
+    description
+      "Grouping for linecard configuration and state";
+    list linecard {
+      description
+        "Top-level container for linecard configuration and state";
+      key slot;
+      leaf slot {
+        type uint8 {
+          range "1..255";
+        }
+        description
+          "Numeric identifier for the linecard";
+      }
+      leaf type {
+        config false;
+        type string;
+        description
+          "Linecard type, as translated from the components EEPROM";
+      }
+      leaf fabric-availability {
+        config false;
+        type srl-comm:percentage;
+        description
+          "Details the percentage bandwidth available to the fabric for the line card";
+      }
+      list forwarding-complex {
+        description
+          "List of forwarding complexes on the linecard";
+        key name;
+        leaf name {
+          type enumeration {
+            enum "0";
+          }
+          description
+            "The identifier of the forwarding complex";
+        }
+      }
+      uses srl-platform:component-common-top;
+      uses srl-platform:component-common-state-sw;
+      uses srl-platform:component-locator;
+      uses srl-platform:component-power-state-top;
+      uses srl-platform:component-temperature-state-top;
+    }
+  }
+
+  augment "/srl-platform:platform" {
+    uses linecard-top;
+  }
+}
