@@ -32,18 +32,18 @@ func resourceAclPolicersSystemCpuPolicerString(d resourceIDStringer) string {
 func resourceAclPolicersSystemCpuPolicer() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "system-cpu-policer": {
+            "system_cpu_policer": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "entry-specific": {
+                        "entry_specific": {
                             Type:     schema.TypeBool,
                             Optional: true,
                             Default: false,
                         },
-                        "max-packet-burst": {
+                        "max_packet_burst": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "16",
@@ -52,7 +52,7 @@ func resourceAclPolicersSystemCpuPolicer() *schema.Resource {
                             Type:     schema.TypeString,
                             Required: true,
                         },
-                        "peak-packet-rate": {
+                        "peak_packet_rate": {
                             Type:     schema.TypeInt,
                             Optional: true,
                         },

@@ -38,11 +38,11 @@ func resourceSystemName() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "domain-name": {
+                        "domain_name": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "host-name": {
+                        "host_name": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },

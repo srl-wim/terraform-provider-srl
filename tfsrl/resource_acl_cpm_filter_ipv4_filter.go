@@ -32,7 +32,7 @@ func resourceAclCpmFilterIpv4FilterString(d resourceIDStringer) string {
 func resourceAclCpmFilterIpv4Filter() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "ipv4-filter": {
+            "ipv4_filter": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
@@ -61,17 +61,17 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                                 Optional: true,
                                                                 Default: false,
                                                             },
-                                                            "rate-limit": {
+                                                            "rate_limit": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "distributed-policer": {
+                                                                        "distributed_policer": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "system-cpu-policer": {
+                                                                        "system_cpu_policer": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -108,11 +108,11 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "destination-address": {
+                                                "destination_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "destination-port": {
+                                                "destination_port": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
@@ -146,7 +146,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "first-fragment": {
+                                                "first_fragment": {
                                                     Type:     schema.TypeBool,
                                                     Optional: true,
                                                 },
@@ -175,11 +175,11 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "source-address": {
+                                                "source_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "source-port": {
+                                                "source_port": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
@@ -213,21 +213,21 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "tcp-flags": {
+                                                "tcp_flags": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
                                             },
                                         },
                                     },
-                                    "sequence-id": {
+                                    "sequence_id": {
                                         Type:     schema.TypeInt,
                                         Required: true,
                                     },
                                 },
                             },
                         },
-                        "statistics-per-entry": {
+                        "statistics_per_entry": {
                             Type:     schema.TypeBool,
                             Optional: true,
                         },

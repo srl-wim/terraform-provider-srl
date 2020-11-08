@@ -38,13 +38,13 @@ func resourceSystemTls() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "server-profile": {
+                        "server_profile": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "authenticate-client": {
+                                    "authenticate_client": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                         Default: false,
@@ -53,7 +53,7 @@ func resourceSystemTls() *schema.Resource {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "cipher-list": {
+                                    "cipher_list": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -65,7 +65,7 @@ func resourceSystemTls() *schema.Resource {
                                         Type:     schema.TypeString,
                                         Required: true,
                                     },
-                                    "trust-anchor": {
+                                    "trust_anchor": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },

@@ -38,39 +38,39 @@ func resourceSystemLldp() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin-state": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                             Default: "enable",
                         },
-                        "bgp-auto-discovery": {
+                        "bgp_auto_discovery": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
                                     },
-                                    "group-id": {
+                                    "group_id": {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                     },
-                                    "network-instance": {
+                                    "network_instance": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
                                 },
                             },
                         },
-                        "hello-timer": {
+                        "hello_timer": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "30",
                         },
-                        "hold-multiplier": {
+                        "hold_multiplier": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "4",
@@ -81,27 +81,27 @@ func resourceSystemLldp() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "enable",
                                     },
-                                    "bgp-auto-discovery": {
+                                    "bgp_auto_discovery": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "admin-state": {
+                                                "admin_state": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                     Default: "enable",
                                                 },
-                                                "group-id": {
+                                                "group_id": {
                                                     Type:     schema.TypeInt,
                                                     Optional: true,
                                                 },
-                                                "peering-address": {
+                                                "peering_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
@@ -115,7 +115,7 @@ func resourceSystemLldp() *schema.Resource {
                                 },
                             },
                         },
-                        "management-address": {
+                        "management_address": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
@@ -132,7 +132,7 @@ func resourceSystemLldp() *schema.Resource {
                                 },
                             },
                         },
-                        "trace-options": {
+                        "trace_options": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },

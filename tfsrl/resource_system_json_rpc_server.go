@@ -32,18 +32,18 @@ func resourceSystemJsonRpcServerString(d resourceIDStringer) string {
 func resourceSystemJsonRpcServer() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "json-rpc-server": {
+            "json_rpc_server": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin-state": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                             Default: "disable",
                         },
-                        "network-instance": {
+                        "network_instance": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
@@ -55,7 +55,7 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "admin-state": {
+                                                "admin_state": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                     Default: "disable",
@@ -65,16 +65,16 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                                     Optional: true,
                                                     Default: "80",
                                                 },
-                                                "session-limit": {
+                                                "session_limit": {
                                                     Type:     schema.TypeInt,
                                                     Optional: true,
                                                     Default: "10",
                                                 },
-                                                "source-address": {
+                                                "source_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "use-authentication": {
+                                                "use_authentication": {
                                                     Type:     schema.TypeBool,
                                                     Optional: true,
                                                     Default: true,
@@ -88,7 +88,7 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "admin-state": {
+                                                "admin_state": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                     Default: "disable",
@@ -98,20 +98,20 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                                     Optional: true,
                                                     Default: "443",
                                                 },
-                                                "session-limit": {
+                                                "session_limit": {
                                                     Type:     schema.TypeInt,
                                                     Optional: true,
                                                     Default: "10",
                                                 },
-                                                "source-address": {
+                                                "source_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "tls-profile": {
+                                                "tls_profile": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "use-authentication": {
+                                                "use_authentication": {
                                                     Type:     schema.TypeBool,
                                                     Optional: true,
                                                     Default: true,
@@ -126,26 +126,26 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                 },
                             },
                         },
-                        "trace-options": {
+                        "trace_options": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "unix-socket": {
+                        "unix_socket": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
                                     },
-                                    "tls-profile": {
+                                    "tls_profile": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "use-authentication": {
+                                    "use_authentication": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                         Default: true,

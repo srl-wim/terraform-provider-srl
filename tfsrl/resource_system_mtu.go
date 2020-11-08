@@ -38,17 +38,17 @@ func resourceSystemMtu() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "default-ip-mtu": {
+                        "default_ip_mtu": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "1500",
                         },
-                        "default-port-mtu": {
+                        "default_port_mtu": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "9232",
                         },
-                        "min-path-mtu": {
+                        "min_path_mtu": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "552",

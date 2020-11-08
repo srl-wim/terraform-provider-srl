@@ -1,0 +1,162 @@
+2020/07/30 20:25:14 [INFO] Terraform version: 0.12.25  
+2020/07/30 20:25:14 [INFO] Go runtime version: go1.13.10
+2020/07/30 20:25:14 [INFO] CLI args: []string{"/usr/local/bin/terraform", "apply"}
+2020/07/30 20:25:14 [DEBUG] Attempting to open CLI config file: /Users/henderiw/.terraformrc
+2020/07/30 20:25:14 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2020/07/30 20:25:14 [INFO] CLI command args: []string{"apply"}
+2020/07/30 20:25:14 [WARN] Log levels other than TRACE are currently unreliable, and are supported only for backward compatibility.
+  Use TF_LOG=TRACE to see Terraform's internal logs.
+  ----
+2020/07/30 20:25:14 [DEBUG] New state was assigned lineage "568b10b4-e43f-d279-3d63-392c0c222088"
+2020/07/30 20:25:14 [DEBUG] checking for provider in "."
+2020/07/30 20:25:14 [WARN] found legacy provider "terraform-provider-srl"
+2020/07/30 20:25:14 [DEBUG] checking for provider in "/usr/local/bin"
+2020/07/30 20:25:14 [DEBUG] checking for provider in ".terraform/plugins/darwin_amd64"
+2020/07/30 20:25:14 [DEBUG] found valid plugin: "srl", "0.0.0", "/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl"
+2020/07/30 20:25:14 [DEBUG] checking for provisioner in "."
+2020/07/30 20:25:14 [DEBUG] checking for provisioner in "/usr/local/bin"
+2020/07/30 20:25:14 [DEBUG] checking for provisioner in ".terraform/plugins/darwin_amd64"
+2020/07/30 20:25:14 [INFO] backend/local: starting Apply operation
+2020-07-30T20:25:14.446+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:14.469+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:14.471+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48919
+2020-07-30T20:25:14.471+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:15.140+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:15.140+0200
+2020-07-30T20:25:15.164+0200 [DEBUG] plugin: using plugin: version=5
+2020-07-30T20:25:15.164+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin144843586 network=unix timestamp=2020-07-30T20:25:15.164+0200
+2020-07-30T20:25:15.219+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48919
+2020-07-30T20:25:15.219+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:25:15 [INFO] terraform: building graph: GraphTypeValidate
+2020/07/30 20:25:15 [DEBUG] ProviderTransformer: "srl_system_clock.clock" (*terraform.NodeValidatableResource) needs provider.srl
+2020/07/30 20:25:15 [DEBUG] ReferenceTransformer: "var.target" references: []
+2020/07/30 20:25:15 [DEBUG] ReferenceTransformer: "provider.srl" references: [var.target var.username var.password]
+2020/07/30 20:25:15 [DEBUG] ReferenceTransformer: "srl_system_clock.clock" references: []
+2020/07/30 20:25:15 [DEBUG] ReferenceTransformer: "var.username" references: []
+2020/07/30 20:25:15 [DEBUG] ReferenceTransformer: "var.password" references: []
+2020/07/30 20:25:15 [DEBUG] Starting graph walk: walkValidate
+2020-07-30T20:25:15.221+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:15.244+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:15.247+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48920
+2020-07-30T20:25:15.247+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:15.260+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:15.260+0200
+2020-07-30T20:25:15.285+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin019311711 network=unix timestamp=2020-07-30T20:25:15.285+0200
+2020-07-30T20:25:15.286+0200 [DEBUG] plugin: using plugin: version=5
+2020/07/30 20:25:15 [WARN] <root>: eval: *terraform.EvalValidateProvider, non-fatal err: Unsupported argument: An argument named "skipVerify" is not expected here. Did you mean "skip_verify"?
+2020/07/30 20:25:15 [ERROR] <root>: eval: *terraform.EvalSequence, err: Unsupported argument: An argument named "skipVerify" is not expected here. Did you mean "skip_verify"?
+2020/07/30 20:25:15 [ERROR] <root>: eval: *terraform.EvalOpFilter, err: Unsupported argument: An argument named "skipVerify" is not expected here. Did you mean "skip_verify"?
+2020/07/30 20:25:15 [ERROR] <root>: eval: *terraform.EvalSequence, err: Unsupported argument: An argument named "skipVerify" is not expected here. Did you mean "skip_verify"?
+2020-07-30T20:25:15.341+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48920
+2020-07-30T20:25:15.341+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:25:39 [INFO] Terraform version: 0.12.25  
+2020/07/30 20:25:39 [INFO] Go runtime version: go1.13.10
+2020/07/30 20:25:39 [INFO] CLI args: []string{"/usr/local/bin/terraform", "apply"}
+2020/07/30 20:25:39 [DEBUG] Attempting to open CLI config file: /Users/henderiw/.terraformrc
+2020/07/30 20:25:39 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2020/07/30 20:25:39 [INFO] CLI command args: []string{"apply"}
+2020/07/30 20:25:39 [WARN] Log levels other than TRACE are currently unreliable, and are supported only for backward compatibility.
+  Use TF_LOG=TRACE to see Terraform's internal logs.
+  ----
+2020/07/30 20:25:39 [DEBUG] New state was assigned lineage "cabdba60-48b7-52a5-cbf8-224774521042"
+2020/07/30 20:25:39 [DEBUG] checking for provider in "."
+2020/07/30 20:25:39 [WARN] found legacy provider "terraform-provider-srl"
+2020/07/30 20:25:39 [DEBUG] checking for provider in "/usr/local/bin"
+2020/07/30 20:25:39 [DEBUG] checking for provider in ".terraform/plugins/darwin_amd64"
+2020/07/30 20:25:39 [DEBUG] found valid plugin: "srl", "0.0.0", "/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl"
+2020/07/30 20:25:39 [DEBUG] checking for provisioner in "."
+2020/07/30 20:25:39 [DEBUG] checking for provisioner in "/usr/local/bin"
+2020/07/30 20:25:39 [DEBUG] checking for provisioner in ".terraform/plugins/darwin_amd64"
+2020/07/30 20:25:39 [INFO] backend/local: starting Apply operation
+2020-07-30T20:25:39.605+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:39.627+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:39.629+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48953
+2020-07-30T20:25:39.629+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:39.642+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:39.642+0200
+2020-07-30T20:25:39.666+0200 [DEBUG] plugin: using plugin: version=5
+2020-07-30T20:25:39.666+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin663443852 network=unix timestamp=2020-07-30T20:25:39.666+0200
+2020-07-30T20:25:39.716+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48953
+2020-07-30T20:25:39.716+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:25:39 [INFO] terraform: building graph: GraphTypeValidate
+2020/07/30 20:25:39 [DEBUG] ProviderTransformer: "srl_system_clock.clock" (*terraform.NodeValidatableResource) needs provider.srl
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "srl_system_clock.clock" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.target" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.username" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.password" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "provider.srl" references: [var.username var.password var.target]
+2020/07/30 20:25:39 [DEBUG] Starting graph walk: walkValidate
+2020-07-30T20:25:39.719+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:39.742+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:39.745+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48954
+2020-07-30T20:25:39.745+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:39.758+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:39.758+0200
+2020-07-30T20:25:39.780+0200 [DEBUG] plugin: using plugin: version=5
+2020-07-30T20:25:39.780+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin219174617 network=unix timestamp=2020-07-30T20:25:39.780+0200
+2020-07-30T20:25:39.833+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48954
+2020-07-30T20:25:39.833+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:25:39 [INFO] backend/local: apply calling Refresh
+2020/07/30 20:25:39 [INFO] terraform: building graph: GraphTypeRefresh
+2020/07/30 20:25:39 [DEBUG] pruning unused provider.srl
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.username" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.password" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.target" references: []
+2020/07/30 20:25:39 [DEBUG] Starting graph walk: walkRefresh
+2020/07/30 20:25:39 [INFO] backend/local: apply calling Plan
+2020/07/30 20:25:39 [INFO] terraform: building graph: GraphTypePlan
+2020/07/30 20:25:39 [DEBUG] ProviderTransformer: "srl_system_clock.clock" (*terraform.NodePlannableResource) needs provider.srl
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.username" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.password" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "var.target" references: []
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "provider.srl" references: [var.password var.username var.target]
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "srl_system_clock.clock" references: []
+2020/07/30 20:25:39 [DEBUG] Starting graph walk: walkPlan
+2020-07-30T20:25:39.835+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:39.856+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:39.858+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48955
+2020-07-30T20:25:39.858+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:39.872+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:39.872+0200
+2020-07-30T20:25:39.895+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin808826406 network=unix timestamp=2020-07-30T20:25:39.895+0200
+2020-07-30T20:25:39.895+0200 [DEBUG] plugin: using plugin: version=5
+2020-07-30T20:25:39.942+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:39 [DEBUG] admin: username
+2020-07-30T20:25:39.942+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:39 [DEBUG] admin: password
+2020-07-30T20:25:39.942+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:39 [DEBUG] 10.1.1.2:57400: target
+2020-07-30T20:25:39.942+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:39 [DEBUG] JSON_IETF: encoding
+2020/07/30 20:25:39 [DEBUG] Resource instance state not found for node "srl_system_clock.clock", instance srl_system_clock.clock
+2020/07/30 20:25:39 [DEBUG] ReferenceTransformer: "srl_system_clock.clock" references: []
+2020-07-30T20:25:39.946+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48955
+2020-07-30T20:25:39.946+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:25:39 [DEBUG] command: asking for input: "Do you want to perform these actions?"
+2020/07/30 20:25:42 [INFO] backend/local: apply calling Apply
+2020/07/30 20:25:42 [INFO] terraform: building graph: GraphTypeApply
+2020/07/30 20:25:42 [DEBUG] Resource state not found for node "srl_system_clock.clock", instance srl_system_clock.clock
+2020/07/30 20:25:42 [DEBUG] ProviderTransformer: "srl_system_clock.clock (prepare state)" (*terraform.NodeApplyableResource) needs provider.srl
+2020/07/30 20:25:42 [DEBUG] ProviderTransformer: "srl_system_clock.clock" (*terraform.NodeApplyableResourceInstance) needs provider.srl
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "srl_system_clock.clock (prepare state)" references: []
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "srl_system_clock.clock" references: []
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "var.username" references: []
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "var.password" references: []
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "var.target" references: []
+2020/07/30 20:25:42 [DEBUG] ReferenceTransformer: "provider.srl" references: [var.target var.username var.password]
+2020/07/30 20:25:42 [DEBUG] Starting graph walk: walkApply
+2020-07-30T20:25:42.669+0200 [INFO]  plugin: configuring client automatic mTLS
+2020-07-30T20:25:42.697+0200 [DEBUG] plugin: starting plugin: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl args=[/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl]
+2020-07-30T20:25:42.700+0200 [DEBUG] plugin: plugin started: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48959
+2020-07-30T20:25:42.700+0200 [DEBUG] plugin: waiting for RPC address: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl
+2020-07-30T20:25:42.715+0200 [INFO]  plugin.terraform-provider-srl: configuring server automatic mTLS: timestamp=2020-07-30T20:25:42.715+0200
+2020-07-30T20:25:42.740+0200 [DEBUG] plugin.terraform-provider-srl: plugin address: address=/var/folders/dn/hf8rsc756w9_96zbgjm5jc0m0000gn/T/plugin235969850 network=unix timestamp=2020-07-30T20:25:42.740+0200
+2020-07-30T20:25:42.740+0200 [DEBUG] plugin: using plugin: version=5
+2020-07-30T20:25:42.787+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] admin: username
+2020-07-30T20:25:42.787+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] admin: password
+2020-07-30T20:25:42.787+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] 10.1.1.2:57400: target
+2020-07-30T20:25:42.787+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] JSON_IETF: encoding
+2020/07/30 20:25:42 [DEBUG] srl_system_clock.clock: applying the planned Create change
+2020-07-30T20:25:42.789+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] srl_system_clock (ID = <new resource>): beginning create
+2020-07-30T20:25:42.789+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:25:42 [DEBUG] : sip verify  transport
+2020/07/30 20:25:54 [WARN] terraform: Stop called, initiating interrupt sequence
+2020/07/30 20:25:54 [WARN] terraform: run context exists, stopping
+2020/07/30 20:25:54 [INFO] terraform: waiting for graceful stop to complete
+2020-07-30T20:25:54.888+0200 [DEBUG] plugin.terraform-provider-srl: plugin received interrupt signal, ignoring: count=1 timestamp=2020-07-30T20:25:54.887+0200
+2020-07-30T20:26:12.793+0200 [DEBUG] plugin.terraform-provider-srl: 2020/07/30 20:26:12 [ERROR] Dialing to "10.1.1.2:57400" failed: context deadline exceeded
+2020/07/30 20:26:12 [DEBUG] srl_system_clock.clock: apply errored, but we're indicating that via the Error pointer rather than returning it: context deadline exceeded
+2020/07/30 20:26:12 [WARN] Early exit triggered by hook: *terraform.stopHook
+2020-07-30T20:26:12.797+0200 [DEBUG] plugin: plugin process exited: path=/Users/henderiw/CodeProjects/go-dev/terraform-provider-srl/test/example/terraform-provider-srl pid=48959
+2020-07-30T20:26:12.797+0200 [DEBUG] plugin: plugin exited
+2020/07/30 20:26:12 [WARN] terraform: stop complete

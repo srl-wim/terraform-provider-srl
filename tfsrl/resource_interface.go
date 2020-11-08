@@ -38,7 +38,7 @@ func resourceInterfaces() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin-state": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                             Default: "enable",
@@ -53,7 +53,7 @@ func resourceInterfaces() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "flow-control": {
+                                    "flow_control": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
@@ -95,17 +95,17 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "queue-id": {
+                                                            "queue_id": {
                                                                 Type:     schema.TypeString,
                                                                 Required: true,
                                                             },
-                                                            "queue-scheduler": {
+                                                            "queue_scheduler": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "strict-priority": {
+                                                                        "strict_priority": {
                                                                             Type:     schema.TypeBool,
                                                                             Optional: true,
                                                                             Default: true,
@@ -132,7 +132,7 @@ func resourceInterfaces() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "enable",
@@ -158,11 +158,11 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "ipv4-filter": {
+                                                            "ipv4_filter": {
                                                                 Type:     schema.TypeString,
                                                                 Optional: true,
                                                             },
-                                                            "ipv6-filter": {
+                                                            "ipv6_filter": {
                                                                 Type:     schema.TypeString,
                                                                 Optional: true,
                                                             },
@@ -175,11 +175,11 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "ipv4-filter": {
+                                                            "ipv4_filter": {
                                                                 Type:     schema.TypeString,
                                                                 Optional: true,
                                                             },
-                                                            "ipv6-filter": {
+                                                            "ipv6_filter": {
                                                                 Type:     schema.TypeString,
                                                                 Optional: true,
                                                             },
@@ -189,7 +189,7 @@ func resourceInterfaces() *schema.Resource {
                                             },
                                         },
                                     },
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "enable",
@@ -202,7 +202,7 @@ func resourceInterfaces() *schema.Resource {
                                         Type:     schema.TypeInt,
                                         Required: true,
                                     },
-                                    "ip-mtu": {
+                                    "ip_mtu": {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                     },
@@ -218,14 +218,14 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "ip-prefix": {
+                                                            "ip_prefix": {
                                                                 Type:     schema.TypeString,
                                                                 Required: true,
                                                             },
                                                         },
                                                     },
                                                 },
-                                                "allow-directed-broadcast": {
+                                                "allow_directed_broadcast": {
                                                     Type:     schema.TypeBool,
                                                     Optional: true,
                                                     Default: false,
@@ -242,11 +242,11 @@ func resourceInterfaces() *schema.Resource {
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "ipv4-address": {
+                                                                        "ipv4_address": {
                                                                             Type:     schema.TypeString,
                                                                             Required: true,
                                                                         },
-                                                                        "link-layer-address": {
+                                                                        "link_layer_address": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -261,13 +261,13 @@ func resourceInterfaces() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "dhcp-client": {
+                                                "dhcp_client": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "trace-options": {
+                                                            "trace_options": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
@@ -298,20 +298,20 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "ip-prefix": {
+                                                            "ip_prefix": {
                                                                 Type:     schema.TypeString,
                                                                 Required: true,
                                                             },
                                                         },
                                                     },
                                                 },
-                                                "dhcp-client": {
+                                                "dhcp_client": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "trace-options": {
+                                                            "trace_options": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
@@ -327,13 +327,13 @@ func resourceInterfaces() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "neighbor-discovery": {
+                                                "neighbor_discovery": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "duplicate-address-detection": {
+                                                            "duplicate_address_detection": {
                                                                 Type:     schema.TypeBool,
                                                                 Optional: true,
                                                                 Default: true,
@@ -344,23 +344,23 @@ func resourceInterfaces() *schema.Resource {
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "ipv6-address": {
+                                                                        "ipv6_address": {
                                                                             Type:     schema.TypeString,
                                                                             Required: true,
                                                                         },
-                                                                        "link-layer-address": {
+                                                                        "link_layer_address": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
                                                                     },
                                                                 },
                                                             },
-                                                            "reachable-time": {
+                                                            "reachable_time": {
                                                                 Type:     schema.TypeInt,
                                                                 Optional: true,
                                                                 Default: "30",
                                                             },
-                                                            "stale-time": {
+                                                            "stale_time": {
                                                                 Type:     schema.TypeInt,
                                                                 Optional: true,
                                                                 Default: "14400",
@@ -389,15 +389,15 @@ func resourceInterfaces() *schema.Resource {
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "ipv4-dscp": {
+                                                                        "ipv4_dscp": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "ipv6-dscp": {
+                                                                        "ipv6_dscp": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "mpls-traffic-class": {
+                                                                        "mpls_traffic_class": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -413,21 +413,21 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "rewrite-rules": {
+                                                            "rewrite_rules": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "ipv4-dscp": {
+                                                                        "ipv4_dscp": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "ipv6-dscp": {
+                                                                        "ipv6_dscp": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "mpls-traffic-class": {
+                                                                        "mpls_traffic_class": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -452,13 +452,13 @@ func resourceInterfaces() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "single-tagged": {
+                                                            "single_tagged": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
                                                                 Elem: &schema.Resource{
                                                                 	Schema: map[string]*schema.Schema{
-                                                                        "vlan-id": {
+                                                                        "vlan_id": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -480,22 +480,22 @@ func resourceInterfaces() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "ddm-events": {
+                                    "ddm_events": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                     },
-                                    "forward-error-correction": {
+                                    "forward_error_correction": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
                                 },
                             },
                         },
-                        "vlan-tagging": {
+                        "vlan_tagging": {
                             Type:     schema.TypeBool,
                             Optional: true,
                         },

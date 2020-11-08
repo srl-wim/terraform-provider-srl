@@ -32,19 +32,19 @@ func resourceSystemSshServerString(d resourceIDStringer) string {
 func resourceSystemSshServer() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "ssh-server": {
+            "ssh_server": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "network-instance": {
+                        "network_instance": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -52,12 +52,12 @@ func resourceSystemSshServer() *schema.Resource {
                                         Type:     schema.TypeString,
                                         Required: true,
                                     },
-                                    "rate-limit": {
+                                    "rate_limit": {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                         Default: "20",
                                     },
-                                    "source-address": {
+                                    "source_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },

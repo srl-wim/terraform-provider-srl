@@ -32,7 +32,7 @@ func resourceAclCaptureFilterIpv6FilterString(d resourceIDStringer) string {
 func resourceAclCaptureFilterIpv6Filter() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "ipv6-filter": {
+            "ipv6_filter": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
@@ -81,11 +81,11 @@ func resourceAclCaptureFilterIpv6Filter() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "destination-address": {
+                                                "destination_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "destination-port": {
+                                                "destination_port": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
@@ -136,15 +136,15 @@ func resourceAclCaptureFilterIpv6Filter() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "next-header": {
+                                                "next_header": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "source-address": {
+                                                "source_address": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "source-port": {
+                                                "source_port": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
@@ -178,14 +178,14 @@ func resourceAclCaptureFilterIpv6Filter() *schema.Resource {
                                                         },
                                                     },
                                                 },
-                                                "tcp-flags": {
+                                                "tcp_flags": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
                                             },
                                         },
                                     },
-                                    "sequence-id": {
+                                    "sequence_id": {
                                         Type:     schema.TypeInt,
                                         Required: true,
                                     },

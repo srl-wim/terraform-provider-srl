@@ -35,25 +35,25 @@ func Provider() *schema.Provider {
 				Description: "proxy to connect to the device",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_PROXY", false),
 			},
-			"tlsCA": {
+			"tls_ca": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls certificate authority",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CA", ""),
 			},
-			"tlsCert": {
+			"tls_cert": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls certificate",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CERT", ""),
 			},
-			"tlsKey": {
+			"tls_key": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "tls key",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_KEY", ""),
 			},
-			"skipVerify": {
+			"skip_verify": {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Description: "skip verify tls connection",

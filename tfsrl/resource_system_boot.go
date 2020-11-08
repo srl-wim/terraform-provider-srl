@@ -44,7 +44,7 @@ func resourceSystemBoot() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -52,7 +52,7 @@ func resourceSystemBoot() *schema.Resource {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                     },
-                                    "client-id": {
+                                    "client_id": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },

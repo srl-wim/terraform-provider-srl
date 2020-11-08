@@ -32,19 +32,19 @@ func resourceSystemFtpServerString(d resourceIDStringer) string {
 func resourceSystemFtpServer() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "ftp-server": {
+            "ftp_server": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "network-instance": {
+                        "network_instance": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
@@ -53,12 +53,12 @@ func resourceSystemFtpServer() *schema.Resource {
                                         Type:     schema.TypeString,
                                         Required: true,
                                     },
-                                    "session-limit": {
+                                    "session_limit": {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                         Default: "20",
                                     },
-                                    "source-address": {
+                                    "source_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "::",

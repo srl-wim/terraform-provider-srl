@@ -38,7 +38,7 @@ func resourceSystemSflow() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin-state": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                             Default: "disable",
@@ -49,15 +49,15 @@ func resourceSystemSflow() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "collector-address": {
+                                    "collector_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "collector-id": {
+                                    "collector_id": {
                                         Type:     schema.TypeInt,
                                         Required: true,
                                     },
-                                    "network-instance": {
+                                    "network_instance": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -66,19 +66,19 @@ func resourceSystemSflow() *schema.Resource {
                                         Optional: true,
                                         Default: "6343",
                                     },
-                                    "source-address": {
+                                    "source_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
                                 },
                             },
                         },
-                        "sample-rate": {
+                        "sample_rate": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "10000",
                         },
-                        "sample-size": {
+                        "sample_size": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "256",

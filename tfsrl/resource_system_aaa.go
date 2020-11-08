@@ -44,7 +44,7 @@ func resourceSystemAaa() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "accounting-method": {
+                                    "accounting_method": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -54,7 +54,7 @@ func resourceSystemAaa() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "event-type": {
+                                                "event_type": {
                                                     Type:     schema.TypeString,
                                                     Required: true,
                                                 },
@@ -74,7 +74,7 @@ func resourceSystemAaa() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-user": {
+                                    "admin_user": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
@@ -87,11 +87,11 @@ func resourceSystemAaa() *schema.Resource {
                                             },
                                         },
                                     },
-                                    "authentication-method": {
+                                    "authentication_method": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "exit-on-reject": {
+                                    "exit_on_reject": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                         Default: false,
@@ -99,7 +99,7 @@ func resourceSystemAaa() *schema.Resource {
                                 },
                             },
                         },
-                        "server-group": {
+                        "server_group": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
@@ -123,7 +123,7 @@ func resourceSystemAaa() *schema.Resource {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "network-instance": {
+                                                "network_instance": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
@@ -138,7 +138,7 @@ func resourceSystemAaa() *schema.Resource {
                                                                 Optional: true,
                                                                 Default: "49",
                                                             },
-                                                            "secret-key": {
+                                                            "secret_key": {
                                                                 Type:     schema.TypeString,
                                                                 Optional: true,
                                                             },

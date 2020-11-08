@@ -38,11 +38,11 @@ func resourceSystemBanner() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "login-banner": {
+                        "login_banner": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "motd-banner": {
+                        "motd_banner": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },

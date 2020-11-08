@@ -32,24 +32,24 @@ func resourceSystemGnmiServerString(d resourceIDStringer) string {
 func resourceSystemGnmiServer() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "gnmi-server": {
+            "gnmi_server": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin-state": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                             Default: "disable",
                         },
-                        "network-instance": {
+                        "network_instance": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
@@ -63,15 +63,15 @@ func resourceSystemGnmiServer() *schema.Resource {
                                         Optional: true,
                                         Default: "57400",
                                     },
-                                    "source-address": {
+                                    "source_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "tls-profile": {
+                                    "tls_profile": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "use-authentication": {
+                                    "use_authentication": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                         Default: true,
@@ -79,12 +79,12 @@ func resourceSystemGnmiServer() *schema.Resource {
                                 },
                             },
                         },
-                        "rate-limit": {
+                        "rate_limit": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "60",
                         },
-                        "session-limit": {
+                        "session_limit": {
                             Type:     schema.TypeInt,
                             Optional: true,
                             Default: "20",
@@ -94,26 +94,26 @@ func resourceSystemGnmiServer() *schema.Resource {
                             Optional: true,
                             Default: "7200",
                         },
-                        "trace-options": {
+                        "trace_options": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "unix-socket": {
+                        "unix_socket": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "admin-state": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
                                     },
-                                    "tls-profile": {
+                                    "tls_profile": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "use-authentication": {
+                                    "use_authentication": {
                                         Type:     schema.TypeBool,
                                         Optional: true,
                                         Default: true,

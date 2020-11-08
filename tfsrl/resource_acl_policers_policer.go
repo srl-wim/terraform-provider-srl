@@ -38,12 +38,12 @@ func resourceAclPolicersPolicer() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "entry-specific": {
+                        "entry_specific": {
                             Type:     schema.TypeBool,
                             Optional: true,
                             Default: false,
                         },
-                        "max-burst": {
+                        "max_burst": {
                             Type:     schema.TypeInt,
                             Optional: true,
                         },
@@ -51,7 +51,7 @@ func resourceAclPolicersPolicer() *schema.Resource {
                             Type:     schema.TypeString,
                             Required: true,
                         },
-                        "peak-rate": {
+                        "peak_rate": {
                             Type:     schema.TypeInt,
                             Optional: true,
                         },

@@ -44,13 +44,13 @@ func resourceSystemMaintenance() *schema.Resource {
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "maintenance-mode": {
+                                    "maintenance_mode": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "admin-state": {
+                                                "admin_state": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                     Default: "disable",
@@ -58,7 +58,7 @@ func resourceSystemMaintenance() *schema.Resource {
                                             },
                                         },
                                     },
-                                    "maintenance-profile": {
+                                    "maintenance_profile": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -74,7 +74,7 @@ func resourceSystemMaintenance() *schema.Resource {
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "network-instance": {
+                                                            "network_instance": {
                                                                 Type:     schema.TypeList,
                                                                 Optional: true,
                                                                 MaxItems: 1,
@@ -88,7 +88,7 @@ func resourceSystemMaintenance() *schema.Resource {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
-                                                                        "peer-group": {
+                                                                        "peer_group": {
                                                                             Type:     schema.TypeString,
                                                                             Optional: true,
                                                                         },
@@ -120,11 +120,11 @@ func resourceSystemMaintenance() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "export-policy": {
+                                                "export_policy": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },
-                                                "import-policy": {
+                                                "import_policy": {
                                                     Type:     schema.TypeString,
                                                     Optional: true,
                                                 },

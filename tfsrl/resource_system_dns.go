@@ -38,17 +38,17 @@ func resourceSystemDns() *schema.Resource {
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "host-entry": {
+                        "host_entry": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "ipv4-address": {
+                                    "ipv4_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
-                                    "ipv6-address": {
+                                    "ipv6_address": {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                     },
@@ -59,15 +59,15 @@ func resourceSystemDns() *schema.Resource {
                                 },
                             },
                         },
-                        "network-instance": {
+                        "network_instance": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "search-list": {
+                        "search_list": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "server-list": {
+                        "server_list": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },

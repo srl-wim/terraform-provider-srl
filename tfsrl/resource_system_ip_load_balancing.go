@@ -32,19 +32,19 @@ func resourceSystemIpLoadBalancingString(d resourceIDStringer) string {
 func resourceSystemIpLoadBalancing() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-            "ip-load-balancing": {
+            "ip_load_balancing": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "hash-keys": {
+                        "hash_keys": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "hash-seed": {
+                                    "hash_seed": {
                                         Type:     schema.TypeInt,
                                         Optional: true,
                                         Default: "0",
