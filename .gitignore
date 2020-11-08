@@ -22,5 +22,11 @@
 
 #generator
 /out/
-/generator/
+/generator
+/generator/*
+/generator2/
 /tf_generator/out/*
+/tf_generator/out2/*
+/yang
+/yang/*
+
