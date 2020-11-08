@@ -10,6 +10,9 @@ provider "srl" {
 #    admin_state = "enable"
 #}
 
-resource "srl_system_clock" "clock" {
-    timezone = "Europe/Amsterdam"
+resource "srl_system_information" "info" {
+    information {
+      contact = "Wim henderickx"
+      location = "Copernicuslann 50, 2018 antwerp"
+    }
 }
