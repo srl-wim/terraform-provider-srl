@@ -11,16 +11,19 @@ Imported modules were sourced from:
 package tfsrl
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/google/gnxi/utils/xpath"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
-	"google.golang.org/grpc/metadata"	
+	"google.golang.org/grpc/metadata"
 )
 
 // resourceSystemBootString function
@@ -31,6 +34,21 @@ func resourceSystemBootString(d resourceIDStringer) string {
 // resourceSystemBoot function
 func resourceSystemBoot() *schema.Resource {
 	return &schema.Resource{
+		CreateContext: resourceSystemBootCreate,
+		ReadContext:   resourceSystemBootRead,
+		UpdateContext: resourceSystemBootUpdate,
+		DeleteContext: resourceSystemBootDelete,
+
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(5 * time.Minute),
+			Read:   schema.DefaultTimeout(5 * time.Minute),
+			Update: schema.DefaultTimeout(5 * time.Minute),
+			Delete: schema.DefaultTimeout(5 * time.Minute),
+		},
 		Schema: map[string]*schema.Schema{
             "boot": {
                 Type:     schema.TypeList,
@@ -97,15 +115,40 @@ func resourceSystemBootCreate(ctx context.Context, d *schema.ResourceData, meta 
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/boot"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("boot"))
+	specBytes, _ := json.Marshal(d.Get("boot"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("boot"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -115,8 +158,7 @@ func resourceSystemBootCreate(ctx context.Context, d *schema.ResourceData, meta 
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("boot")
 	return resourceSystemBootRead(ctx, d, meta)
 }
 
@@ -152,16 +194,16 @@ func resourceSystemBootRead(ctx context.Context, d *schema.ResourceData, meta in
 		Encoding:  gnmi.Encoding(encodingVal),
 	}
 	paths := make([]string, 0)
-	paths = append(paths, "/system/clock")
+	paths = append(paths, "/system/boot")
 
-	for _, path  := range paths {
+	for _, path := range paths {
 		gnmiPath, err := xpath.ToGNMIPath(path)
 		if err != nil {
 			log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
 		}
 		req.Path = append(req.Path, gnmiPath)
 	}
-	
+
 	response, err := client.Get(ctx, req)
 	if err != nil {
 		log.Printf("[ERROR] : get failed: %v", err)
@@ -189,15 +231,40 @@ func resourceSystemBootUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/boot"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("boot"))
+	specBytes, _ := json.Marshal(d.Get("boot"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("boot"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -207,8 +274,7 @@ func resourceSystemBootUpdate(ctx context.Context, d *schema.ResourceData, meta 
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("boot")
 	return resourceSystemBootRead(ctx, d, meta)
 }
 
@@ -231,7 +297,7 @@ func resourceSystemBootDelete(ctx context.Context, d *schema.ResourceData, meta 
 
 	var deleteList []*gnmi.Path
 
-	path := "/system/clock"
+	path := "/system/boot"
 
 	gnmiPath, err := xpath.ToGNMIPath(path)
 	if err != nil {

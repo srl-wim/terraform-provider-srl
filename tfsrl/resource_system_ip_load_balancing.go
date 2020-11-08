@@ -11,16 +11,19 @@ Imported modules were sourced from:
 package tfsrl
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/google/gnxi/utils/xpath"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
-	"google.golang.org/grpc/metadata"	
+	"google.golang.org/grpc/metadata"
 )
 
 // resourceSystemIpLoadBalancingString function
@@ -31,6 +34,21 @@ func resourceSystemIpLoadBalancingString(d resourceIDStringer) string {
 // resourceSystemIpLoadBalancing function
 func resourceSystemIpLoadBalancing() *schema.Resource {
 	return &schema.Resource{
+		CreateContext: resourceSystemIpLoadBalancingCreate,
+		ReadContext:   resourceSystemIpLoadBalancingRead,
+		UpdateContext: resourceSystemIpLoadBalancingUpdate,
+		DeleteContext: resourceSystemIpLoadBalancingDelete,
+
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(5 * time.Minute),
+			Read:   schema.DefaultTimeout(5 * time.Minute),
+			Update: schema.DefaultTimeout(5 * time.Minute),
+			Delete: schema.DefaultTimeout(5 * time.Minute),
+		},
 		Schema: map[string]*schema.Schema{
             "ip_load_balancing": {
                 Type:     schema.TypeList,
@@ -77,15 +95,40 @@ func resourceSystemIpLoadBalancingCreate(ctx context.Context, d *schema.Resource
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/ip-load-balancing"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("ip-load-balancing"))
+	specBytes, _ := json.Marshal(d.Get("ip-load-balancing"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("ip-load-balancing"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -95,8 +138,7 @@ func resourceSystemIpLoadBalancingCreate(ctx context.Context, d *schema.Resource
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("ip-load-balancing")
 	return resourceSystemIpLoadBalancingRead(ctx, d, meta)
 }
 
@@ -132,16 +174,16 @@ func resourceSystemIpLoadBalancingRead(ctx context.Context, d *schema.ResourceDa
 		Encoding:  gnmi.Encoding(encodingVal),
 	}
 	paths := make([]string, 0)
-	paths = append(paths, "/system/clock")
+	paths = append(paths, "/system/ip-load-balancing")
 
-	for _, path  := range paths {
+	for _, path := range paths {
 		gnmiPath, err := xpath.ToGNMIPath(path)
 		if err != nil {
 			log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
 		}
 		req.Path = append(req.Path, gnmiPath)
 	}
-	
+
 	response, err := client.Get(ctx, req)
 	if err != nil {
 		log.Printf("[ERROR] : get failed: %v", err)
@@ -169,15 +211,40 @@ func resourceSystemIpLoadBalancingUpdate(ctx context.Context, d *schema.Resource
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/ip-load-balancing"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("ip-load-balancing"))
+	specBytes, _ := json.Marshal(d.Get("ip-load-balancing"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("ip-load-balancing"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -187,8 +254,7 @@ func resourceSystemIpLoadBalancingUpdate(ctx context.Context, d *schema.Resource
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("ip-load-balancing")
 	return resourceSystemIpLoadBalancingRead(ctx, d, meta)
 }
 
@@ -211,7 +277,7 @@ func resourceSystemIpLoadBalancingDelete(ctx context.Context, d *schema.Resource
 
 	var deleteList []*gnmi.Path
 
-	path := "/system/clock"
+	path := "/system/ip-load-balancing"
 
 	gnmiPath, err := xpath.ToGNMIPath(path)
 	if err != nil {

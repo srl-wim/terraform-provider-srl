@@ -11,16 +11,19 @@ Imported modules were sourced from:
 package tfsrl
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/google/gnxi/utils/xpath"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
-	"google.golang.org/grpc/metadata"	
+	"google.golang.org/grpc/metadata"
 )
 
 // resourceAclCpmFilterIpv6FilterString function
@@ -31,6 +34,21 @@ func resourceAclCpmFilterIpv6FilterString(d resourceIDStringer) string {
 // resourceAclCpmFilterIpv6Filter function
 func resourceAclCpmFilterIpv6Filter() *schema.Resource {
 	return &schema.Resource{
+		CreateContext: resourceAclCpmFilterIpv6FilterCreate,
+		ReadContext:   resourceAclCpmFilterIpv6FilterRead,
+		UpdateContext: resourceAclCpmFilterIpv6FilterUpdate,
+		DeleteContext: resourceAclCpmFilterIpv6FilterDelete,
+
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(5 * time.Minute),
+			Read:   schema.DefaultTimeout(5 * time.Minute),
+			Update: schema.DefaultTimeout(5 * time.Minute),
+			Delete: schema.DefaultTimeout(5 * time.Minute),
+		},
 		Schema: map[string]*schema.Schema{
             "ipv6_filter": {
                 Type:     schema.TypeList,
@@ -248,15 +266,40 @@ func resourceAclCpmFilterIpv6FilterCreate(ctx context.Context, d *schema.Resourc
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/acl/cpm-filter/ipv6-filter"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("ipv6-filter"))
+	specBytes, _ := json.Marshal(d.Get("ipv6-filter"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("ipv6-filter"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -266,8 +309,7 @@ func resourceAclCpmFilterIpv6FilterCreate(ctx context.Context, d *schema.Resourc
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("ipv6-filter")
 	return resourceAclCpmFilterIpv6FilterRead(ctx, d, meta)
 }
 
@@ -303,16 +345,16 @@ func resourceAclCpmFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceD
 		Encoding:  gnmi.Encoding(encodingVal),
 	}
 	paths := make([]string, 0)
-	paths = append(paths, "/system/clock")
+	paths = append(paths, "/acl/cpm-filter/ipv6-filter")
 
-	for _, path  := range paths {
+	for _, path := range paths {
 		gnmiPath, err := xpath.ToGNMIPath(path)
 		if err != nil {
 			log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
 		}
 		req.Path = append(req.Path, gnmiPath)
 	}
-	
+
 	response, err := client.Get(ctx, req)
 	if err != nil {
 		log.Printf("[ERROR] : get failed: %v", err)
@@ -340,15 +382,40 @@ func resourceAclCpmFilterIpv6FilterUpdate(ctx context.Context, d *schema.Resourc
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/acl/cpm-filter/ipv6-filter"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("ipv6-filter"))
+	specBytes, _ := json.Marshal(d.Get("ipv6-filter"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("ipv6-filter"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -358,8 +425,7 @@ func resourceAclCpmFilterIpv6FilterUpdate(ctx context.Context, d *schema.Resourc
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("ipv6-filter")
 	return resourceAclCpmFilterIpv6FilterRead(ctx, d, meta)
 }
 
@@ -382,7 +448,7 @@ func resourceAclCpmFilterIpv6FilterDelete(ctx context.Context, d *schema.Resourc
 
 	var deleteList []*gnmi.Path
 
-	path := "/system/clock"
+	path := "/acl/cpm-filter/ipv6-filter"
 
 	gnmiPath, err := xpath.ToGNMIPath(path)
 	if err != nil {

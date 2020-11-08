@@ -11,16 +11,19 @@ Imported modules were sourced from:
 package tfsrl
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/google/gnxi/utils/xpath"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/openconfig/gnmi/proto/gnmi"
-	"google.golang.org/grpc/metadata"	
+	"google.golang.org/grpc/metadata"
 )
 
 // resourceSystemAaaString function
@@ -31,6 +34,21 @@ func resourceSystemAaaString(d resourceIDStringer) string {
 // resourceSystemAaa function
 func resourceSystemAaa() *schema.Resource {
 	return &schema.Resource{
+		CreateContext: resourceSystemAaaCreate,
+		ReadContext:   resourceSystemAaaRead,
+		UpdateContext: resourceSystemAaaUpdate,
+		DeleteContext: resourceSystemAaaDelete,
+
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(5 * time.Minute),
+			Read:   schema.DefaultTimeout(5 * time.Minute),
+			Update: schema.DefaultTimeout(5 * time.Minute),
+			Delete: schema.DefaultTimeout(5 * time.Minute),
+		},
 		Schema: map[string]*schema.Schema{
             "aaa": {
                 Type:     schema.TypeList,
@@ -185,15 +203,40 @@ func resourceSystemAaaCreate(ctx context.Context, d *schema.ResourceData, meta i
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/aaa"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("aaa"))
+	specBytes, _ := json.Marshal(d.Get("aaa"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("aaa"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -203,8 +246,7 @@ func resourceSystemAaaCreate(ctx context.Context, d *schema.ResourceData, meta i
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("aaa")
 	return resourceSystemAaaRead(ctx, d, meta)
 }
 
@@ -240,16 +282,16 @@ func resourceSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta int
 		Encoding:  gnmi.Encoding(encodingVal),
 	}
 	paths := make([]string, 0)
-	paths = append(paths, "/system/clock")
+	paths = append(paths, "/system/aaa")
 
-	for _, path  := range paths {
+	for _, path := range paths {
 		gnmiPath, err := xpath.ToGNMIPath(path)
 		if err != nil {
 			log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
 		}
 		req.Path = append(req.Path, gnmiPath)
 	}
-	
+
 	response, err := client.Get(ctx, req)
 	if err != nil {
 		log.Printf("[ERROR] : get failed: %v", err)
@@ -277,15 +319,40 @@ func resourceSystemAaaUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	defer cancel()
 	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
 
-	p := fmt.Sprintf("/system/clock/timezone:\"%s\"", d.Get("timezone").(string))
-	log.Printf("[DEBUG] %s: path", p)
-	path := []string{p}
+	path := "/system/aaa"
+	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	if err != nil {
+		log.Printf("[ERROR] Path parsing failed : %v", err)
+		return diagnostics
+	}
 
-	updateList, err := buildPbUpdateList(path)
+	log.Printf("[DEBUG] %s: get", d.Get("aaa"))
+	specBytes, _ := json.Marshal(d.Get("aaa"))
+	fmt.Printf("bytes: %s \n", specBytes)
+	value := new(gnmi.TypedValue)
+	value.Value = &gnmi.TypedValue_JsonIetfVal{
+		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
+	}
+
+	gnmiPrefix, err := CreatePrefix("", config.target)
+	if err != nil {
+		log.Printf("[ERROR] Path prefix failed : %v", err)
+		return diagnostics
+	}
 
 	req := &gnmi.SetRequest{
-		Update: updateList,
+		Prefix:  gnmiPrefix,
+		Delete:  make([]*gnmi.Path, 0, 0),
+		Replace: make([]*gnmi.Update, 0),
+		Update:  make([]*gnmi.Update, 0),
 	}
+
+	req.Update = append(req.Update, &gnmi.Update{
+		Path: gnmiPath,
+		Val:  value,
+	})
+
+	log.Printf("[DEBUG] %s: get", d.Get("aaa"))
 
 	log.Printf("[DEBUG] : Req: %v", req)
 	response, err := client.Set(ctx, req)
@@ -295,8 +362,7 @@ func resourceSystemAaaUpdate(ctx context.Context, d *schema.ResourceData, meta i
 
 	log.Printf("[DEBUG] %v: set response", response)
 
-	timezone := d.Get("timezone").(string)
-	d.SetId(timezone)
+	d.SetId("aaa")
 	return resourceSystemAaaRead(ctx, d, meta)
 }
 
@@ -319,7 +385,7 @@ func resourceSystemAaaDelete(ctx context.Context, d *schema.ResourceData, meta i
 
 	var deleteList []*gnmi.Path
 
-	path := "/system/clock"
+	path := "/system/aaa"
 
 	gnmiPath, err := xpath.ToGNMIPath(path)
 	if err != nil {
