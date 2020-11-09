@@ -50,36 +50,27 @@ func resourceSystemSnmp() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "snmp": {
+            "community": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "network_instance": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "community": {
+                        "admin_state": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "network_instance": {
-                            Type:     schema.TypeList,
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
+                        },
+                        "source_address": {
+                            Type:     schema.TypeString,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "admin_state": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "source_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                },
-                            },
                         },
                     },
                 },

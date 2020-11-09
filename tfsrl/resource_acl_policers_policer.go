@@ -50,31 +50,22 @@ func resourceAclPolicersPolicer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "policer": {
-                Type:     schema.TypeList,
+            "entry_specific": {
+                Type:     schema.TypeBool,
                 Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "entry_specific": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
-                            Default: false,
-                        },
-                        "max_burst": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
-                        },
-                        "peak_rate": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
-                    },
-                },
+                Default: false,
+            },
+            "max_burst": {
+                Type:     schema.TypeInt,
+                Optional: true,
+            },
+            "name": {
+                Type:     schema.TypeString,
+                Required: true,
+            },
+            "peak_rate": {
+                Type:     schema.TypeInt,
+                Optional: true,
             },
 
         },

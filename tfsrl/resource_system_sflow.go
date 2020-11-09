@@ -50,59 +50,50 @@ func resourceSystemSflow() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "sflow": {
+            "admin_state": {
+                Type:     schema.TypeString,
+                Optional: true,
+                Default: "disable",
+            },
+            "collector": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin_state": {
+                        "collector_address": {
                             Type:     schema.TypeString,
                             Optional: true,
-                            Default: "disable",
                         },
-                        "collector": {
-                            Type:     schema.TypeList,
+                        "collector_id": {
+                            Type:     schema.TypeInt,
+                            Required: true,
+                        },
+                        "network_instance": {
+                            Type:     schema.TypeString,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "collector_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "collector_id": {
-                                        Type:     schema.TypeInt,
-                                        Required: true,
-                                    },
-                                    "network_instance": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "port": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "6343",
-                                    },
-                                    "source_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                },
-                            },
                         },
-                        "sample_rate": {
+                        "port": {
                             Type:     schema.TypeInt,
                             Optional: true,
-                            Default: "10000",
+                            Default: "6343",
                         },
-                        "sample_size": {
-                            Type:     schema.TypeInt,
+                        "source_address": {
+                            Type:     schema.TypeString,
                             Optional: true,
-                            Default: "256",
                         },
                     },
                 },
+            },
+            "sample_rate": {
+                Type:     schema.TypeInt,
+                Optional: true,
+                Default: "10000",
+            },
+            "sample_size": {
+                Type:     schema.TypeInt,
+                Optional: true,
+                Default: "256",
             },
 
         },

@@ -1,3 +1,4 @@
+
 package tfsrl
 
 import (
@@ -6,7 +7,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
-
 // Provider function
 func Provider() *schema.Provider {
 	return &schema.Provider{
@@ -80,64 +80,65 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{},
 		ResourcesMap: map[string]*schema.Resource{
-
-			"srl_acl_capture_filter_ipv4_filter": resourceAclCaptureFilterIpv4Filter(),
-
-			"srl_acl_capture_filter_ipv6_filter": resourceAclCaptureFilterIpv6Filter(),
-
-			"srl_acl_cpm_filter_ipv4_filter": resourceAclCpmFilterIpv4Filter(),
-
-			"srl_acl_cpm_filter_ipv6_filter": resourceAclCpmFilterIpv6Filter(),
-
-			"srl_acl_ipv4_filter": resourceAclIpv4Filter(),
-
-			"srl_acl_ipv6_filter": resourceAclIpv6Filter(),
-
-			"srl_acl_policers_policer": resourceAclPolicersPolicer(),
-
-			"srl_acl_policers_system_cpu_policer": resourceAclPolicersSystemCpuPolicer(),
-
-			"srl_interfaces": resourceInterfaces(),
-
-			"srl_system_aaa": resourceSystemAaa(),
-
-			"srl_system_banner": resourceSystemBanner(),
-
-			"srl_system_boot": resourceSystemBoot(),
-
-			"srl_system_clock": resourceSystemClock(),
-
-			"srl_system_configuration": resourceSystemConfiguration(),
-
-			"srl_system_dns": resourceSystemDns(),
-
-			"srl_system_ftp_server": resourceSystemFtpServer(),
-
-			"srl_system_gnmi_server": resourceSystemGnmiServer(),
-
-			"srl_system_information": resourceSystemInformation(),
-
-			"srl_system_ip_load_balancing": resourceSystemIpLoadBalancing(),
-
-			"srl_system_json_rpc_server": resourceSystemJsonRpcServer(),
-
-			"srl_system_lldp": resourceSystemLldp(),
-
-			"srl_system_maintenance": resourceSystemMaintenance(),
-
-			"srl_system_mtu": resourceSystemMtu(),
-
-			"srl_system_name": resourceSystemName(),
-
-			"srl_system_ntp": resourceSystemNtp(),
-
-			"srl_system_sflow": resourceSystemSflow(),
-
-			"srl_system_snmp": resourceSystemSnmp(),
-
-			"srl_system_ssh_server": resourceSystemSshServer(),
-
-			"srl_system_tls": resourceSystemTls(),
+			
+            "srl_acl_capture_filter_ipv4_filter": resourceAclCaptureFilterIpv4Filter(),
+            
+            "srl_acl_capture_filter_ipv6_filter": resourceAclCaptureFilterIpv6Filter(),
+            
+            "srl_acl_cpm_filter_ipv4_filter": resourceAclCpmFilterIpv4Filter(),
+            
+            "srl_acl_cpm_filter_ipv6_filter": resourceAclCpmFilterIpv6Filter(),
+            
+            "srl_acl_ipv4_filter": resourceAclIpv4Filter(),
+            
+            "srl_acl_ipv6_filter": resourceAclIpv6Filter(),
+            
+            "srl_acl_policers_policer": resourceAclPolicersPolicer(),
+            
+            "srl_acl_policers_system_cpu_policer": resourceAclPolicersSystemCpuPolicer(),
+            
+            "srl_interfaces": resourceInterfaces(),
+            
+            "srl_system_aaa": resourceSystemAaa(),
+            
+            "srl_system_banner": resourceSystemBanner(),
+            
+            "srl_system_boot": resourceSystemBoot(),
+            
+            "srl_system_clock": resourceSystemClock(),
+            
+            "srl_system_configuration": resourceSystemConfiguration(),
+            
+            "srl_system_dns": resourceSystemDns(),
+            
+            "srl_system_ftp_server": resourceSystemFtpServer(),
+            
+            "srl_system_gnmi_server": resourceSystemGnmiServer(),
+            
+            "srl_system_information": resourceSystemInformation(),
+            
+            "srl_system_ip_load_balancing": resourceSystemIpLoadBalancing(),
+            
+            "srl_system_json_rpc_server": resourceSystemJsonRpcServer(),
+            
+            "srl_system_lldp": resourceSystemLldp(),
+            
+            "srl_system_maintenance": resourceSystemMaintenance(),
+            
+            "srl_system_mtu": resourceSystemMtu(),
+            
+            "srl_system_name": resourceSystemName(),
+            
+            "srl_system_ntp": resourceSystemNtp(),
+            
+            "srl_system_sflow": resourceSystemSflow(),
+            
+            "srl_system_snmp": resourceSystemSnmp(),
+            
+            "srl_system_ssh_server": resourceSystemSshServer(),
+            
+            "srl_system_tls": resourceSystemTls(),
+            
 		},
 		ConfigureFunc: providerConfigure,
 	}

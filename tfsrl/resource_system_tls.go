@@ -50,45 +50,36 @@ func resourceSystemTls() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "tls": {
+            "server_profile": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "server_profile": {
-                            Type:     schema.TypeList,
+                        "authenticate_client": {
+                            Type:     schema.TypeBool,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "authenticate_client": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: false,
-                                    },
-                                    "certificate": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "cipher_list": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "key": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "trust_anchor": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                },
-                            },
+                            Default: false,
+                        },
+                        "certificate": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "cipher_list": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "key": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
+                        },
+                        "trust_anchor": {
+                            Type:     schema.TypeString,
+                            Optional: true,
                         },
                     },
                 },

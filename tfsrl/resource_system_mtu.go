@@ -50,29 +50,20 @@ func resourceSystemMtu() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "mtu": {
-                Type:     schema.TypeList,
+            "default_ip_mtu": {
+                Type:     schema.TypeInt,
                 Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "default_ip_mtu": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "1500",
-                        },
-                        "default_port_mtu": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "9232",
-                        },
-                        "min_path_mtu": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "552",
-                        },
-                    },
-                },
+                Default: "1500",
+            },
+            "default_port_mtu": {
+                Type:     schema.TypeInt,
+                Optional: true,
+                Default: "9232",
+            },
+            "min_path_mtu": {
+                Type:     schema.TypeInt,
+                Optional: true,
+                Default: "552",
             },
 
         },

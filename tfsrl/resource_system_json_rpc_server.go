@@ -50,105 +50,18 @@ func resourceSystemJsonRpcServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "json_rpc_server": {
+            "admin_state": {
+                Type:     schema.TypeString,
+                Optional: true,
+                Default: "disable",
+            },
+            "network_instance": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
-                        },
-                        "network_instance": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "http": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "admin_state": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                    Default: "disable",
-                                                },
-                                                "port": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "80",
-                                                },
-                                                "session_limit": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "10",
-                                                },
-                                                "source_address": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "use_authentication": {
-                                                    Type:     schema.TypeBool,
-                                                    Optional: true,
-                                                    Default: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "https": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "admin_state": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                    Default: "disable",
-                                                },
-                                                "port": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "443",
-                                                },
-                                                "session_limit": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "10",
-                                                },
-                                                "source_address": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "tls_profile": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "use_authentication": {
-                                                    Type:     schema.TypeBool,
-                                                    Optional: true,
-                                                    Default: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                },
-                            },
-                        },
-                        "trace_options": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "unix_socket": {
+                        "http": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
@@ -158,6 +71,53 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                         Type:     schema.TypeString,
                                         Optional: true,
                                         Default: "disable",
+                                    },
+                                    "port": {
+                                        Type:     schema.TypeInt,
+                                        Optional: true,
+                                        Default: "80",
+                                    },
+                                    "session_limit": {
+                                        Type:     schema.TypeInt,
+                                        Optional: true,
+                                        Default: "10",
+                                    },
+                                    "source_address": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                    },
+                                    "use_authentication": {
+                                        Type:     schema.TypeBool,
+                                        Optional: true,
+                                        Default: true,
+                                    },
+                                },
+                            },
+                        },
+                        "https": {
+                            Type:     schema.TypeList,
+                            Optional: true,
+                            MaxItems: 1,
+                            Elem: &schema.Resource{
+                            	Schema: map[string]*schema.Schema{
+                                    "admin_state": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                        Default: "disable",
+                                    },
+                                    "port": {
+                                        Type:     schema.TypeInt,
+                                        Optional: true,
+                                        Default: "443",
+                                    },
+                                    "session_limit": {
+                                        Type:     schema.TypeInt,
+                                        Optional: true,
+                                        Default: "10",
+                                    },
+                                    "source_address": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
                                     },
                                     "tls_profile": {
                                         Type:     schema.TypeString,
@@ -170,6 +130,37 @@ func resourceSystemJsonRpcServer() *schema.Resource {
                                     },
                                 },
                             },
+                        },
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
+                        },
+                    },
+                },
+            },
+            "trace_options": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "unix_socket": {
+                Type:     schema.TypeList,
+                Optional: true,
+                MaxItems: 1,
+                Elem: &schema.Resource{
+                	Schema: map[string]*schema.Schema{
+                        "admin_state": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                            Default: "disable",
+                        },
+                        "tls_profile": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "use_authentication": {
+                            Type:     schema.TypeBool,
+                            Optional: true,
+                            Default: true,
                         },
                     },
                 },

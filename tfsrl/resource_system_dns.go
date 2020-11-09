@@ -50,47 +50,38 @@ func resourceSystemDns() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "dns": {
+            "host_entry": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "host_entry": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "ipv4_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "ipv6_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                },
-                            },
-                        },
-                        "network_instance": {
+                        "ipv4_address": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "search_list": {
+                        "ipv6_address": {
                             Type:     schema.TypeString,
                             Optional: true,
                         },
-                        "server_list": {
+                        "name": {
                             Type:     schema.TypeString,
-                            Optional: true,
+                            Required: true,
                         },
                     },
                 },
+            },
+            "network_instance": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "search_list": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "server_list": {
+                Type:     schema.TypeString,
+                Optional: true,
             },
 
         },

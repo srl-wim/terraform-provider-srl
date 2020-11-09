@@ -50,83 +50,31 @@ func resourceSystemMaintenance() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "maintenance": {
+            "group": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "group": {
+                        "maintenance_mode": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "maintenance_mode": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "admin_state": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                    Default: "disable",
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "maintenance_profile": {
+                                    "admin_state": {
                                         Type:     schema.TypeString,
                                         Optional: true,
-                                    },
-                                    "members": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "bgp": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "network_instance": {
-                                                                Type:     schema.TypeList,
-                                                                Optional: true,
-                                                                MaxItems: 1,
-                                                                Elem: &schema.Resource{
-                                                                	Schema: map[string]*schema.Schema{
-                                                                        "name": {
-                                                                            Type:     schema.TypeString,
-                                                                            Required: true,
-                                                                        },
-                                                                        "neighbor": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                        "peer_group": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                    },
-                                                                },
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
+                                        Default: "disable",
                                     },
                                 },
                             },
                         },
-                        "profile": {
+                        "maintenance_profile": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "members": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
@@ -138,23 +86,66 @@ func resourceSystemMaintenance() *schema.Resource {
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "export_policy": {
-                                                    Type:     schema.TypeString,
+                                                "network_instance": {
+                                                    Type:     schema.TypeList,
                                                     Optional: true,
-                                                },
-                                                "import_policy": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
+                                                    MaxItems: 1,
+                                                    Elem: &schema.Resource{
+                                                    	Schema: map[string]*schema.Schema{
+                                                            "name": {
+                                                                Type:     schema.TypeString,
+                                                                Required: true,
+                                                            },
+                                                            "neighbor": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                            "peer_group": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                        },
+                                                    },
                                                 },
                                             },
                                         },
                                     },
-                                    "name": {
+                                },
+                            },
+                        },
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
+                        },
+                    },
+                },
+            },
+            "profile": {
+                Type:     schema.TypeList,
+                Optional: true,
+                MaxItems: 1,
+                Elem: &schema.Resource{
+                	Schema: map[string]*schema.Schema{
+                        "bgp": {
+                            Type:     schema.TypeList,
+                            Optional: true,
+                            MaxItems: 1,
+                            Elem: &schema.Resource{
+                            	Schema: map[string]*schema.Schema{
+                                    "export_policy": {
                                         Type:     schema.TypeString,
-                                        Required: true,
+                                        Optional: true,
+                                    },
+                                    "import_policy": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
                                     },
                                 },
                             },
+                        },
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
                         },
                     },
                 },

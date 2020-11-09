@@ -50,22 +50,13 @@ func resourceSystemName() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "name": {
-                Type:     schema.TypeList,
+            "domain_name": {
+                Type:     schema.TypeString,
                 Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "domain_name": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "host_name": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                    },
-                },
+            },
+            "host_name": {
+                Type:     schema.TypeString,
+                Optional: true,
             },
 
         },

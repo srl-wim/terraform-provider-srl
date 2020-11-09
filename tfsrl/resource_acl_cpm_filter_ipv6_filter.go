@@ -50,65 +50,42 @@ func resourceAclCpmFilterIpv6Filter() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "ipv6_filter": {
+            "entry": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "entry": {
+                        "action": {
                             Type:     schema.TypeList,
                             Optional: true,
                             MaxItems: 1,
                             Elem: &schema.Resource{
                             	Schema: map[string]*schema.Schema{
-                                    "action": {
+                                    "accept": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "accept": {
-                                                    Type:     schema.TypeList,
+                                                "log": {
+                                                    Type:     schema.TypeBool,
                                                     Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "log": {
-                                                                Type:     schema.TypeBool,
-                                                                Optional: true,
-                                                                Default: false,
-                                                            },
-                                                            "rate_limit": {
-                                                                Type:     schema.TypeList,
-                                                                Optional: true,
-                                                                MaxItems: 1,
-                                                                Elem: &schema.Resource{
-                                                                	Schema: map[string]*schema.Schema{
-                                                                        "distributed_policer": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                        "system_cpu_policer": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                    },
-                                                                },
-                                                            },
-                                                        },
-                                                    },
+                                                    Default: false,
                                                 },
-                                                "drop": {
+                                                "rate_limit": {
                                                     Type:     schema.TypeList,
                                                     Optional: true,
                                                     MaxItems: 1,
                                                     Elem: &schema.Resource{
                                                     	Schema: map[string]*schema.Schema{
-                                                            "log": {
-                                                                Type:     schema.TypeBool,
+                                                            "distributed_policer": {
+                                                                Type:     schema.TypeString,
                                                                 Optional: true,
-                                                                Default: false,
+                                                            },
+                                                            "system_cpu_policer": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
                                                             },
                                                         },
                                                     },
@@ -116,133 +93,147 @@ func resourceAclCpmFilterIpv6Filter() *schema.Resource {
                                             },
                                         },
                                     },
-                                    "description": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "match": {
+                                    "drop": {
                                         Type:     schema.TypeList,
                                         Optional: true,
                                         MaxItems: 1,
                                         Elem: &schema.Resource{
                                         	Schema: map[string]*schema.Schema{
-                                                "destination_address": {
-                                                    Type:     schema.TypeString,
+                                                "log": {
+                                                    Type:     schema.TypeBool,
                                                     Optional: true,
-                                                },
-                                                "destination_port": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "operator": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "range": {
-                                                                Type:     schema.TypeList,
-                                                                Optional: true,
-                                                                MaxItems: 1,
-                                                                Elem: &schema.Resource{
-                                                                	Schema: map[string]*schema.Schema{
-                                                                        "end": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                        "start": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                    },
-                                                                },
-                                                            },
-                                                            "value": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                                "icmp6": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "code": {
-                                                                Type:     schema.TypeInt,
-                                                                Optional: true,
-                                                            },
-                                                            "type": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                                "next_header": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "source_address": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "source_port": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "operator": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "range": {
-                                                                Type:     schema.TypeList,
-                                                                Optional: true,
-                                                                MaxItems: 1,
-                                                                Elem: &schema.Resource{
-                                                                	Schema: map[string]*schema.Schema{
-                                                                        "end": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                        "start": {
-                                                                            Type:     schema.TypeString,
-                                                                            Optional: true,
-                                                                        },
-                                                                    },
-                                                                },
-                                                            },
-                                                            "value": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                                "tcp_flags": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
+                                                    Default: false,
                                                 },
                                             },
                                         },
-                                    },
-                                    "sequence_id": {
-                                        Type:     schema.TypeInt,
-                                        Required: true,
                                     },
                                 },
                             },
                         },
-                        "statistics_per_entry": {
-                            Type:     schema.TypeBool,
+                        "description": {
+                            Type:     schema.TypeString,
                             Optional: true,
+                        },
+                        "match": {
+                            Type:     schema.TypeList,
+                            Optional: true,
+                            MaxItems: 1,
+                            Elem: &schema.Resource{
+                            	Schema: map[string]*schema.Schema{
+                                    "destination_address": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                    },
+                                    "destination_port": {
+                                        Type:     schema.TypeList,
+                                        Optional: true,
+                                        MaxItems: 1,
+                                        Elem: &schema.Resource{
+                                        	Schema: map[string]*schema.Schema{
+                                                "operator": {
+                                                    Type:     schema.TypeString,
+                                                    Optional: true,
+                                                },
+                                                "range": {
+                                                    Type:     schema.TypeList,
+                                                    Optional: true,
+                                                    MaxItems: 1,
+                                                    Elem: &schema.Resource{
+                                                    	Schema: map[string]*schema.Schema{
+                                                            "end": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                            "start": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                                "value": {
+                                                    Type:     schema.TypeString,
+                                                    Optional: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "icmp6": {
+                                        Type:     schema.TypeList,
+                                        Optional: true,
+                                        MaxItems: 1,
+                                        Elem: &schema.Resource{
+                                        	Schema: map[string]*schema.Schema{
+                                                "code": {
+                                                    Type:     schema.TypeInt,
+                                                    Optional: true,
+                                                },
+                                                "type": {
+                                                    Type:     schema.TypeString,
+                                                    Optional: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "next_header": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                    },
+                                    "source_address": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                    },
+                                    "source_port": {
+                                        Type:     schema.TypeList,
+                                        Optional: true,
+                                        MaxItems: 1,
+                                        Elem: &schema.Resource{
+                                        	Schema: map[string]*schema.Schema{
+                                                "operator": {
+                                                    Type:     schema.TypeString,
+                                                    Optional: true,
+                                                },
+                                                "range": {
+                                                    Type:     schema.TypeList,
+                                                    Optional: true,
+                                                    MaxItems: 1,
+                                                    Elem: &schema.Resource{
+                                                    	Schema: map[string]*schema.Schema{
+                                                            "end": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                            "start": {
+                                                                Type:     schema.TypeString,
+                                                                Optional: true,
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                                "value": {
+                                                    Type:     schema.TypeString,
+                                                    Optional: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    "tcp_flags": {
+                                        Type:     schema.TypeString,
+                                        Optional: true,
+                                    },
+                                },
+                            },
+                        },
+                        "sequence_id": {
+                            Type:     schema.TypeInt,
+                            Required: true,
                         },
                     },
                 },
+            },
+            "statistics_per_entry": {
+                Type:     schema.TypeBool,
+                Optional: true,
             },
 
         },

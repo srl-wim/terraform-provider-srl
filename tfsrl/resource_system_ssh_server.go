@@ -50,42 +50,33 @@ func resourceSystemSshServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "ssh_server": {
+            "network_instance": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "network_instance": {
-                            Type:     schema.TypeList,
+                        "admin_state": {
+                            Type:     schema.TypeString,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "admin_state": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "rate_limit": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "20",
-                                    },
-                                    "source_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "timeout": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "0",
-                                    },
-                                },
-                            },
+                        },
+                        "name": {
+                            Type:     schema.TypeString,
+                            Required: true,
+                        },
+                        "rate_limit": {
+                            Type:     schema.TypeInt,
+                            Optional: true,
+                            Default: "20",
+                        },
+                        "source_address": {
+                            Type:     schema.TypeString,
+                            Optional: true,
+                        },
+                        "timeout": {
+                            Type:     schema.TypeInt,
+                            Optional: true,
+                            Default: "0",
                         },
                     },
                 },

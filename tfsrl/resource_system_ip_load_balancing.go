@@ -50,25 +50,16 @@ func resourceSystemIpLoadBalancing() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "ip_load_balancing": {
+            "hash_keys": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "hash_keys": {
-                            Type:     schema.TypeList,
+                        "hash_seed": {
+                            Type:     schema.TypeInt,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "hash_seed": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "0",
-                                    },
-                                },
-                            },
+                            Default: "0",
                         },
                     },
                 },

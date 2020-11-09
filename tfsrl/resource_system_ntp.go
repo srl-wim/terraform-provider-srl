@@ -50,42 +50,33 @@ func resourceSystemNtp() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "ntp": {
+            "admin_state": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "network_instance": {
+                Type:     schema.TypeString,
+                Optional: true,
+            },
+            "server": {
                 Type:     schema.TypeList,
                 Optional: true,
                 MaxItems: 1,
                 Elem: &schema.Resource{
                 	Schema: map[string]*schema.Schema{
-                        "admin_state": {
+                        "address": {
                             Type:     schema.TypeString,
-                            Optional: true,
+                            Required: true,
                         },
-                        "network_instance": {
-                            Type:     schema.TypeString,
+                        "iburst": {
+                            Type:     schema.TypeBool,
                             Optional: true,
+                            Default: false,
                         },
-                        "server": {
-                            Type:     schema.TypeList,
+                        "prefer": {
+                            Type:     schema.TypeBool,
                             Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "address": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "iburst": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: false,
-                                    },
-                                    "prefer": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: false,
-                                    },
-                                },
-                            },
+                            Default: false,
                         },
                     },
                 },
