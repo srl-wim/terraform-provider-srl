@@ -50,14 +50,23 @@ func resourceSystemInformation() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "contact": {
-                Type:     schema.TypeString,
-                Optional: true,
+        "information": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "contact": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                    "location": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                },
             },
-            "location": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
+        },
 
         },
     }

@@ -50,121 +50,130 @@ func resourceSystemJsonRpcServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "admin_state": {
-                Type:     schema.TypeString,
-                Optional: true,
-                Default: "disable",
-            },
-            "network_instance": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "http": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "admin_state": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                        Default: "disable",
+        "json_rpc_server": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "admin_state": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                        Default: "disable",
+                    },
+                    "network_instance": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "http": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "admin_state": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                                Default: "disable",
+                                            },
+                                            "port": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                                Default: "80",
+                                            },
+                                            "session_limit": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                                Default: "10",
+                                            },
+                                            "source_address": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "use_authentication": {
+                                                Type:     schema.TypeBool,
+                                                Optional: true,
+                                                Default: true,
+                                            },
+                                        },
                                     },
-                                    "port": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "80",
+                                },
+                                "https": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "admin_state": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                                Default: "disable",
+                                            },
+                                            "port": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                                Default: "443",
+                                            },
+                                            "session_limit": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                                Default: "10",
+                                            },
+                                            "source_address": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "tls_profile": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "use_authentication": {
+                                                Type:     schema.TypeBool,
+                                                Optional: true,
+                                                Default: true,
+                                            },
+                                        },
                                     },
-                                    "session_limit": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "10",
-                                    },
-                                    "source_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "use_authentication": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: true,
-                                    },
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
                                 },
                             },
                         },
-                        "https": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "admin_state": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                        Default: "disable",
-                                    },
-                                    "port": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "443",
-                                    },
-                                    "session_limit": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                        Default: "10",
-                                    },
-                                    "source_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "tls_profile": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "use_authentication": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: true,
-                                    },
+                    },
+                    "trace_options": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                    "unix_socket": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "disable",
+                                },
+                                "tls_profile": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "use_authentication": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                    Default: true,
                                 },
                             },
-                        },
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
                         },
                     },
                 },
             },
-            "trace_options": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
-            "unix_socket": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
-                        },
-                        "tls_profile": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "use_authentication": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
-                            Default: true,
-                        },
-                    },
-                },
-            },
+        },
 
         },
     }

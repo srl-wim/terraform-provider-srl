@@ -50,11 +50,20 @@ func resourceSystemConfiguration() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "max_checkpoints": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "10",
+        "configuration": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "max_checkpoints": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "10",
+                    },
+                },
             },
+        },
 
         },
     }

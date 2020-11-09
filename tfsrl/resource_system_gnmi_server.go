@@ -50,89 +50,98 @@ func resourceSystemGnmiServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "admin_state": {
-                Type:     schema.TypeString,
-                Optional: true,
-                Default: "disable",
-            },
-            "network_instance": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
+        "gnmi_server": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "admin_state": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                        Default: "disable",
+                    },
+                    "network_instance": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "disable",
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "port": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                    Default: "57400",
+                                },
+                                "source_address": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "tls_profile": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "use_authentication": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                    Default: true,
+                                },
+                            },
                         },
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
-                        },
-                        "port": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "57400",
-                        },
-                        "source_address": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "tls_profile": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "use_authentication": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
-                            Default: true,
+                    },
+                    "rate_limit": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "60",
+                    },
+                    "session_limit": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "20",
+                    },
+                    "timeout": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "7200",
+                    },
+                    "trace_options": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                    "unix_socket": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "disable",
+                                },
+                                "tls_profile": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "use_authentication": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                    Default: true,
+                                },
+                            },
                         },
                     },
                 },
             },
-            "rate_limit": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "60",
-            },
-            "session_limit": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "20",
-            },
-            "timeout": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "7200",
-            },
-            "trace_options": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
-            "unix_socket": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
-                        },
-                        "tls_profile": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "use_authentication": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
-                            Default: true,
-                        },
-                    },
-                },
-            },
+        },
 
         },
     }

@@ -50,85 +50,36 @@ func resourceInterfaces() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "admin_state": {
-                Type:     schema.TypeString,
-                Optional: true,
-                Default: "enable",
-            },
-            "description": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
-            "ethernet": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "flow_control": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "receive": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                    },
-                                },
-                            },
-                        },
+        "interface": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "admin_state": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                        Default: "enable",
                     },
-                },
-            },
-            "mtu": {
-                Type:     schema.TypeInt,
-                Optional: true,
-            },
-            "name": {
-                Type:     schema.TypeString,
-                Required: true,
-            },
-            "qos": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "output": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "queue": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "queue_id": {
-                                                    Type:     schema.TypeString,
-                                                    Required: true,
-                                                },
-                                                "queue_scheduler": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "strict_priority": {
-                                                                Type:     schema.TypeBool,
-                                                                Optional: true,
-                                                                Default: true,
-                                                            },
-                                                            "weight": {
-                                                                Type:     schema.TypeInt,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
+                    "description": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                    "ethernet": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "flow_control": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "receive": {
+                                                Type:     schema.TypeBool,
+                                                Optional: true,
                                             },
                                         },
                                     },
@@ -136,343 +87,52 @@ func resourceInterfaces() *schema.Resource {
                             },
                         },
                     },
-                },
-            },
-            "sflow": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "enable",
-                        },
+                    "mtu": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
                     },
-                },
-            },
-            "subinterface": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "acl": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "input": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "ipv4_filter": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "ipv6_filter": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "output": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "ipv4_filter": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                                "ipv6_filter": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "enable",
-                        },
-                        "description": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "index": {
-                            Type:     schema.TypeInt,
-                            Required: true,
-                        },
-                        "ip_mtu": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
-                        "ipv4": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "address": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "ip_prefix": {
-                                                    Type:     schema.TypeString,
-                                                    Required: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "allow_directed_broadcast": {
-                                        Type:     schema.TypeBool,
-                                        Optional: true,
-                                        Default: false,
-                                    },
-                                    "arp": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "neighbor": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "ipv4_address": {
-                                                                Type:     schema.TypeString,
-                                                                Required: true,
-                                                            },
-                                                            "link_layer_address": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
+                    "name": {
+                        Type:     schema.TypeString,
+                        Required: true,
+                    },
+                    "qos": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "output": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "queue": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "queue_id": {
+                                                            Type:     schema.TypeString,
+                                                            Required: true,
                                                         },
-                                                    },
-                                                },
-                                                "timeout": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "14400",
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "dhcp_client": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "trace_options": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "trace": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        "ipv6": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "address": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "ip_prefix": {
-                                                    Type:     schema.TypeString,
-                                                    Required: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "dhcp_client": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "trace_options": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "trace": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "neighbor_discovery": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "duplicate_address_detection": {
-                                                    Type:     schema.TypeBool,
-                                                    Optional: true,
-                                                    Default: true,
-                                                },
-                                                "neighbor": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "ipv6_address": {
-                                                                Type:     schema.TypeString,
-                                                                Required: true,
-                                                            },
-                                                            "link_layer_address": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                                "reachable_time": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "30",
-                                                },
-                                                "stale_time": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "14400",
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        "qos": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "input": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "classifiers": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "ipv4_dscp": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "ipv6_dscp": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "mpls_traffic_class": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                    "output": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "rewrite_rules": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "ipv4_dscp": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "ipv6_dscp": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                            "mpls_traffic_class": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        "vlan": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "encap": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "single_tagged": {
-                                                    Type:     schema.TypeList,
-                                                    Optional: true,
-                                                    MaxItems: 1,
-                                                    Elem: &schema.Resource{
-                                                    	Schema: map[string]*schema.Schema{
-                                                            "vlan_id": {
-                                                                Type:     schema.TypeString,
-                                                                Optional: true,
+                                                        "queue_scheduler": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "strict_priority": {
+                                                                        Type:     schema.TypeBool,
+                                                                        Optional: true,
+                                                                        Default: true,
+                                                                    },
+                                                                    "weight": {
+                                                                        Type:     schema.TypeInt,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
                                                             },
                                                         },
                                                     },
@@ -484,33 +144,382 @@ func resourceInterfaces() *schema.Resource {
                             },
                         },
                     },
-                },
-            },
-            "transceiver": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
+                    "sflow": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "enable",
+                                },
+                            },
                         },
-                        "ddm_events": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
+                    },
+                    "subinterface": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "acl": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "input": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "ipv4_filter": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                        "ipv6_filter": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "output": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "ipv4_filter": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                        "ipv6_filter": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "enable",
+                                },
+                                "description": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "index": {
+                                    Type:     schema.TypeInt,
+                                    Required: true,
+                                },
+                                "ip_mtu": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                },
+                                "ipv4": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "address": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "ip_prefix": {
+                                                            Type:     schema.TypeString,
+                                                            Required: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "allow_directed_broadcast": {
+                                                Type:     schema.TypeBool,
+                                                Optional: true,
+                                                Default: false,
+                                            },
+                                            "arp": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "neighbor": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "ipv4_address": {
+                                                                        Type:     schema.TypeString,
+                                                                        Required: true,
+                                                                    },
+                                                                    "link_layer_address": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                        "timeout": {
+                                                            Type:     schema.TypeInt,
+                                                            Optional: true,
+                                                            Default: "14400",
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "dhcp_client": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "trace_options": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "trace": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                "ipv6": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "address": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "ip_prefix": {
+                                                            Type:     schema.TypeString,
+                                                            Required: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "dhcp_client": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "trace_options": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "trace": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "neighbor_discovery": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "duplicate_address_detection": {
+                                                            Type:     schema.TypeBool,
+                                                            Optional: true,
+                                                            Default: true,
+                                                        },
+                                                        "neighbor": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "ipv6_address": {
+                                                                        Type:     schema.TypeString,
+                                                                        Required: true,
+                                                                    },
+                                                                    "link_layer_address": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                        "reachable_time": {
+                                                            Type:     schema.TypeInt,
+                                                            Optional: true,
+                                                            Default: "30",
+                                                        },
+                                                        "stale_time": {
+                                                            Type:     schema.TypeInt,
+                                                            Optional: true,
+                                                            Default: "14400",
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                "qos": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "input": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "classifiers": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "ipv4_dscp": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                    "ipv6_dscp": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                    "mpls_traffic_class": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "output": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "rewrite_rules": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "ipv4_dscp": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                    "ipv6_dscp": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                    "mpls_traffic_class": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                "vlan": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "encap": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "single_tagged": {
+                                                            Type:     schema.TypeList,
+                                                            Optional: true,
+                                                            MaxItems: 1,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "vlan_id": {
+                                                                        Type:     schema.TypeString,
+                                                                        Optional: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
                         },
-                        "forward_error_correction": {
-                            Type:     schema.TypeString,
-                            Optional: true,
+                    },
+                    "transceiver": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "ddm_events": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                },
+                                "forward_error_correction": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                            },
                         },
+                    },
+                    "vlan_tagging": {
+                        Type:     schema.TypeBool,
+                        Optional: true,
                     },
                 },
             },
-            "vlan_tagging": {
-                Type:     schema.TypeBool,
-                Optional: true,
-            },
+        },
 
         },
     }

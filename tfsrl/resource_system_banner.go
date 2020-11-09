@@ -50,14 +50,23 @@ func resourceSystemBanner() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "login_banner": {
-                Type:     schema.TypeString,
-                Optional: true,
+        "banner": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "login_banner": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                    "motd_banner": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                    },
+                },
             },
-            "motd_banner": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
+        },
 
         },
     }

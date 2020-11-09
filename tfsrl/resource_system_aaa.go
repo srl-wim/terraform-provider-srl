@@ -50,128 +50,137 @@ func resourceSystemAaa() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "accounting": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "accounting_method": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "event": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "event_type": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "record": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
+        "aaa": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "accounting": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "accounting_method": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
                                 },
-                            },
-                        },
-                    },
-                },
-            },
-            "authentication": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_user": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "password": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                },
-                            },
-                        },
-                        "authentication_method": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "exit_on_reject": {
-                            Type:     schema.TypeBool,
-                            Optional: true,
-                            Default: false,
-                        },
-                    },
-                },
-            },
-            "server_group": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
-                        },
-                        "server": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "address": {
-                                        Type:     schema.TypeString,
-                                        Required: true,
-                                    },
-                                    "name": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "network_instance": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
-                                    "tacacs": {
-                                        Type:     schema.TypeList,
-                                        Optional: true,
-                                        MaxItems: 1,
-                                        Elem: &schema.Resource{
-                                        	Schema: map[string]*schema.Schema{
-                                                "port": {
-                                                    Type:     schema.TypeInt,
-                                                    Optional: true,
-                                                    Default: "49",
-                                                },
-                                                "secret_key": {
-                                                    Type:     schema.TypeString,
-                                                    Optional: true,
-                                                },
+                                "event": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "event_type": {
+                                                Type:     schema.TypeString,
+                                                Required: true,
+                                            },
+                                            "record": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
                                             },
                                         },
                                     },
                                 },
                             },
                         },
-                        "timeout": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "10",
+                    },
+                    "authentication": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_user": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "password": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                        },
+                                    },
+                                },
+                                "authentication_method": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "exit_on_reject": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                    Default: false,
+                                },
+                            },
                         },
-                        "type": {
-                            Type:     schema.TypeString,
-                            Optional: true,
+                    },
+                    "server_group": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "server": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "address": {
+                                                Type:     schema.TypeString,
+                                                Required: true,
+                                            },
+                                            "name": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "network_instance": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "tacacs": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "port": {
+                                                            Type:     schema.TypeInt,
+                                                            Optional: true,
+                                                            Default: "49",
+                                                        },
+                                                        "secret_key": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                    Default: "10",
+                                },
+                                "type": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                            },
                         },
                     },
                 },
             },
+        },
 
         },
     }

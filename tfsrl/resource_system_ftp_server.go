@@ -50,39 +50,48 @@ func resourceSystemFtpServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "network_instance": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
-                        },
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
-                        },
-                        "session_limit": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "20",
-                        },
-                        "source_address": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "::",
-                        },
-                        "timeout": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                            Default: "300",
+        "ftp_server": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "network_instance": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "disable",
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "session_limit": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                    Default: "20",
+                                },
+                                "source_address": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "::",
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                    Default: "300",
+                                },
+                            },
                         },
                     },
                 },
             },
+        },
 
         },
     }

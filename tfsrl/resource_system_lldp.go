@@ -50,104 +50,113 @@ func resourceSystemLldp() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "admin_state": {
-                Type:     schema.TypeString,
-                Optional: true,
-                Default: "enable",
-            },
-            "bgp_auto_discovery": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "disable",
-                        },
-                        "group_id": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
-                        "network_instance": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
+        "lldp": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "admin_state": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                        Default: "enable",
                     },
-                },
-            },
-            "hello_timer": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "30",
-            },
-            "hold_multiplier": {
-                Type:     schema.TypeInt,
-                Optional: true,
-                Default: "4",
-            },
-            "interface": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "enable",
-                        },
-                        "bgp_auto_discovery": {
-                            Type:     schema.TypeList,
-                            Optional: true,
-                            MaxItems: 1,
-                            Elem: &schema.Resource{
-                            	Schema: map[string]*schema.Schema{
-                                    "admin_state": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                        Default: "enable",
-                                    },
-                                    "group_id": {
-                                        Type:     schema.TypeInt,
-                                        Optional: true,
-                                    },
-                                    "peering_address": {
-                                        Type:     schema.TypeString,
-                                        Optional: true,
-                                    },
+                    "bgp_auto_discovery": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "disable",
+                                },
+                                "group_id": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                },
+                                "network_instance": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
                                 },
                             },
                         },
-                        "name": {
-                            Type:     schema.TypeString,
-                            Required: true,
+                    },
+                    "hello_timer": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "30",
+                    },
+                    "hold_multiplier": {
+                        Type:     schema.TypeInt,
+                        Optional: true,
+                        Default: "4",
+                    },
+                    "interface": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "enable",
+                                },
+                                "bgp_auto_discovery": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "admin_state": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                                Default: "enable",
+                                            },
+                                            "group_id": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                            },
+                                            "peering_address": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                        },
+                                    },
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                            },
                         },
+                    },
+                    "management_address": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "subinterface": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "type": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                            },
+                        },
+                    },
+                    "trace_options": {
+                        Type:     schema.TypeString,
+                        Optional: true,
                     },
                 },
             },
-            "management_address": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "subinterface": {
-                            Type:     schema.TypeString,
-                            Required: true,
-                        },
-                        "type": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                    },
-                },
-            },
-            "trace_options": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
+        },
 
         },
     }

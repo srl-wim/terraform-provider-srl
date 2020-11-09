@@ -50,40 +50,49 @@ func resourceSystemBoot() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-            "autoboot": {
-                Type:     schema.TypeList,
-                Optional: true,
-                MaxItems: 1,
-                Elem: &schema.Resource{
-                	Schema: map[string]*schema.Schema{
-                        "admin_state": {
-                            Type:     schema.TypeString,
-                            Optional: true,
+        "boot": {
+            Type:     schema.TypeList,
+            Optional: true,
+            MaxItems: 1,
+            Elem: &schema.Resource{
+            	Schema: map[string]*schema.Schema{
+                    "autoboot": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "attempts": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                },
+                                "client_id": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                },
+                                "interface": {
+                                    Type:     schema.TypeString,
+                                    Optional: true,
+                                    Default: "mgmt0",
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                },
+                            },
                         },
-                        "attempts": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
-                        "client_id": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                        },
-                        "interface": {
-                            Type:     schema.TypeString,
-                            Optional: true,
-                            Default: "mgmt0",
-                        },
-                        "timeout": {
-                            Type:     schema.TypeInt,
-                            Optional: true,
-                        },
+                    },
+                    "image": {
+                        Type:     schema.TypeString,
+                        Optional: true,
                     },
                 },
             },
-            "image": {
-                Type:     schema.TypeString,
-                Optional: true,
-            },
+        },
 
         },
     }
