@@ -28,7 +28,7 @@ import (
 
 // resourceSystemTlsString function
 func resourceSystemTlsString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_tls")
 }
 
 // resourceSystemTls function

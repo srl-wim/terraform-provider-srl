@@ -28,7 +28,7 @@ import (
 
 // resourceSystemFtpServerString function
 func resourceSystemFtpServerString(d resourceIDStringer) string {
-	return resourceIDString(d, "server")
+	return resourceIDString(d, "system_ftp_server")
 }
 
 // resourceSystemFtpServer function

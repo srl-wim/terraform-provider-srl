@@ -28,7 +28,7 @@ import (
 
 // resourceSystemConfigurationString function
 func resourceSystemConfigurationString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_configuration")
 }
 
 // resourceSystemConfiguration function

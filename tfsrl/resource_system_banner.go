@@ -28,7 +28,7 @@ import (
 
 // resourceSystemBannerString function
 func resourceSystemBannerString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_banner")
 }
 
 // resourceSystemBanner function

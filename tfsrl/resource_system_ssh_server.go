@@ -28,7 +28,7 @@ import (
 
 // resourceSystemSshServerString function
 func resourceSystemSshServerString(d resourceIDStringer) string {
-	return resourceIDString(d, "server")
+	return resourceIDString(d, "system_ssh_server")
 }
 
 // resourceSystemSshServer function

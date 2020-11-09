@@ -28,7 +28,7 @@ import (
 
 // resourceSystemNameString function
 func resourceSystemNameString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_name")
 }
 
 // resourceSystemName function

@@ -28,7 +28,7 @@ import (
 
 // resourceSystemIpLoadBalancingString function
 func resourceSystemIpLoadBalancingString(d resourceIDStringer) string {
-	return resourceIDString(d, "load_balancing")
+	return resourceIDString(d, "system_ip_load_balancing")
 }
 
 // resourceSystemIpLoadBalancing function

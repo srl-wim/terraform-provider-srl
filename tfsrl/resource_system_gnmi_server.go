@@ -28,7 +28,7 @@ import (
 
 // resourceSystemGnmiServerString function
 func resourceSystemGnmiServerString(d resourceIDStringer) string {
-	return resourceIDString(d, "server")
+	return resourceIDString(d, "system_gnmi_server")
 }
 
 // resourceSystemGnmiServer function

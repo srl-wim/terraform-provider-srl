@@ -28,7 +28,7 @@ import (
 
 // resourceAclPolicersSystemCpuPolicerString function
 func resourceAclPolicersSystemCpuPolicerString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_cpu_policer")
+	return resourceIDString(d, "acl_policers_system_cpu_policer")
 }
 
 // resourceAclPolicersSystemCpuPolicer function

@@ -28,7 +28,7 @@ import (
 
 // resourceSystemDnsString function
 func resourceSystemDnsString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_dns")
 }
 
 // resourceSystemDns function

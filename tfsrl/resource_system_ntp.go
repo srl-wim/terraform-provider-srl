@@ -28,7 +28,7 @@ import (
 
 // resourceSystemNtpString function
 func resourceSystemNtpString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_ntp")
 }
 
 // resourceSystemNtp function

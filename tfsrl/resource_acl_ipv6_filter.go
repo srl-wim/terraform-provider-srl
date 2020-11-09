@@ -28,7 +28,7 @@ import (
 
 // resourceAclIpv6FilterString function
 func resourceAclIpv6FilterString(d resourceIDStringer) string {
-	return resourceIDString(d, "filter")
+	return resourceIDString(d, "acl_ipv6_filter")
 }
 
 // resourceAclIpv6Filter function

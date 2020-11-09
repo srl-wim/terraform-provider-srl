@@ -28,7 +28,7 @@ import (
 
 // resourceAclPolicersPolicerString function
 func resourceAclPolicersPolicerString(d resourceIDStringer) string {
-	return resourceIDString(d, "policer")
+	return resourceIDString(d, "acl_policers_policer")
 }
 
 // resourceAclPolicersPolicer function

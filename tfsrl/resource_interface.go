@@ -28,7 +28,7 @@ import (
 
 // resourceInterfacesString function
 func resourceInterfacesString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "interfaces")
 }
 
 // resourceInterfaces function

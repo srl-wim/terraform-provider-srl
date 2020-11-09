@@ -28,7 +28,7 @@ import (
 
 // resourceSystemClockString function
 func resourceSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_clock")
 }
 
 // resourceSystemClock function

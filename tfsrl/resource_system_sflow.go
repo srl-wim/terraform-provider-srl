@@ -28,7 +28,7 @@ import (
 
 // resourceSystemSflowString function
 func resourceSystemSflowString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_sflow")
 }
 
 // resourceSystemSflow function

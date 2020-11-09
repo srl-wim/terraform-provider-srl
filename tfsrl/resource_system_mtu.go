@@ -28,7 +28,7 @@ import (
 
 // resourceSystemMtuString function
 func resourceSystemMtuString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_mtu")
 }
 
 // resourceSystemMtu function

@@ -28,7 +28,7 @@ import (
 
 // resourceSystemMaintenanceString function
 func resourceSystemMaintenanceString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_maintenance")
 }
 
 // resourceSystemMaintenance function

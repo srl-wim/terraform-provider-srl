@@ -28,7 +28,7 @@ import (
 
 // resourceSystemJsonRpcServerString function
 func resourceSystemJsonRpcServerString(d resourceIDStringer) string {
-	return resourceIDString(d, "rpc_server")
+	return resourceIDString(d, "system_json_rpc_server")
 }
 
 // resourceSystemJsonRpcServer function

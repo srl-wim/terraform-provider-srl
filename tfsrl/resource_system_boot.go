@@ -28,7 +28,7 @@ import (
 
 // resourceSystemBootString function
 func resourceSystemBootString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_boot")
 }
 
 // resourceSystemBoot function

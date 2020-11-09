@@ -28,7 +28,7 @@ import (
 
 // resourceSystemSnmpString function
 func resourceSystemSnmpString(d resourceIDStringer) string {
-	return resourceIDString(d, "")
+	return resourceIDString(d, "system_snmp")
 }
 
 // resourceSystemSnmp function
