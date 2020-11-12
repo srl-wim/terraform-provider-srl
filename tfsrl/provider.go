@@ -2,32 +2,24 @@
 package tfsrl
 
 import (
+	"context"
 	"fmt"
-	"log"
 
+	log "github.com/sirupsen/logrus"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
+
 // Provider function
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"username": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "username to connect to SRL device",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_USERNAME", defaultUsername),
-			},
-			"password": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "password to connect to SRL device",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_PASSWORD", defaultPassword),
-			},
 			"target": {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "target to connect to <ip>:<port>",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_TARGET", defaultTarget),
+				DefaultFunc: schema.EnvDefaultFunc("SRL_TARGET", nil),
 			},
 			"proxy": {
 				Type:        schema.TypeBool,
@@ -35,35 +27,17 @@ func Provider() *schema.Provider {
 				Description: "proxy to connect to the device",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_PROXY", false),
 			},
-			"tls_ca": {
+			"username": {
 				Type:        schema.TypeString,
-				Optional:    true,
-				Description: "tls certificate authority",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CA", ""),
+				Required:    true,
+				Description: "username to connect to SRL device",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_USERNAME", nil),
 			},
-			"tls_cert": {
+			"password": {
 				Type:        schema.TypeString,
-				Optional:    true,
-				Description: "tls certificate",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CERT", ""),
-			},
-			"tls_key": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Description: "tls key",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_KEY", ""),
-			},
-			"skip_verify": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				Description: "skip verify tls connection",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_SKIP_VERIFY", false),
-			},
-			"insecure": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				Description: "insecure connection",
-				DefaultFunc: schema.EnvDefaultFunc("SRL_INSECURE", true),
+				Required:    true,
+				Description: "password to connect to SRL device",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_PASSWORD", nil),
 			},
 			"timeout": {
 				Type:        schema.TypeFloat,
@@ -71,11 +45,47 @@ func Provider() *schema.Provider {
 				Description: "grpc timeout (default: 30 sec)",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_TIMEOUT", defaultTimeout.Seconds()),
 			},
+			"insecure": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "insecure connection",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_INSECURE", false),
+			},
+			"tls_ca": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "tls certificate authority",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CA", nil),
+			},
+			"tls_cert": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "tls certificate",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_CERT", nil),
+			},
+			"tls_key": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "tls key",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_TLS_KEY", nil),
+			},
+			"skip_verify": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "skip verify tls connection",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_SKIP_VERIFY", false),
+			},
 			"encoding": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "grpc encoding",
 				DefaultFunc: schema.EnvDefaultFunc("SRL_ENCODING", defaultEncoding),
+			},
+			"debug": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "initialize the debug level in the srl provider",
+				DefaultFunc: schema.EnvDefaultFunc("SRL_DEBUG", false),
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{},
@@ -140,42 +150,60 @@ func Provider() *schema.Provider {
             "srl_system_tls": resourceSystemTls(),
             
 		},
-		ConfigureFunc: providerConfigure,
+		ConfigureContextFunc: providerConfigure,
 	}
 }
 
-func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	u, uOK := d.GetOk("username")
-	p, pOK := d.GetOk("password")
-	t, tOK := d.GetOk("target")
+func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+	debug := d.Get("debug").(bool)
+	if debug {
+		log.SetLevel(log.DebugLevel)
+	}
+	t := d.Get("target").(string)
+	u := d.Get("username").(string)
+	p := d.Get("password").(string)
+	proxy := d.Get("proxy").(bool)
+	i := d.Get("insecure").(bool)
+	tlsCA := d.Get("tls_ca").(string)
+	tlsCert := d.Get("tls_cert").(string)
+	tlsKey := d.Get("tls_key").(string)
+	s := d.Get("skip_verify").(bool)
+	e := d.Get("encoding").(string)
 
-	log.Printf("[DEBUG] %s: username", u)
-	log.Printf("[DEBUG] %s: password", p)
-	log.Printf("[DEBUG] %s: target", t)
+	log.Debugf("target: %s, username: %s and password: %s", t, u, p)
 
-	if !uOK || !pOK || !tOK {
-		return nil, fmt.Errorf("username (%#v), password  (%#v) and target (%#v) must be set", u.(string), p.(string), t.(string))
+	// Warning or errors can be collected in a slice type
+	var diags diag.Diagnostics
+
+	if t == "" || u == "" || p == "" {
+		return nil, diag.Errorf("target (%s), username (%s) and password (%s) must be set", t, u, p)
 	}
 
-	encoding := d.Get("encoding")
-	log.Printf("[DEBUG] %s: encoding", encoding)
-	if encoding == "" {
-		encoding = defaultEncoding
+	tc := &TargetConfig{
+		Target:     &t,
+		Proxy:      &proxy,
+		Username:   &u,
+		Password:   &p,
+		Timeout:    defaultTimeout,
+		Insecure:   &i,
+		TLSCA:      &tlsCA,
+		TLSCert:    &tlsCert,
+		TLSKey:     &tlsKey,
+		SkipVerify: &s,
+		Encoding:   &e,
+		Debug:      &debug,
 	}
 
-	baseConfig := BaseConfig{
-		username: u.(string),
-		password: p.(string),
-		target:   t.(string),
-		proxy:    false,
-		insecure: true,
-		notls:    false,
-		timeout:  defaultTimeout,
-		encoding: defaultEncoding,
-		//timeout:  time.Duration(int64(d.Get("timeout").(float64)) * int64(time.Second)),
+	target := &Target{
+		Config: tc,
 	}
 
-	return baseConfig, nil
+	opts := target.createCollectorDialOpts()
+	if err := target.CreateGNMIClient(ctx, opts...); err != nil {
+		return nil, diag.FromErr(err)
+	}
+
+	return target, diags
 }
 
 type resourceIDStringer interface {
@@ -189,4 +217,4 @@ func resourceIDString(d resourceIDStringer, name string) string {
 	}
 
 	return fmt.Sprintf("%s (ID = %s)", name, id)
-}
+}	

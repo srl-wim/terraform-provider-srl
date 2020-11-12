@@ -11,19 +11,12 @@ Imported modules were sourced from:
 package tfsrl
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
-	"log"
-	"strings"
 	"time"
 
-	"github.com/google/gnxi/utils/xpath"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/openconfig/gnmi/proto/gnmi"
-	"google.golang.org/grpc/metadata"
+	log "github.com/sirupsen/logrus"
 )
 
 // resourceSystemLldpString function
@@ -129,6 +122,7 @@ func resourceSystemLldp() *schema.Resource {
                                 "name": {
                                     Type:     schema.TypeString,
                                     Required: true,
+                                    ForceNew: true,
                                 },
                             },
                         },
@@ -142,6 +136,7 @@ func resourceSystemLldp() *schema.Resource {
                                 "subinterface": {
                                     Type:     schema.TypeString,
                                     Required: true,
+                                    ForceNew: true,
                                 },
                                 "type": {
                                     Type:     schema.TypeString,
@@ -163,223 +158,97 @@ func resourceSystemLldp() *schema.Resource {
 }
 
 func resourceSystemLldpCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] %s: beginning create", resourceSystemLldpString(d))
-	diagnostics := make([]diag.Diagnostic, 0)
-	config := meta.(BaseConfig)
+	log.Infof("Beginning Create: %s", resourceSystemLldpString(d))
+	target := meta.(*Target)
+	
+	key := "lldp"
 
-	conn, err := createGrpcConn(meta)
+	p := "/system/lldp"
+	v := "lldp"
+	
+	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
-		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
 
-	client := gnmi.NewGNMIClient(conn)
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
-
-	path := "/system/lldp"
-	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	response, err := target.Set(ctx, req)
 	if err != nil {
-		log.Printf("[ERROR] Path parsing failed : %v", err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
 
-	log.Printf("[DEBUG] %s: get", d.Get("lldp"))
-	specBytes, _ := json.Marshal(d.Get("lldp"))
-	fmt.Printf("bytes: %s \n", specBytes)
-	value := new(gnmi.TypedValue)
-	value.Value = &gnmi.TypedValue_JsonIetfVal{
-		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
-	}
+	replaceInKeys(d.Get(v), "-", "_")
+	log.Debugf("Set response: %v", response)
 
-	gnmiPrefix, err := CreatePrefix("", config.target)
-	if err != nil {
-		log.Printf("[ERROR] Path prefix failed : %v", err)
-		return diagnostics
-	}
-
-	req := &gnmi.SetRequest{
-		Prefix:  gnmiPrefix,
-		Delete:  make([]*gnmi.Path, 0, 0),
-		Replace: make([]*gnmi.Update, 0),
-		Update:  make([]*gnmi.Update, 0),
-	}
-
-	req.Update = append(req.Update, &gnmi.Update{
-		Path: gnmiPath,
-		Val:  value,
-	})
-
-	log.Printf("[DEBUG] %s: get", d.Get("lldp"))
-
-	log.Printf("[DEBUG] : Req: %v", req)
-	response, err := client.Set(ctx, req)
-	if err != nil {
-		log.Printf("[ERROR] : Set failed: %v", err)
-	}
-
-	log.Printf("[DEBUG] %v: set response", response)
-
-	d.SetId("lldp")
+	d.SetId(key)
 	return resourceSystemLldpRead(ctx, d, meta)
 }
 
 func resourceSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] %s: beginning read", resourceSystemLldpString(d))
-	diagnostics := make([]diag.Diagnostic, 0)
-	config := meta.(BaseConfig)
+	log.Infof("Beginning Read: %s", resourceSystemLldpString(d))
+	target := meta.(*Target)
 
-	conn, err := createGrpcConn(meta)
+	
+	p := "/system/lldp"
+	
+	req, err := target.CreateGetRequest(&p, d)
 	if err != nil {
-		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
-
-	client := gnmi.NewGNMIClient(conn)
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
-
-	encodingVal, ok := gnmi.Encoding_value[strings.Replace(strings.ToUpper(config.encoding), "-", "_", -1)]
-	if !ok {
-		var gnmiEncodingList []string
-		for _, name := range gnmi.Encoding_name {
-			gnmiEncodingList = append(gnmiEncodingList, name)
-		}
-		log.Printf("[ERROR] Supported encodings: %s", strings.Join(gnmiEncodingList, ", "))
-	}
-
-	req := &gnmi.GetRequest{
-		UseModels: make([]*gnmi.ModelData, 0),
-		Path:      make([]*gnmi.Path, 0),
-		Encoding:  gnmi.Encoding(encodingVal),
-	}
-	paths := make([]string, 0)
-	paths = append(paths, "/system/lldp")
-
-	for _, path := range paths {
-		gnmiPath, err := xpath.ToGNMIPath(path)
-		if err != nil {
-			log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
-		}
-		req.Path = append(req.Path, gnmiPath)
-	}
-
-	response, err := client.Get(ctx, req)
+	response, err := target.Get(ctx, req)
 	if err != nil {
-		log.Printf("[ERROR] : get failed: %v", err)
+		return diag.FromErr(err)
 	}
 
-	log.Printf("[DEBUG] %v: get response", response)
+	log.Debugf("Get Gnmi read response: %v", response)
 
 	return nil
 }
 
 func resourceSystemLldpUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] %s: beginning update", resourceSystemLldpString(d))
-	diagnostics := make([]diag.Diagnostic, 0)
-	config := meta.(BaseConfig)
+	log.Infof("Beginning Update: %s", resourceSystemLldpString(d))
+	target := meta.(*Target)
+	
+	key := "lldp"
 
-	conn, err := createGrpcConn(meta)
+	p := "/system/lldp"
+	v := "lldp"
+	
+
+	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
-		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
 
-	client := gnmi.NewGNMIClient(conn)
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
-
-	path := "/system/lldp"
-	gnmiPath, err := ParsePath(strings.TrimSpace(path))
+	response, err := target.Set(ctx, req)
 	if err != nil {
-		log.Printf("[ERROR] Path parsing failed : %v", err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
 
-	log.Printf("[DEBUG] %s: get", d.Get("lldp"))
-	specBytes, _ := json.Marshal(d.Get("lldp"))
-	fmt.Printf("bytes: %s \n", specBytes)
-	value := new(gnmi.TypedValue)
-	value.Value = &gnmi.TypedValue_JsonIetfVal{
-		JsonIetfVal: bytes.Trim(specBytes, " \r\n\t"),
-	}
+	replaceInKeys(d.Get(v), "-", "_")
+	log.Debugf("Set response: %v", response)
 
-	gnmiPrefix, err := CreatePrefix("", config.target)
-	if err != nil {
-		log.Printf("[ERROR] Path prefix failed : %v", err)
-		return diagnostics
-	}
-
-	req := &gnmi.SetRequest{
-		Prefix:  gnmiPrefix,
-		Delete:  make([]*gnmi.Path, 0, 0),
-		Replace: make([]*gnmi.Update, 0),
-		Update:  make([]*gnmi.Update, 0),
-	}
-
-	req.Update = append(req.Update, &gnmi.Update{
-		Path: gnmiPath,
-		Val:  value,
-	})
-
-	log.Printf("[DEBUG] %s: get", d.Get("lldp"))
-
-	log.Printf("[DEBUG] : Req: %v", req)
-	response, err := client.Set(ctx, req)
-	if err != nil {
-		log.Printf("[ERROR] : Set failed: %v", err)
-	}
-
-	log.Printf("[DEBUG] %v: set response", response)
-
-	d.SetId("lldp")
+	d.SetId(key)
 	return resourceSystemLldpRead(ctx, d, meta)
 }
 
 func resourceSystemLldpDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] %s: beginning delete", resourceSystemLldpString(d))
-	diagnostics := make([]diag.Diagnostic, 0)
-	config := meta.(BaseConfig)
+	log.Debugf("Beginning delete: %s", resourceSystemLldpString(d))
+	target := meta.(*Target)
 
-	conn, err := createGrpcConn(meta)
+	
+	p := "/system/lldp"
+	
+	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {
-		log.Printf("[ERROR] Dialing to %q failed: %v", config.target, err)
-		return diagnostics
+		return diag.FromErr(err)
 	}
 
-	client := gnmi.NewGNMIClient(conn)
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	ctx = metadata.AppendToOutgoingContext(ctx, "username", config.username, "password", config.password)
-
-	var deleteList []*gnmi.Path
-
-	path := "/system/lldp"
-
-	gnmiPath, err := xpath.ToGNMIPath(path)
+	response, err := target.Set(ctx, req)
 	if err != nil {
-		log.Printf("[ERROR] Error in parsing xpath %q to gnmi path", path)
-	}
-	deleteList = append(deleteList, gnmiPath)
-
-	req := &gnmi.SetRequest{
-		Delete: deleteList,
+		return diag.FromErr(err)
 	}
 
-	log.Printf("[DEBUG] : Delete Req: %v", req)
-	response, err := client.Set(ctx, req)
-	if err != nil {
-		log.Printf("[ERROR] : Delete Set failed: %v", err)
-	}
-
-	log.Printf("[DEBUG] %v: delete set response", response)
+	log.Debugf("Gnmi Delete Response: %v", response)
 
 	d.SetId("")
 	return nil
