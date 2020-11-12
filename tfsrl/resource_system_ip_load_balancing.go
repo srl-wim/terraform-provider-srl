@@ -75,10 +75,10 @@ func resourceSystemIpLoadBalancingCreate(ctx context.Context, d *schema.Resource
 	log.Infof("Beginning Create: %s", resourceSystemIpLoadBalancingString(d))
 	target := meta.(*Target)
 	
-	key := "ip-load-balancing"
+	key := "ip_load_balancing"
 
 	p := "/system/ip-load-balancing"
-	v := "ip-load-balancing"
+	v := "ip_load_balancing"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -122,10 +122,10 @@ func resourceSystemIpLoadBalancingUpdate(ctx context.Context, d *schema.Resource
 	log.Infof("Beginning Update: %s", resourceSystemIpLoadBalancingString(d))
 	target := meta.(*Target)
 	
-	key := "ip-load-balancing"
+	key := "ip_load_balancing"
 
 	p := "/system/ip-load-balancing"
-	v := "ip-load-balancing"
+	v := "ip_load_balancing"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)

@@ -80,7 +80,7 @@ func resourceAclPolicersSystemCpuPolicerCreate(ctx context.Context, d *schema.Re
 	log.Infof("Beginning Create: %s", resourceAclPolicersSystemCpuPolicerString(d))
 	target := meta.(*Target)
 
-	rn := "system-cpu-policer"
+	rn := "system_cpu_policer"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
@@ -130,7 +130,7 @@ func resourceAclPolicersSystemCpuPolicerUpdate(ctx context.Context, d *schema.Re
 	log.Infof("Beginning Update: %s", resourceAclPolicersSystemCpuPolicerString(d))
 	target := meta.(*Target)
 
-	rn := "system-cpu-policer"
+	rn := "system_cpu_policer"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {

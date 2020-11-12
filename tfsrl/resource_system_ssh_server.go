@@ -93,10 +93,10 @@ func resourceSystemSshServerCreate(ctx context.Context, d *schema.ResourceData, 
 	log.Infof("Beginning Create: %s", resourceSystemSshServerString(d))
 	target := meta.(*Target)
 	
-	key := "ssh-server"
+	key := "ssh_server"
 
 	p := "/system/ssh-server"
-	v := "ssh-server"
+	v := "ssh_server"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -140,10 +140,10 @@ func resourceSystemSshServerUpdate(ctx context.Context, d *schema.ResourceData, 
 	log.Infof("Beginning Update: %s", resourceSystemSshServerString(d))
 	target := meta.(*Target)
 	
-	key := "ssh-server"
+	key := "ssh_server"
 
 	p := "/system/ssh-server"
-	v := "ssh-server"
+	v := "ssh_server"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)

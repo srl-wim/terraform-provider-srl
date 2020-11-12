@@ -213,10 +213,10 @@ func resourceAclCaptureFilterIpv6FilterCreate(ctx context.Context, d *schema.Res
 	log.Infof("Beginning Create: %s", resourceAclCaptureFilterIpv6FilterString(d))
 	target := meta.(*Target)
 
-	key := "ipv6-filter"
+	key := "ipv6_filter"
 
 	p := "/acl/capture-filter/ipv6-filter"
-	v := "ipv6-filter"
+	v := "ipv6_filter"
 
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -259,10 +259,10 @@ func resourceAclCaptureFilterIpv6FilterUpdate(ctx context.Context, d *schema.Res
 	log.Infof("Beginning Update: %s", resourceAclCaptureFilterIpv6FilterString(d))
 	target := meta.(*Target)
 
-	key := "ipv6-filter"
+	key := "ipv6_filter"
 
 	p := "/acl/capture-filter/ipv6-filter"
-	v := "ipv6-filter"
+	v := "ipv6_filter"
 
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {

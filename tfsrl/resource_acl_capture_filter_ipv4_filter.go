@@ -221,10 +221,10 @@ func resourceAclCaptureFilterIpv4FilterCreate(ctx context.Context, d *schema.Res
 	log.Infof("Beginning Create: %s", resourceAclCaptureFilterIpv4FilterString(d))
 	target := meta.(*Target)
 
-	key := "ipv4-filter"
+	key := "ipv4_filter"
 
 	p := "/acl/capture-filter/ipv4-filter"
-	v := "ipv4-filter"
+	v := "ipv4_filter"
 
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -267,10 +267,10 @@ func resourceAclCaptureFilterIpv4FilterUpdate(ctx context.Context, d *schema.Res
 	log.Infof("Beginning Update: %s", resourceAclCaptureFilterIpv4FilterString(d))
 	target := meta.(*Target)
 
-	key := "ipv4-filter"
+	key := "ipv4_filter"
 
 	p := "/acl/capture-filter/ipv4-filter"
-	v := "ipv4-filter"
+	v := "ipv4_filter"
 
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {

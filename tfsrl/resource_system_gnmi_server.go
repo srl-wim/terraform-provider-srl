@@ -145,10 +145,10 @@ func resourceSystemGnmiServerCreate(ctx context.Context, d *schema.ResourceData,
 	log.Infof("Beginning Create: %s", resourceSystemGnmiServerString(d))
 	target := meta.(*Target)
 	
-	key := "gnmi-server"
+	key := "gnmi_server"
 
 	p := "/system/gnmi-server"
-	v := "gnmi-server"
+	v := "gnmi_server"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -192,10 +192,10 @@ func resourceSystemGnmiServerUpdate(ctx context.Context, d *schema.ResourceData,
 	log.Infof("Beginning Update: %s", resourceSystemGnmiServerString(d))
 	target := meta.(*Target)
 	
-	key := "gnmi-server"
+	key := "gnmi_server"
 
 	p := "/system/gnmi-server"
-	v := "gnmi-server"
+	v := "gnmi_server"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)

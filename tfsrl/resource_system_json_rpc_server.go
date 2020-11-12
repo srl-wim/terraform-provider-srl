@@ -177,10 +177,10 @@ func resourceSystemJsonRpcServerCreate(ctx context.Context, d *schema.ResourceDa
 	log.Infof("Beginning Create: %s", resourceSystemJsonRpcServerString(d))
 	target := meta.(*Target)
 	
-	key := "json-rpc-server"
+	key := "json_rpc_server"
 
 	p := "/system/json-rpc-server"
-	v := "json-rpc-server"
+	v := "json_rpc_server"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -224,10 +224,10 @@ func resourceSystemJsonRpcServerUpdate(ctx context.Context, d *schema.ResourceDa
 	log.Infof("Beginning Update: %s", resourceSystemJsonRpcServerString(d))
 	target := meta.(*Target)
 	
-	key := "json-rpc-server"
+	key := "json_rpc_server"
 
 	p := "/system/json-rpc-server"
-	v := "json-rpc-server"
+	v := "json_rpc_server"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)

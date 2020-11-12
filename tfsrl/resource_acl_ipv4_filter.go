@@ -252,7 +252,7 @@ func resourceAclIpv4FilterCreate(ctx context.Context, d *schema.ResourceData, me
 	log.Infof("Beginning Create: %s", resourceAclIpv4FilterString(d))
 	target := meta.(*Target)
 
-	rn := "ipv4-filter"
+	rn := "ipv4_filter"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
@@ -302,7 +302,7 @@ func resourceAclIpv4FilterUpdate(ctx context.Context, d *schema.ResourceData, me
 	log.Infof("Beginning Update: %s", resourceAclIpv4FilterString(d))
 	target := meta.(*Target)
 
-	rn := "ipv4-filter"
+	rn := "ipv4_filter"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {

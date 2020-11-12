@@ -244,7 +244,7 @@ func resourceAclIpv6FilterCreate(ctx context.Context, d *schema.ResourceData, me
 	log.Infof("Beginning Create: %s", resourceAclIpv6FilterString(d))
 	target := meta.(*Target)
 
-	rn := "ipv6-filter"
+	rn := "ipv6_filter"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
@@ -294,7 +294,7 @@ func resourceAclIpv6FilterUpdate(ctx context.Context, d *schema.ResourceData, me
 	log.Infof("Beginning Update: %s", resourceAclIpv6FilterString(d))
 	target := meta.(*Target)
 
-	rn := "ipv6-filter"
+	rn := "ipv6_filter"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {

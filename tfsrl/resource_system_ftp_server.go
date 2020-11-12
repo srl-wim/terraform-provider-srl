@@ -95,10 +95,10 @@ func resourceSystemFtpServerCreate(ctx context.Context, d *schema.ResourceData, 
 	log.Infof("Beginning Create: %s", resourceSystemFtpServerString(d))
 	target := meta.(*Target)
 	
-	key := "ftp-server"
+	key := "ftp_server"
 
 	p := "/system/ftp-server"
-	v := "ftp-server"
+	v := "ftp_server"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -142,10 +142,10 @@ func resourceSystemFtpServerUpdate(ctx context.Context, d *schema.ResourceData, 
 	log.Infof("Beginning Update: %s", resourceSystemFtpServerString(d))
 	target := meta.(*Target)
 	
-	key := "ftp-server"
+	key := "ftp_server"
 
 	p := "/system/ftp-server"
-	v := "ftp-server"
+	v := "ftp_server"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)
