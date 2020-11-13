@@ -88,7 +88,9 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("SRL_DEBUG", false),
 			},
 		},
-		DataSourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"srl_system_clock": dataSystemClock(),
+		},
 		ResourcesMap: map[string]*schema.Resource{
 			
             "srl_acl_capture_filter_ipv4_filter": resourceAclCaptureFilterIpv4Filter(),
