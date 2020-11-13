@@ -17,8 +17,8 @@
 #terraform
 *.terraform
 *.tfstate
-/test/example/tf.log
-/test/example/terraform-provider-srl
+/example/tf.log
+/example/terraform-provider-srl
 
 #generator
 /out/
