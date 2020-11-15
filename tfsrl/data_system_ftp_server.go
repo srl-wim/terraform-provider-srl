@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemFtpServerString function
+func dataSystemFtpServerString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_ftp_server")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemFtpServer function
+func dataSystemFtpServer() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemFtpServerRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,14 +38,42 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "ftp_server": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
-                        Type:     schema.TypeString,
+                    "network_instance": {
+                        Type:     schema.TypeList,
                         Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "oper_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "session_limit": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "source_address": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                            },
+                        },
                     },
                 },
             },
@@ -55,15 +83,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemFtpServerRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemFtpServerString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/ftp-server"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +114,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["ftp-server"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("ftp_server", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

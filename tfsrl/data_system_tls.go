@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemTlsString function
+func dataSystemTlsString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_tls")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemTls function
+func dataSystemTls() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemTlsRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,14 +38,42 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "tls": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
-                        Type:     schema.TypeString,
+                    "server_profile": {
+                        Type:     schema.TypeList,
                         Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "authenticate_client": {
+                                    Type:     schema.TypeBool,
+                                    Computed: true,
+                                },
+                                "certificate": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "cipher_list": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "key": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "trust_anchor": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                            },
+                        },
                     },
                 },
             },
@@ -55,15 +83,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemTlsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemTlsString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/tls"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +114,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["tls"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("tls", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

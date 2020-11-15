@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemIpLoadBalancingString function
+func dataSystemIpLoadBalancingString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_ip_load_balancing")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemIpLoadBalancing function
+func dataSystemIpLoadBalancing() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemIpLoadBalancingRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,14 +38,22 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "ip_load_balancing": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
-                        Type:     schema.TypeString,
+                    "hash_keys": {
+                        Type:     schema.TypeList,
                         Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "hash_seed": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                            },
+                        },
                     },
                 },
             },
@@ -55,15 +63,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemIpLoadBalancingRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemIpLoadBalancingString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/ip-load-balancing"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +94,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["ip-load-balancing"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("ip_load_balancing", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

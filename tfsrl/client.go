@@ -276,17 +276,63 @@ func (t *Target) Set(ctx context.Context, req *gnmi.SetRequest) (response *gnmi.
 	return response, nil
 }
 
-type NotificationRspMsg struct {
-	Meta             map[string]interface{} `json:"meta,omitempty"`
-	Source           string                 `json:"source,omitempty"`
-	SystemName       string                 `json:"system-name,omitempty"`
-	SubscriptionName string                 `json:"subscription-name,omitempty"`
-	Timestamp        int64                  `json:"timestamp,omitempty"`
-	Time             *time.Time             `json:"time,omitempty"`
-	Prefix           string                 `json:"prefix,omitempty"`
-	Target           string                 `json:"target,omitempty"`
-	Updates          []update               `json:"updates,omitempty"`
-	Deletes          []string               `json:"deletes,omitempty"`
+func (t *Target) HandleGetRespone(response *gnmi.GetResponse) ([]update, error) {
+	for _, notif := range response.GetNotification() {
+		ts := notif.Timestamp
+		t := time.Unix(0, ts)
+		time := &t
+		log.Debugf("Get response time: %v", time)
+
+		updates := make([]update, 0, len(notif.GetUpdate()))
+
+		for i, upd := range notif.GetUpdate() {
+			// Path element processing
+			pathElems := make([]string, 0, len(upd.GetPath().GetElem()))
+			for _, pElem := range upd.GetPath().GetElem() {
+				pathElems = append(pathElems, pElem.GetName())
+			}
+			log.Debugf("Get response PathElems: %v", pathElems)
+			var pathElemSplit []string
+			if len(pathElems) > 1 {
+				pathElemSplit = strings.Split(pathElems[len(pathElems)-1], ":")
+			} else {
+				pathElemSplit = strings.Split(pathElems[0], ":")
+			}
+			var pathElem string
+			if len(pathElemSplit) > 1 {
+				pathElem = pathElemSplit[len(pathElemSplit)-1]
+			} else {
+				pathElem = pathElemSplit[0]
+			}
+			log.Debugf("Get response PathElem: %s", pathElem)
+
+			// Value processing
+			value, err := getValue(upd.GetVal())
+			if err != nil {
+				return nil, err
+			}
+			value = replaceInKeys(value, "-", "_")
+			log.Debugf("Get response Value: %s", value)
+			updates = append(updates,
+				update{
+					Path:   gnmiPathToXPath(upd.GetPath()),
+					Values: make(map[string]interface{}),
+				})
+			updates[i].Values[pathElem] = value
+
+		}
+		x, err := json.Marshal(updates)
+		if err != nil {
+			return nil, nil
+		}
+		sb := strings.Builder{}
+		sb.Write(x)
+		log.Debugf("Get response: %v", sb.String())
+
+		log.Debugf("Get response Updates: %v", updates)
+		return updates, nil
+	}
+	return nil, nil
 }
 
 type update struct {

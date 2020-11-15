@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemBootString function
+func dataSystemBootString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_boot")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemBoot function
+func dataSystemBoot() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemBootRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,12 +38,44 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "boot": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
+                    "autoboot": {
+                        Type:     schema.TypeList,
+                        Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "attempts": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "client_id": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "interface": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "oper_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                            },
+                        },
+                    },
+                    "image": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
@@ -55,15 +87,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemBootRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemBootString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/boot"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +118,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["boot"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("boot", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

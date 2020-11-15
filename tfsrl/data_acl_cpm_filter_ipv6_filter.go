@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -19,72 +20,60 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// resourceAclCpmFilterIpv4FilterString function
-func resourceAclCpmFilterIpv4FilterString(d resourceIDStringer) string {
-	return resourceIDString(d, "acl_cpm_filter_ipv4_filter")
+// dataAclCpmFilterIpv6FilterString function
+func dataAclCpmFilterIpv6FilterString(d resourceIDStringer) string {
+	return resourceIDString(d, "acl_cpm_filter_ipv6_filter")
 }
 
-// resourceAclCpmFilterIpv4Filter function
-func resourceAclCpmFilterIpv4Filter() *schema.Resource {
+// dataAclCpmFilterIpv6Filter function
+func dataAclCpmFilterIpv6Filter() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceAclCpmFilterIpv4FilterCreate,
-		ReadContext:   resourceAclCpmFilterIpv4FilterRead,
-		UpdateContext: resourceAclCpmFilterIpv4FilterUpdate,
-		DeleteContext: resourceAclCpmFilterIpv4FilterDelete,
+		ReadContext:   dataAclCpmFilterIpv6FilterRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(5 * time.Minute),
 			Read:   schema.DefaultTimeout(5 * time.Minute),
-			Update: schema.DefaultTimeout(5 * time.Minute),
-			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "ipv4_filter": {
+        "ipv6_filter": {
             Type:     schema.TypeList,
-            Optional: true,
-            MaxItems: 1,
+            Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "entry": {
                         Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
+                        Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "action": {
                                     Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
+                                    Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "accept": {
                                                 Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
+                                                Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
                                                             Type:     schema.TypeBool,
-                                                            Optional: true,
-                                                            Default: false,
+                                                            Computed: true,
                                                         },
                                                         "rate_limit": {
                                                             Type:     schema.TypeList,
-                                                            Optional: true,
-                                                            MaxItems: 1,
+                                                            Computed: true,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "distributed_policer": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                     "system_cpu_policer": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                 },
                                                             },
@@ -94,14 +83,12 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                             },
                                             "drop": {
                                                 Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
+                                                Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
                                                             Type:     schema.TypeBool,
-                                                            Optional: true,
-                                                            Default: false,
+                                                            Computed: true,
                                                         },
                                                     },
                                                 },
@@ -111,122 +98,108 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                 },
                                 "description": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Computed: true,
                                 },
                                 "match": {
                                     Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
+                                    Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "destination_address": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Computed: true,
                                             },
                                             "destination_port": {
                                                 Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
+                                                Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                         "range": {
                                                             Type:     schema.TypeList,
-                                                            Optional: true,
-                                                            MaxItems: 1,
+                                                            Computed: true,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                     "start": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                 },
                                                             },
                                                         },
                                                         "value": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                     },
                                                 },
                                             },
-                                            "first_fragment": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                            },
-                                            "fragment": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                            },
-                                            "icmp": {
+                                            "icmp6": {
                                                 Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
+                                                Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "code": {
                                                             Type:     schema.TypeInt,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                         "type": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                     },
                                                 },
                                             },
-                                            "protocol": {
+                                            "next_header": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Computed: true,
                                             },
                                             "source_address": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Computed: true,
                                             },
                                             "source_port": {
                                                 Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
+                                                Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                         "range": {
                                                             Type:     schema.TypeList,
-                                                            Optional: true,
-                                                            MaxItems: 1,
+                                                            Computed: true,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                     "start": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Computed: true,
                                                                     },
                                                                 },
                                                             },
                                                         },
                                                         "value": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Computed: true,
                                                         },
                                                     },
                                                 },
                                             },
                                             "tcp_flags": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Computed: true,
                                             },
                                         },
                                     },
@@ -234,14 +207,37 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                 "sequence_id": {
                                     Type:     schema.TypeInt,
                                     Required: true,
-                                    ForceNew: true,
+                                },
+                                "statistics": {
+                                    Type:     schema.TypeList,
+                                    Computed: true,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "last_clear": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "last_match": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "matched_packets": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                        },
+                                    },
+                                },
+                                "tcam_entries": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
                                 },
                             },
                         },
                     },
                     "statistics_per_entry": {
                         Type:     schema.TypeBool,
-                        Optional: true,
+                        Computed: true,
                     },
                 },
             },
@@ -251,99 +247,62 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
     }
 }
 
-func resourceAclCpmFilterIpv4FilterCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Create: %s", resourceAclCpmFilterIpv4FilterString(d))
-	target := meta.(*Target)
-	
-	key := "ipv4_filter"
-
-	p := "/acl/cpm-filter/ipv4-filter"
-	v := "ipv4_filter"
-	
-	req, err := target.CreateSetRequest(&p, &v, d)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	response, err := target.Set(ctx, req)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	replaceInKeys(d.Get(v), "-", "_")
-	log.Debugf("Set response: %v", response)
-
-	d.SetId(key)
-	return resourceAclCpmFilterIpv4FilterRead(ctx, d, meta)
-}
-
-func resourceAclCpmFilterIpv4FilterRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", resourceAclCpmFilterIpv4FilterString(d))
+func dataAclCpmFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataAclCpmFilterIpv6FilterString(d))
 	target := meta.(*Target)
 
+	// Warning or errors can be collected in a slice type
+	var diags diag.Diagnostics
+
 	
-	p := "/acl/cpm-filter/ipv4-filter"
+	p := "/acl/cpm-filter/ipv6-filter"
 	
+
 	req, err := target.CreateGetRequest(&p, d)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	log.Infof("Get Request: %v", req)
 	response, err := target.Get(ctx, req)
 	if err != nil {
 		return diag.FromErr(err)
 	}
-
 	log.Debugf("Get Gnmi read response: %v", response)
 
-	return nil
-}
-
-func resourceAclCpmFilterIpv4FilterUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Update: %s", resourceAclCpmFilterIpv4FilterString(d))
-	target := meta.(*Target)
-	
-	key := "ipv4_filter"
-
-	p := "/acl/cpm-filter/ipv4-filter"
-	v := "ipv4_filter"
-	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	u, err := target.HandleGetRespone(response)
 	if err != nil {
 		return diag.FromErr(err)
 	}
-
-	response, err := target.Set(ctx, req)
-	if err != nil {
-		return diag.FromErr(err)
+	for i, upd := range u {
+		// we expect a single response in the get since we target the explicit resource
+		log.Debugf("get response: index: %d, update: %v", i, upd)
+		if i <= 0 {
+			data := make([]map[string]interface{}, 0)
+			switch x := upd.Values["ipv6-filter"].(type) {
+			case map[string]interface{}:
+				
+				data = append(data, x)
+			}
+			log.Debugf("get response: index: %d, data: %v", i, data)
+			if err := d.Set("ipv6_filter", data); err != nil {
+				return diag.FromErr(err)
+			}
+			// always run
+			
+			d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+			
+			return diags
+		} else {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Unexpected multiple response",
+				Detail:   "We only expect a single response from the read/get response",
+			})
+			return diags
+		}
 	}
-
-	replaceInKeys(d.Get(v), "-", "_")
-	log.Debugf("Set response: %v", response)
-
-	d.SetId(key)
-	return resourceAclCpmFilterIpv4FilterRead(ctx, d, meta)
-}
-
-func resourceAclCpmFilterIpv4FilterDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Debugf("Beginning delete: %s", resourceAclCpmFilterIpv4FilterString(d))
-	target := meta.(*Target)
-
-	
-	p := "/acl/cpm-filter/ipv4-filter"
-	
-	req, err := target.CreateDeleteRequest(&p, d)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	response, err := target.Set(ctx, req)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
-	log.Debugf("Gnmi Delete Response: %v", response)
-
+	// when the response is empty no data exists in the system
+	log.Debugf("get response: empty set id to nill")
 	d.SetId("")
-	return nil
+	return diags
 }

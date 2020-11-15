@@ -89,7 +89,65 @@ func Provider() *schema.Provider {
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"srl_system_clock": dataSystemClock(),
+			
+            "srl_acl_capture_filter_ipv4_filter": dataAclCaptureFilterIpv4Filter(),
+            
+            "srl_acl_capture_filter_ipv6_filter": dataAclCaptureFilterIpv6Filter(),
+            
+            "srl_acl_cpm_filter_ipv4_filter": dataAclCpmFilterIpv4Filter(),
+            
+            "srl_acl_cpm_filter_ipv6_filter": dataAclCpmFilterIpv6Filter(),
+            
+            "srl_acl_ipv4_filter": dataAclIpv4Filter(),
+            
+            "srl_acl_ipv6_filter": dataAclIpv6Filter(),
+            
+            "srl_acl_policers_policer": dataAclPolicersPolicer(),
+            
+            "srl_acl_policers_system_cpu_policer": dataAclPolicersSystemCpuPolicer(),
+            
+            "srl_interfaces": dataInterfaces(),
+            
+            "srl_system_aaa": dataSystemAaa(),
+            
+            "srl_system_banner": dataSystemBanner(),
+            
+            "srl_system_boot": dataSystemBoot(),
+            
+            "srl_system_clock": dataSystemClock(),
+            
+            "srl_system_configuration": dataSystemConfiguration(),
+            
+            "srl_system_dns": dataSystemDns(),
+            
+            "srl_system_ftp_server": dataSystemFtpServer(),
+            
+            "srl_system_gnmi_server": dataSystemGnmiServer(),
+            
+            "srl_system_information": dataSystemInformation(),
+            
+            "srl_system_ip_load_balancing": dataSystemIpLoadBalancing(),
+            
+            "srl_system_json_rpc_server": dataSystemJsonRpcServer(),
+            
+            "srl_system_lldp": dataSystemLldp(),
+            
+            "srl_system_maintenance": dataSystemMaintenance(),
+            
+            "srl_system_mtu": dataSystemMtu(),
+            
+            "srl_system_name": dataSystemName(),
+            
+            "srl_system_ntp": dataSystemNtp(),
+            
+            "srl_system_sflow": dataSystemSflow(),
+            
+            "srl_system_snmp": dataSystemSnmp(),
+            
+            "srl_system_ssh_server": dataSystemSshServer(),
+            
+            "srl_system_tls": dataSystemTls(),
+            
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			

@@ -15,7 +15,7 @@ cd cfg && generator -path=../yang/ietf/ -generate_fakeroot -fakeroot_name config
 export GIT_TERMINAL_PROMPT=1
 export GOPRIVATE=github.com/srl-wim/*
 
-go build -o test/example/terraform-provider-srl
+go build -o example/terraform-provider-srl
 
 
 

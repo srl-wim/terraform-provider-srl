@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemInformationString function
+func dataSystemInformationString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_information")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemInformation function
+func dataSystemInformation() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemInformationRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,12 +38,32 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "information": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
+                    "contact": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                    "current_datetime": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                    "description": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                    "location": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                    "uptime": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                    "version": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
@@ -55,15 +75,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemInformationRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemInformationString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/information"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +106,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["information"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("information", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

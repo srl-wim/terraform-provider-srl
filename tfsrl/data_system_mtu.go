@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataSystemMtuString function
+func dataSystemMtuString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_mtu")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataSystemMtu function
+func dataSystemMtu() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataSystemMtuRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,13 +38,21 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "mtu": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
-                        Type:     schema.TypeString,
+                    "default_ip_mtu": {
+                        Type:     schema.TypeInt,
+                        Computed: true,
+                    },
+                    "default_port_mtu": {
+                        Type:     schema.TypeInt,
+                        Computed: true,
+                    },
+                    "min_path_mtu": {
+                        Type:     schema.TypeInt,
                         Computed: true,
                     },
                 },
@@ -55,15 +63,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataSystemMtuRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemMtuString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/system/mtu"
 	
 
 	req, err := target.CreateGetRequest(&p, d)
@@ -86,13 +94,13 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["mtu"].(type) {
 			case map[string]interface{}:
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("mtu", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
