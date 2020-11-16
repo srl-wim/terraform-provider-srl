@@ -47,7 +47,7 @@ func resourceSystemConfiguration() *schema.Resource {
         "configuration": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "max_checkpoints": {

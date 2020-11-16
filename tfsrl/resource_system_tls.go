@@ -47,13 +47,13 @@ func resourceSystemTls() *schema.Resource {
         "tls": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "server_profile": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "authenticate_client": {

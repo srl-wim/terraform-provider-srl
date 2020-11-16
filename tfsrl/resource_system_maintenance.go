@@ -47,19 +47,19 @@ func resourceSystemMaintenance() *schema.Resource {
         "maintenance": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "group": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "maintenance_mode": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "admin_state": {
@@ -77,19 +77,19 @@ func resourceSystemMaintenance() *schema.Resource {
                                 "members": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "bgp": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "network_instance": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "name": {
@@ -125,13 +125,13 @@ func resourceSystemMaintenance() *schema.Resource {
                     "profile": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "bgp": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "export_policy": {

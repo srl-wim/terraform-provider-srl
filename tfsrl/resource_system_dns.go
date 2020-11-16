@@ -47,13 +47,13 @@ func resourceSystemDns() *schema.Resource {
         "dns": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "host_entry": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "ipv4_address": {

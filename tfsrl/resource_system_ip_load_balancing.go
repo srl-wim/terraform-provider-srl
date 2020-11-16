@@ -47,13 +47,13 @@ func resourceSystemIpLoadBalancing() *schema.Resource {
         "ip_load_balancing": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "hash_keys": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "hash_seed": {

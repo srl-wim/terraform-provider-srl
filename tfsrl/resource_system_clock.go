@@ -47,7 +47,7 @@ func resourceSystemClock() *schema.Resource {
         "clock": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "timezone": {

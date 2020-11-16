@@ -47,7 +47,7 @@ func resourceInterfaces() *schema.Resource {
         "interface": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "admin_state": {
@@ -62,13 +62,13 @@ func resourceInterfaces() *schema.Resource {
                     "ethernet": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "flow_control": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "receive": {
@@ -93,19 +93,19 @@ func resourceInterfaces() *schema.Resource {
                     "qos": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "output": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "queue": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "queue_id": {
@@ -116,7 +116,7 @@ func resourceInterfaces() *schema.Resource {
                                                         "queue_scheduler": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "strict_priority": {
@@ -143,7 +143,7 @@ func resourceInterfaces() *schema.Resource {
                     "sflow": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
@@ -157,19 +157,19 @@ func resourceInterfaces() *schema.Resource {
                     "subinterface": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "acl": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "input": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "ipv4_filter": {
@@ -186,7 +186,7 @@ func resourceInterfaces() *schema.Resource {
                                             "output": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "ipv4_filter": {
@@ -224,13 +224,13 @@ func resourceInterfaces() *schema.Resource {
                                 "ipv4": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "address": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "ip_prefix": {
@@ -249,13 +249,13 @@ func resourceInterfaces() *schema.Resource {
                                             "arp": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "neighbor": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "ipv4_address": {
@@ -281,13 +281,13 @@ func resourceInterfaces() *schema.Resource {
                                             "dhcp_client": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "trace_options": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "trace": {
@@ -306,13 +306,13 @@ func resourceInterfaces() *schema.Resource {
                                 "ipv6": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "address": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "ip_prefix": {
@@ -326,13 +326,13 @@ func resourceInterfaces() *schema.Resource {
                                             "dhcp_client": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "trace_options": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "trace": {
@@ -348,7 +348,7 @@ func resourceInterfaces() *schema.Resource {
                                             "neighbor_discovery": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "duplicate_address_detection": {
@@ -359,7 +359,7 @@ func resourceInterfaces() *schema.Resource {
                                                         "neighbor": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "ipv6_address": {
@@ -393,19 +393,19 @@ func resourceInterfaces() *schema.Resource {
                                 "qos": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "input": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "classifiers": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "ipv4_dscp": {
@@ -429,13 +429,13 @@ func resourceInterfaces() *schema.Resource {
                                             "output": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "rewrite_rules": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "ipv4_dscp": {
@@ -462,19 +462,19 @@ func resourceInterfaces() *schema.Resource {
                                 "vlan": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "encap": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "single_tagged": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "vlan_id": {
@@ -496,7 +496,7 @@ func resourceInterfaces() *schema.Resource {
                     "transceiver": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {

@@ -47,7 +47,7 @@ func resourceSystemLldp() *schema.Resource {
         "lldp": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "admin_state": {
@@ -58,7 +58,7 @@ func resourceSystemLldp() *schema.Resource {
                     "bgp_auto_discovery": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
@@ -90,7 +90,7 @@ func resourceSystemLldp() *schema.Resource {
                     "interface": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
@@ -101,7 +101,7 @@ func resourceSystemLldp() *schema.Resource {
                                 "bgp_auto_discovery": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "admin_state": {
@@ -131,7 +131,7 @@ func resourceSystemLldp() *schema.Resource {
                     "management_address": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "subinterface": {

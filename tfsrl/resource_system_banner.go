@@ -47,7 +47,7 @@ func resourceSystemBanner() *schema.Resource {
         "banner": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "login_banner": {

@@ -47,25 +47,25 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
         "ipv4_filter": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "entry": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "action": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "accept": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
@@ -76,7 +76,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                         "rate_limit": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "distributed_policer": {
@@ -96,7 +96,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                             "drop": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
@@ -117,7 +117,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                 "match": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 1,
+                                    MaxItems: 16,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "destination_address": {
@@ -127,7 +127,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                             "destination_port": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
@@ -137,7 +137,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                         "range": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {
@@ -169,7 +169,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                             "icmp": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "code": {
@@ -194,7 +194,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                             "source_port": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 1,
+                                                MaxItems: 16,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
@@ -204,7 +204,7 @@ func resourceAclCpmFilterIpv4Filter() *schema.Resource {
                                                         "range": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 1,
+                                                            MaxItems: 16,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {

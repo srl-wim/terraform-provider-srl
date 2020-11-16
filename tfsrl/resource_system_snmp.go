@@ -47,7 +47,7 @@ func resourceSystemSnmp() *schema.Resource {
         "snmp": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "community": {
@@ -57,7 +57,7 @@ func resourceSystemSnmp() *schema.Resource {
                     "network_instance": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {

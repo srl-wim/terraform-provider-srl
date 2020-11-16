@@ -47,7 +47,7 @@ func resourceSystemName() *schema.Resource {
         "name": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "domain_name": {

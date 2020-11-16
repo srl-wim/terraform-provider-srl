@@ -47,7 +47,7 @@ func resourceSystemNtp() *schema.Resource {
         "ntp": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 1,
+            MaxItems: 16,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "admin_state": {
@@ -61,7 +61,7 @@ func resourceSystemNtp() *schema.Resource {
                     "server": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "address": {
