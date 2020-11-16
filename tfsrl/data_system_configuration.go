@@ -43,73 +43,9 @@ func dataSystemConfiguration() *schema.Resource {
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "checkpoint": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "comment": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "created": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "id": {
-                                    Type:     schema.TypeInt,
-                                    Required: true,
-                                },
-                                "name": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "size": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "username": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "version": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "last_change": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "max_checkpoints": {
                         Type:     schema.TypeInt,
                         Computed: true,
-                    },
-                    "session": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "id": {
-                                    Type:     schema.TypeInt,
-                                    Required: true,
-                                },
-                                "started": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "type": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "username": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -130,7 +66,7 @@ func dataSystemConfigurationRead(ctx context.Context, d *schema.ResourceData, me
 	p := "/system/configuration"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

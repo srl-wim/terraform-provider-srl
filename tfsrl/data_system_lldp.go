@@ -67,14 +67,6 @@ func dataSystemLldp() *schema.Resource {
                             },
                         },
                     },
-                    "chassis_id": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "chassis_id_type": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "hello_timer": {
                         Type:     schema.TypeInt,
                         Computed: true,
@@ -116,170 +108,6 @@ func dataSystemLldp() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                 },
-                                "neighbor": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "bgp_auto_discovery": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "bgp_peer_addresses": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "group_id": {
-                                                            Type:     schema.TypeInt,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "capability": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "enabled": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "name": {
-                                                            Type:     schema.TypeString,
-                                                            Required: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "chassis_id": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "chassis_id_type": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "custom_tlv": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "oui": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "oui_subtype": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "type": {
-                                                            Type:     schema.TypeInt,
-                                                            Computed: true,
-                                                        },
-                                                        "value": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "first_message": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "id": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                            "last_update": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "management_address": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "address": {
-                                                            Type:     schema.TypeString,
-                                                            Required: true,
-                                                        },
-                                                        "type": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "port_description": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "port_id": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "port_id_type": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "system_description": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "system_name": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "statistics": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "frame_discard": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "frame_error_in": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "frame_error_out": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "frame_in": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "frame_out": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "last_clear": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "tlv_discard": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "tlv_unknown": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
                             },
                         },
                     },
@@ -298,58 +126,6 @@ func dataSystemLldp() *schema.Resource {
                                 },
                             },
                         },
-                    },
-                    "statistics": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "entries_aged_out": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "frame_discard": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "frame_error_in": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "frame_in": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "frame_out": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "last_clear": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "tlv_accepted": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "tlv_discard": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "tlv_unknown": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "system_description": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "system_name": {
-                        Type:     schema.TypeString,
-                        Computed: true,
                     },
                     "trace_options": {
                         Type:     schema.TypeString,
@@ -374,7 +150,7 @@ func dataSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta interf
 	p := "/system/lldp"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

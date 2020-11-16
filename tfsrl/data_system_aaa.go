@@ -85,10 +85,6 @@ func dataSystemAaa() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
                                             },
-                                            "username": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
                                         },
                                     },
                                 },
@@ -99,38 +95,6 @@ func dataSystemAaa() *schema.Resource {
                                 "exit_on_reject": {
                                     Type:     schema.TypeBool,
                                     Computed: true,
-                                },
-                                "session": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "id": {
-                                                Type:     schema.TypeInt,
-                                                Required: true,
-                                            },
-                                            "login_time": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "remote_host": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "service_name": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "tty_name": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "username": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
                                 },
                             },
                         },
@@ -160,42 +124,6 @@ func dataSystemAaa() *schema.Resource {
                                             "network_instance": {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
-                                            },
-                                            "oper_state": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "statistics": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "accounting_connection_failures": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "accounting_rejects": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "accounting_success": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "login_connection_failures": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "login_rejects": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "login_success": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
                                             },
                                             "tacacs": {
                                                 Type:     schema.TypeList,
@@ -246,7 +174,7 @@ func dataSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	p := "/system/aaa"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

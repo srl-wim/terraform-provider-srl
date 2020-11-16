@@ -60,10 +60,6 @@ func dataSystemGnmiServer() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                 },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "port": {
                                     Type:     schema.TypeInt,
                                     Computed: true,
@@ -91,50 +87,6 @@ func dataSystemGnmiServer() *schema.Resource {
                         Type:     schema.TypeInt,
                         Computed: true,
                     },
-                    "subscription": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "id": {
-                                    Type:     schema.TypeInt,
-                                    Required: true,
-                                },
-                                "mode": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "paths": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "remote_host": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "remote_port": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "sample_interval": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "start_time": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "user": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "user_agent": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "timeout": {
                         Type:     schema.TypeInt,
                         Computed: true,
@@ -149,14 +101,6 @@ func dataSystemGnmiServer() *schema.Resource {
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "socket_path": {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
@@ -190,7 +134,7 @@ func dataSystemGnmiServerRead(ctx context.Context, d *schema.ResourceData, meta 
 	p := "/system/gnmi-server"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

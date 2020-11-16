@@ -47,23 +47,7 @@ func dataSystemInformation() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "current_datetime": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "description": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "location": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "uptime": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "version": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
@@ -86,7 +70,7 @@ func dataSystemInformationRead(ctx context.Context, d *schema.ResourceData, meta
 	p := "/system/information"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

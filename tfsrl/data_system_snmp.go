@@ -60,10 +60,6 @@ func dataSystemSnmp() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                 },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "source_address": {
                                     Type:     schema.TypeString,
                                     Computed: true,
@@ -90,7 +86,7 @@ func dataSystemSnmpRead(ctx context.Context, d *schema.ResourceData, meta interf
 	p := "/system/snmp"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

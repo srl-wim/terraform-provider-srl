@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -238,25 +239,84 @@ func resourceAclCaptureFilterIpv6FilterCreate(ctx context.Context, d *schema.Res
 	return resourceAclCaptureFilterIpv6FilterRead(ctx, d, meta)
 }
 
+// func resourceAclCaptureFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+// 	log.Infof("Beginning Read: %s", resourceAclCaptureFilterIpv6FilterString(d))
+// 	target := meta.(*Target)
+
+// 	
+// 	p := "/acl/capture-filter/ipv6-filter"
+// 	
+// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
+// 	if err != nil {
+// 		return diag.FromErr(err)
+// 	}
+// 	response, err := target.Get(ctx, req)
+// 	if err != nil {
+// 		return diag.FromErr(err)
+// 	}
+
+// 	log.Debugf("Get Gnmi read response: %v", response)
+
+// 	return nil
+// }
 func resourceAclCaptureFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceAclCaptureFilterIpv6FilterString(d))
 	target := meta.(*Target)
 
+	// Warning or errors can be collected in a slice type
+	var diags diag.Diagnostics
+
 	
 	p := "/acl/capture-filter/ipv6-filter"
 	
-	req, err := target.CreateGetRequest(&p, d)
+
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	log.Infof("Get Request: %v", req)
 	response, err := target.Get(ctx, req)
 	if err != nil {
 		return diag.FromErr(err)
 	}
-
 	log.Debugf("Get Gnmi read response: %v", response)
 
-	return nil
+	u, err := target.HandleGetRespone(response)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	for i, upd := range u {
+		// we expect a single response in the get since we target the explicit resource
+		log.Debugf("get response: index: %d, update: %v", i, upd)
+		if i <= 0 {
+			data := make([]map[string]interface{}, 0)
+			switch x := upd.Values["ipv6-filter"].(type) {
+			case map[string]interface{}:
+				
+				data = append(data, x)
+			}
+			log.Debugf("get response: index: %d, data: %v", i, data)
+			if err := d.Set("ipv6_filter", data); err != nil {
+				return diag.FromErr(err)
+			}
+			// always run
+			
+			d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
+			
+			return diags
+		} else {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Unexpected multiple response",
+				Detail:   "We only expect a single response from the read/get response",
+			})
+			return diags
+		}
+	}
+	// when the response is empty no data exists in the system
+	log.Debugf("get response: empty set id to nill")
+	d.SetId("")
+	return diags
 }
 
 func resourceAclCaptureFilterIpv6FilterUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

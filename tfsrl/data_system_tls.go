@@ -94,7 +94,7 @@ func dataSystemTlsRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	p := "/system/tls"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

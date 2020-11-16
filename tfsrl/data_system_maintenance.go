@@ -154,7 +154,7 @@ func dataSystemMaintenanceRead(ctx context.Context, d *schema.ResourceData, meta
 	p := "/system/maintenance"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

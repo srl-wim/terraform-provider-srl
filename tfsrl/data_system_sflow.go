@@ -64,10 +64,6 @@ func dataSystemSflow() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "next_hop": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "port": {
                                     Type:     schema.TypeInt,
                                     Computed: true,
@@ -86,26 +82,6 @@ func dataSystemSflow() *schema.Resource {
                     "sample_size": {
                         Type:     schema.TypeInt,
                         Computed: true,
-                    },
-                    "statistics": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "total_offered_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "total_samples_taken": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "total_sent_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -126,7 +102,7 @@ func dataSystemSflowRead(ctx context.Context, d *schema.ResourceData, meta inter
 	p := "/system/sflow"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

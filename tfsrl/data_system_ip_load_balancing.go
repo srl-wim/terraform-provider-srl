@@ -74,7 +74,7 @@ func dataSystemIpLoadBalancingRead(ctx context.Context, d *schema.ResourceData, 
 	p := "/system/ip-load-balancing"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

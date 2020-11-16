@@ -70,7 +70,7 @@ func dataSystemBannerRead(ctx context.Context, d *schema.ResourceData, meta inte
 	p := "/system/banner"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

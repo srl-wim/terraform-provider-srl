@@ -51,10 +51,6 @@ func dataSystemNtp() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "oper_state": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "server": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -68,32 +64,12 @@ func dataSystemNtp() *schema.Resource {
                                     Type:     schema.TypeBool,
                                     Computed: true,
                                 },
-                                "jitter": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "offset": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "poll_interval": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
                                 "prefer": {
                                     Type:     schema.TypeBool,
                                     Computed: true,
                                 },
-                                "stratum": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
                             },
                         },
-                    },
-                    "synchronized": {
-                        Type:     schema.TypeString,
-                        Computed: true,
                     },
                 },
             },
@@ -114,7 +90,7 @@ func dataSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	p := "/system/ntp"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

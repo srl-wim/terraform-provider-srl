@@ -67,10 +67,6 @@ func dataSystemDns() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "oper_state": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "search_list": {
                         Type:     schema.TypeString,
                         Computed: true,
@@ -98,7 +94,7 @@ func dataSystemDnsRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	p := "/system/dns"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

@@ -68,112 +68,8 @@ func dataInterfaces() *schema.Resource {
                                         },
                                     },
                                 },
-                                "hw_mac_address": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "port_speed": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "statistics": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "in_1024b_to_1518b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_128b_to_255b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_1519b_or_longer_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_256b_to_511b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_512b_to_1023b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_64b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_65b_to_127b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_crc_error_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_fragment_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_jabber_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_mac_pause_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_oversize_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "last_clear": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_1024b_to_1518b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_128b_to_255b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_1519b_or_longer_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_256b_to_511b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_512b_to_1023b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_64b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_65b_to_127b_frames": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
                             },
                         },
-                    },
-                    "ifindex": {
-                        Type:     schema.TypeInt,
-                        Computed: true,
-                    },
-                    "last_change": {
-                        Type:     schema.TypeString,
-                        Computed: true,
                     },
                     "mtu": {
                         Type:     schema.TypeInt,
@@ -182,14 +78,6 @@ func dataInterfaces() *schema.Resource {
                     "name": {
                         Type:     schema.TypeString,
                         Required: true,
-                    },
-                    "oper_down_reason": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "oper_state": {
-                        Type:     schema.TypeString,
-                        Computed: true,
                     },
                     "qos": {
                         Type:     schema.TypeList,
@@ -235,140 +123,12 @@ func dataInterfaces() *schema.Resource {
                             },
                         },
                     },
-                    "queue_statistics": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "queue": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "final_dropped_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "final_dropped_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "last_clear": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "queue_id": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                            "transmitted_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "transmitted_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "virtual_output_queue": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "dropped_octets": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "dropped_packets": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "forwarded_octets": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "forwarded_packets": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "slot": {
-                                                            Type:     schema.TypeInt,
-                                                            Required: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "sflow": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "statistics": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "carrier_transitions": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_broadcast_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_error_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_fcs_error_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_multicast_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_octets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "in_unicast_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "last_clear": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "out_broadcast_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "out_error_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "out_multicast_packets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "out_octets": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "out_unicast_packets": {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
@@ -450,10 +210,6 @@ func dataInterfaces() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Required: true,
                                                         },
-                                                        "origin": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
                                                     },
                                                 },
                                             },
@@ -471,19 +227,11 @@ func dataInterfaces() *schema.Resource {
                                                             Computed: true,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
-                                                                    "expiration_time": {
-                                                                        Type:     schema.TypeString,
-                                                                        Computed: true,
-                                                                    },
                                                                     "ipv4_address": {
                                                                         Type:     schema.TypeString,
                                                                         Required: true,
                                                                     },
                                                                     "link_layer_address": {
-                                                                        Type:     schema.TypeString,
-                                                                        Computed: true,
-                                                                    },
-                                                                    "origin": {
                                                                         Type:     schema.TypeString,
                                                                         Computed: true,
                                                                     },
@@ -534,14 +282,6 @@ func dataInterfaces() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Required: true,
                                                         },
-                                                        "origin": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "status": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
                                                     },
                                                 },
                                             },
@@ -579,27 +319,11 @@ func dataInterfaces() *schema.Resource {
                                                             Computed: true,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
-                                                                    "current_state": {
-                                                                        Type:     schema.TypeString,
-                                                                        Computed: true,
-                                                                    },
                                                                     "ipv6_address": {
                                                                         Type:     schema.TypeString,
                                                                         Required: true,
                                                                     },
-                                                                    "is_router": {
-                                                                        Type:     schema.TypeBool,
-                                                                        Computed: true,
-                                                                    },
                                                                     "link_layer_address": {
-                                                                        Type:     schema.TypeString,
-                                                                        Computed: true,
-                                                                    },
-                                                                    "next_state_time": {
-                                                                        Type:     schema.TypeString,
-                                                                        Computed: true,
-                                                                    },
-                                                                    "origin": {
                                                                         Type:     schema.TypeString,
                                                                         Computed: true,
                                                                     },
@@ -619,22 +343,6 @@ func dataInterfaces() *schema.Resource {
                                             },
                                         },
                                     },
-                                },
-                                "last_change": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "name": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "oper_down_reason": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
                                 },
                                 "qos": {
                                     Type:     schema.TypeList,
@@ -700,82 +408,6 @@ func dataInterfaces() *schema.Resource {
                                         },
                                     },
                                 },
-                                "statistics": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "in_discarded_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_error_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_forwarded_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_forwarded_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_terminated_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "in_terminated_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "last_clear": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_discarded_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_error_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_forwarded_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_forwarded_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_originated_octets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_originated_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "out_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
                                 "vlan": {
                                     Type:     schema.TypeList,
                                     Computed: true,
@@ -807,22 +439,6 @@ func dataInterfaces() *schema.Resource {
                             },
                         },
                     },
-                    "traffic_rate": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "in_bps": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "out_bps": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "transceiver": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -832,289 +448,13 @@ func dataInterfaces() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "channel": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "index": {
-                                                Type:     schema.TypeInt,
-                                                Required: true,
-                                            },
-                                            "input_power": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "high_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "latest_value": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "laser_bias_current": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "high_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "latest_value": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "output_power": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "high_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "high_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "latest_value": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_alarm_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_condition": {
-                                                            Type:     schema.TypeBool,
-                                                            Computed: true,
-                                                        },
-                                                        "low_warning_threshold": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "wavelength": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "connector_type": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "date_code": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "ddm_events": {
                                     Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "ethernet_pmd": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "fault_condition": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "form_factor": {
-                                    Type:     schema.TypeString,
                                     Computed: true,
                                 },
                                 "forward_error_correction": {
                                     Type:     schema.TypeString,
                                     Computed: true,
-                                },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "serial_number": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "temperature": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "high_alarm_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "high_alarm_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "high_warning_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "high_warning_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "latest_value": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "low_alarm_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "low_alarm_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "low_warning_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "low_warning_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "vendor": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "vendor_part_number": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "vendor_revision": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "voltage": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "high_alarm_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "high_alarm_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "high_warning_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "high_warning_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "latest_value": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "low_alarm_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "low_alarm_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "low_warning_condition": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "low_warning_threshold": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
                                 },
                             },
                         },
@@ -1146,7 +486,7 @@ func dataInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interf
 	p := fmt.Sprintf("/interface[name=%s]", key)
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

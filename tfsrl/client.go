@@ -179,15 +179,20 @@ func (t *Target) CreateDeleteRequest(path *string, d *schema.ResourceData) (*gnm
 
 }
 
-func (t *Target) CreateGetRequest(path *string, d *schema.ResourceData) (*gnmi.GetRequest, error) {
+func (t *Target) CreateGetRequest(path *string, dataType string, d *schema.ResourceData) (*gnmi.GetRequest, error) {
 	encodingVal, ok := gnmi.Encoding_value[strings.Replace(strings.ToUpper(*t.Config.Encoding), "-", "_", -1)]
 	if !ok {
 		return nil, fmt.Errorf("invalid encoding type '%s'", *t.Config.Encoding)
+	}
+	dti, ok := gnmi.GetRequest_DataType_value[strings.ToUpper(dataType)]
+	if !ok {
+		return nil, fmt.Errorf("unknown data type %s", dataType)
 	}
 	req := &gnmi.GetRequest{
 		UseModels: make([]*gnmi.ModelData, 0),
 		Path:      make([]*gnmi.Path, 0),
 		Encoding:  gnmi.Encoding(encodingVal),
+		Type:      gnmi.GetRequest_DataType(dti),
 	}
 	prefix := ""
 	if prefix != "" {

@@ -56,10 +56,6 @@ func dataSystemFtpServer() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                 },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "session_limit": {
                                     Type:     schema.TypeInt,
                                     Computed: true,
@@ -94,7 +90,7 @@ func dataSystemFtpServerRead(ctx context.Context, d *schema.ResourceData, meta i
 	p := "/system/ftp-server"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

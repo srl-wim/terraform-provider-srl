@@ -184,10 +184,6 @@ func dataAclCaptureFilterIpv6Filter() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Required: true,
                                 },
-                                "tcam_entries": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
                             },
                         },
                     },
@@ -210,7 +206,7 @@ func dataAclCaptureFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceD
 	p := "/acl/capture-filter/ipv6-filter"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

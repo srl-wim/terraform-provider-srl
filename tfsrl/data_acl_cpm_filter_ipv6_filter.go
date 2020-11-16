@@ -208,30 +208,6 @@ func dataAclCpmFilterIpv6Filter() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Required: true,
                                 },
-                                "statistics": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "last_clear": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "last_match": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "matched_packets": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "tcam_entries": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
                             },
                         },
                     },
@@ -258,7 +234,7 @@ func dataAclCpmFilterIpv6FilterRead(ctx context.Context, d *schema.ResourceData,
 	p := "/acl/cpm-filter/ipv6-filter"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

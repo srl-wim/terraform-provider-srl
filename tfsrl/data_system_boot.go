@@ -64,10 +64,6 @@ func dataSystemBoot() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "timeout": {
                                     Type:     schema.TypeInt,
                                     Computed: true,
@@ -98,7 +94,7 @@ func dataSystemBootRead(ctx context.Context, d *schema.ResourceData, meta interf
 	p := "/system/boot"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}

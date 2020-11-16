@@ -61,10 +61,6 @@ func dataSystemJsonRpcServer() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
                                             },
-                                            "oper_state": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
                                             "port": {
                                                 Type:     schema.TypeInt,
                                                 Computed: true,
@@ -90,10 +86,6 @@ func dataSystemJsonRpcServer() *schema.Resource {
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "admin_state": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "oper_state": {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
                                             },
@@ -140,14 +132,6 @@ func dataSystemJsonRpcServer() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "oper_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "socket_path": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
                                 "tls_profile": {
                                     Type:     schema.TypeString,
                                     Computed: true,
@@ -178,7 +162,7 @@ func dataSystemJsonRpcServerRead(ctx context.Context, d *schema.ResourceData, me
 	p := "/system/json-rpc-server"
 	
 
-	req, err := target.CreateGetRequest(&p, d)
+	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 	if err != nil {
 		return diag.FromErr(err)
 	}
