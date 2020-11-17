@@ -47,13 +47,13 @@ func resourceSystemAaa() *schema.Resource {
         "aaa": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 16,
+            MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "accounting": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 16,
+                        MaxItems: 1,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "accounting_method": {
@@ -63,7 +63,7 @@ func resourceSystemAaa() *schema.Resource {
                                 "event": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 16,
+                                    MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "event_type": {
@@ -84,13 +84,13 @@ func resourceSystemAaa() *schema.Resource {
                     "authentication": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 16,
+                        MaxItems: 1,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_user": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 16,
+                                    MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "password": {
@@ -145,7 +145,7 @@ func resourceSystemAaa() *schema.Resource {
                                             "tacacs": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "port": {

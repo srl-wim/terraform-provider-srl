@@ -47,7 +47,7 @@ func resourceAclPolicersSystemCpuPolicer() *schema.Resource {
         "system_cpu_policer": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 16,
+            MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "entry_specific": {

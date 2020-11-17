@@ -47,7 +47,7 @@ func resourceAclIpv6Filter() *schema.Resource {
         "ipv6_filter": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 16,
+            MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "description": {
@@ -57,19 +57,19 @@ func resourceAclIpv6Filter() *schema.Resource {
                     "entry": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 16,
+                        MaxItems: 65535,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "action": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 16,
+                                    MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "accept": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
@@ -83,7 +83,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                             "drop": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "log": {
@@ -104,7 +104,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                 "match": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 16,
+                                    MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
                                             "destination_address": {
@@ -114,7 +114,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                             "destination_port": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
@@ -124,7 +124,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                                         "range": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 16,
+                                                            MaxItems: 1,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {
@@ -148,7 +148,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                             "icmp6": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "code": {
@@ -173,7 +173,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                             "source_port": {
                                                 Type:     schema.TypeList,
                                                 Optional: true,
-                                                MaxItems: 16,
+                                                MaxItems: 1,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "operator": {
@@ -183,7 +183,7 @@ func resourceAclIpv6Filter() *schema.Resource {
                                                         "range": {
                                                             Type:     schema.TypeList,
                                                             Optional: true,
-                                                            MaxItems: 16,
+                                                            MaxItems: 1,
                                                             Elem: &schema.Resource{
                                                             	Schema: map[string]*schema.Schema{
                                                                     "end": {

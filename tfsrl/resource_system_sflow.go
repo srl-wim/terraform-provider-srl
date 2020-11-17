@@ -47,7 +47,7 @@ func resourceSystemSflow() *schema.Resource {
         "sflow": {
             Type:     schema.TypeList,
             Optional: true,
-            MaxItems: 16,
+            MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
                     "admin_state": {
@@ -58,7 +58,7 @@ func resourceSystemSflow() *schema.Resource {
                     "collector": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 16,
+                        MaxItems: 8,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "collector_address": {

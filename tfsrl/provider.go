@@ -108,6 +108,8 @@ func Provider() *schema.Provider {
             
             "srl_interfaces": dataInterfaces(),
             
+            "srl_network_instance_instance": dataNetworkInstanceInstance(),
+            
             "srl_system_aaa": dataSystemAaa(),
             
             "srl_system_banner": dataSystemBanner(),
@@ -168,6 +170,8 @@ func Provider() *schema.Provider {
             "srl_acl_policers_system_cpu_policer": resourceAclPolicersSystemCpuPolicer(),
             
             "srl_interfaces": resourceInterfaces(),
+            
+            "srl_network_instance_instance": resourceNetworkInstanceInstance(),
             
             "srl_system_aaa": resourceSystemAaa(),
             
