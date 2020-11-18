@@ -251,6 +251,22 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					
+					if k == "protocols" {
+                        delete(x, k)
+					}    
+					
+					if k == "static-routes" {
+                        delete(x, k)
+					}    
+					
+					if k == "aggregate-routes" {
+                        delete(x, k)
+					}    
+					
+					if k == "next-hop-groups" {
+                        delete(x, k)
+					}    
+					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)

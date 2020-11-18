@@ -265,6 +265,10 @@ func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta in
                         delete(x, k)
 					}    
 					
+					if k == "subinterface" {
+                        delete(x, k)
+					}    
+					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
