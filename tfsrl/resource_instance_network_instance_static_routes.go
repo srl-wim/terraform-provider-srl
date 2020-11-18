@@ -20,18 +20,18 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// resourceSystemGnmiServerString function
-func resourceSystemGnmiServerString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_gnmi_server")
+// resourceNetworkInstanceInstanceStaticRoutesString function
+func resourceNetworkInstanceInstanceStaticRoutesString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_static_routes")
 }
 
-// resourceSystemGnmiServer function
-func resourceSystemGnmiServer() *schema.Resource {
+// resourceNetworkInstanceInstanceStaticRoutes function
+func resourceNetworkInstanceInstanceStaticRoutes() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceSystemGnmiServerCreate,
-		ReadContext:   resourceSystemGnmiServerRead,
-		UpdateContext: resourceSystemGnmiServerUpdate,
-		DeleteContext: resourceSystemGnmiServerDelete,
+		CreateContext: resourceNetworkInstanceInstanceStaticRoutesCreate,
+		ReadContext:   resourceNetworkInstanceInstanceStaticRoutesRead,
+		UpdateContext: resourceNetworkInstanceInstanceStaticRoutesUpdate,
+		DeleteContext: resourceNetworkInstanceInstanceStaticRoutesDelete,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,92 +44,40 @@ func resourceSystemGnmiServer() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "gnmi_server": {
+        "static_routes": {
             Type:     schema.TypeList,
             Optional: true,
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "admin_state": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                        Default: "disable",
-                    },
-                    "network_instance": {
+                    "route": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
                                     Type:     schema.TypeString,
                                     Optional: true,
-                                    Default: "disable",
+                                    Default: "enable",
                                 },
-                                "name": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
-                                },
-                                "port": {
+                                "metric": {
                                     Type:     schema.TypeInt,
                                     Optional: true,
-                                    Default: "57400",
+                                    Default: "1",
                                 },
-                                "source_address": {
+                                "next_hop_group": {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                 },
-                                "tls_profile": {
+                                "preference": {
+                                    Type:     schema.TypeInt,
+                                    Optional: true,
+                                    Default: "5",
+                                },
+                                "prefix": {
                                     Type:     schema.TypeString,
                                     Optional: true,
-                                },
-                                "use_authentication": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                            },
-                        },
-                    },
-                    "rate_limit": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        Default: "60",
-                    },
-                    "session_limit": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        Default: "20",
-                    },
-                    "timeout": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        Default: "7200",
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
-                    "unix_socket": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "disable",
-                                },
-                                "tls_profile": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "use_authentication": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
                                 },
                             },
                         },
@@ -142,14 +90,14 @@ func resourceSystemGnmiServer() *schema.Resource {
     }
 }
 
-func resourceSystemGnmiServerCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Create: %s", resourceSystemGnmiServerString(d))
+func resourceNetworkInstanceInstanceStaticRoutesCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "gnmi_server"
+	key := "static_routes"
 
-	p := "/system/gnmi-server"
-	v := "gnmi_server"
+	p := "/network-instance/static-routes"
+	v := "static_routes"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -165,15 +113,15 @@ func resourceSystemGnmiServerCreate(ctx context.Context, d *schema.ResourceData,
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemGnmiServerRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceStaticRoutesRead(ctx, d, meta)
 }
 
-// func resourceSystemGnmiServerRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceSystemGnmiServerString(d))
+// func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 // 	target := meta.(*Target)
 
 // 	
-// 	p := "/system/gnmi-server"
+// 	p := "/network-instance/static-routes"
 // 	
 // 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 // 	if err != nil {
@@ -188,15 +136,15 @@ func resourceSystemGnmiServerCreate(ctx context.Context, d *schema.ResourceData,
 
 // 	return nil
 // }
-func resourceSystemGnmiServerRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", resourceSystemGnmiServerString(d))
+func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/gnmi-server"
+	p := "/network-instance/static-routes"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -219,13 +167,20 @@ func resourceSystemGnmiServerRead(ctx context.Context, d *schema.ResourceData, m
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["gnmi-server"].(type) {
+			switch x := upd.Values["static-routes"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("gnmi_server", data); err != nil {
+			if err := d.Set("static_routes", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
@@ -248,14 +203,14 @@ func resourceSystemGnmiServerRead(ctx context.Context, d *schema.ResourceData, m
 	return diags
 }
 
-func resourceSystemGnmiServerUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Update: %s", resourceSystemGnmiServerString(d))
+func resourceNetworkInstanceInstanceStaticRoutesUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "gnmi_server"
+	key := "static_routes"
 
-	p := "/system/gnmi-server"
-	v := "gnmi_server"
+	p := "/network-instance/static-routes"
+	v := "static_routes"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)
@@ -272,15 +227,15 @@ func resourceSystemGnmiServerUpdate(ctx context.Context, d *schema.ResourceData,
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemGnmiServerRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceStaticRoutesRead(ctx, d, meta)
 }
 
-func resourceSystemGnmiServerDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Debugf("Beginning delete: %s", resourceSystemGnmiServerString(d))
+func resourceNetworkInstanceInstanceStaticRoutesDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Debugf("Beginning delete: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 
 	
-	p := "/system/gnmi-server"
+	p := "/network-instance/static-routes"
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

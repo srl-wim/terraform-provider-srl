@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemAaaString function
-func dataSystemAaaString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_aaa")
+// dataNetworkInstanceInstanceNextHopGroupsString function
+func dataNetworkInstanceInstanceNextHopGroupsString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_next_hop_groups")
 }
 
-// dataSystemAaa function
-func dataSystemAaa() *schema.Resource {
+// dataNetworkInstanceInstanceNextHopGroups function
+func dataNetworkInstanceInstanceNextHopGroups() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemAaaRead,
+		ReadContext:   dataNetworkInstanceInstanceNextHopGroupsRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,119 +38,71 @@ func dataSystemAaa() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "aaa": {
+        "network_instance": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
+        "next_hop_groups": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "accounting": {
+                    "group": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
-                                "accounting_method": {
+                                "admin_state": {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "event": {
+                                "blackhole": {
                                     Type:     schema.TypeList,
                                     Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "event_type": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                            "record": {
-                                                Type:     schema.TypeString,
+                                            "generate_icmp": {
+                                                Type:     schema.TypeBool,
                                                 Computed: true,
                                             },
                                         },
                                     },
                                 },
-                            },
-                        },
-                    },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_user": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "password": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "authentication_method": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "exit_on_reject": {
+                                "collect_stats": {
                                     Type:     schema.TypeBool,
                                     Computed: true,
                                 },
-                            },
-                        },
-                    },
-                    "server_group": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Required: true,
+                                    Computed: true,
                                 },
-                                "server": {
+                                "nexthop": {
                                     Type:     schema.TypeList,
                                     Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "address": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                            "name": {
+                                            "admin_state": {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
                                             },
-                                            "network_instance": {
+                                            "index": {
+                                                Type:     schema.TypeInt,
+                                                Computed: true,
+                                            },
+                                            "ip_address": {
                                                 Type:     schema.TypeString,
                                                 Computed: true,
                                             },
-                                            "tacacs": {
-                                                Type:     schema.TypeList,
+                                            "pushed_mpls_label_stack": {
+                                                Type:     schema.TypeString,
                                                 Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "port": {
-                                                            Type:     schema.TypeInt,
-                                                            Computed: true,
-                                                        },
-                                                        "secret_key": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
+                                            },
+                                            "resolve": {
+                                                Type:     schema.TypeBool,
+                                                Computed: true,
                                             },
                                         },
                                     },
-                                },
-                                "timeout": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "type": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
                                 },
                             },
                         },
@@ -163,15 +115,15 @@ func dataSystemAaa() *schema.Resource {
     }
 }
 
-func dataSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemAaaString(d))
+func dataNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/aaa"
+	p := "/network-instance/next-hop-groups"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -194,13 +146,20 @@ func dataSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["aaa"].(type) {
+			switch x := upd.Values["next-hop-groups"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("aaa", data); err != nil {
+			if err := d.Set("next_hop_groups", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

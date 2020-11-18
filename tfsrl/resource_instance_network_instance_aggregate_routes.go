@@ -20,18 +20,18 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// resourceSystemLldpString function
-func resourceSystemLldpString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_lldp")
+// resourceNetworkInstanceInstanceAggregateRoutesString function
+func resourceNetworkInstanceInstanceAggregateRoutesString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_aggregate_routes")
 }
 
-// resourceSystemLldp function
-func resourceSystemLldp() *schema.Resource {
+// resourceNetworkInstanceInstanceAggregateRoutes function
+func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceSystemLldpCreate,
-		ReadContext:   resourceSystemLldpRead,
-		UpdateContext: resourceSystemLldpUpdate,
-		DeleteContext: resourceSystemLldpDelete,
+		CreateContext: resourceNetworkInstanceInstanceAggregateRoutesCreate,
+		ReadContext:   resourceNetworkInstanceInstanceAggregateRoutesRead,
+		UpdateContext: resourceNetworkInstanceInstanceAggregateRoutesUpdate,
+		DeleteContext: resourceNetworkInstanceInstanceAggregateRoutesDelete,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,53 +44,16 @@ func resourceSystemLldp() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "lldp": {
+        "aggregate_routes": {
             Type:     schema.TypeList,
             Optional: true,
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "admin_state": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                        Default: "enable",
-                    },
-                    "bgp_auto_discovery": {
+                    "route": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "disable",
-                                },
-                                "group_id": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "network_instance": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "hello_timer": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        Default: "30",
-                    },
-                    "hold_multiplier": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        Default: "4",
-                    },
-                    "interface": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
+                        MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "admin_state": {
@@ -98,57 +61,51 @@ func resourceSystemLldp() *schema.Resource {
                                     Optional: true,
                                     Default: "enable",
                                 },
-                                "bgp_auto_discovery": {
+                                "aggregator": {
                                     Type:     schema.TypeList,
                                     Optional: true,
                                     MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "admin_state": {
+                                            "address": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
-                                                Default: "enable",
                                             },
-                                            "group_id": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                            },
-                                            "peering_address": {
+                                            "as_number": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                             },
                                         },
                                     },
                                 },
-                                "name": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
+                                "communities": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "add": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                        },
+                                    },
                                 },
-                            },
-                        },
-                    },
-                    "management_address": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 16,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "subinterface": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
+                                "generate_icmp": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
                                 },
-                                "type": {
+                                "prefix": {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                 },
+                                "summary_only": {
+                                    Type:     schema.TypeBool,
+                                    Optional: true,
+                                    Default: false,
+                                },
                             },
                         },
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeString,
-                        Optional: true,
                     },
                 },
             },
@@ -158,14 +115,14 @@ func resourceSystemLldp() *schema.Resource {
     }
 }
 
-func resourceSystemLldpCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Create: %s", resourceSystemLldpString(d))
+func resourceNetworkInstanceInstanceAggregateRoutesCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "lldp"
+	key := "aggregate_routes"
 
-	p := "/system/lldp"
-	v := "lldp"
+	p := "/network-instance/aggregate-routes"
+	v := "aggregate_routes"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -181,15 +138,15 @@ func resourceSystemLldpCreate(ctx context.Context, d *schema.ResourceData, meta 
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemLldpRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceAggregateRoutesRead(ctx, d, meta)
 }
 
-// func resourceSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceSystemLldpString(d))
+// func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 // 	target := meta.(*Target)
 
 // 	
-// 	p := "/system/lldp"
+// 	p := "/network-instance/aggregate-routes"
 // 	
 // 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 // 	if err != nil {
@@ -204,15 +161,15 @@ func resourceSystemLldpCreate(ctx context.Context, d *schema.ResourceData, meta 
 
 // 	return nil
 // }
-func resourceSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", resourceSystemLldpString(d))
+func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/lldp"
+	p := "/network-instance/aggregate-routes"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -235,13 +192,20 @@ func resourceSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta in
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["lldp"].(type) {
+			switch x := upd.Values["aggregate-routes"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("lldp", data); err != nil {
+			if err := d.Set("aggregate_routes", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
@@ -264,14 +228,14 @@ func resourceSystemLldpRead(ctx context.Context, d *schema.ResourceData, meta in
 	return diags
 }
 
-func resourceSystemLldpUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Update: %s", resourceSystemLldpString(d))
+func resourceNetworkInstanceInstanceAggregateRoutesUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "lldp"
+	key := "aggregate_routes"
 
-	p := "/system/lldp"
-	v := "lldp"
+	p := "/network-instance/aggregate-routes"
+	v := "aggregate_routes"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)
@@ -288,15 +252,15 @@ func resourceSystemLldpUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemLldpRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceAggregateRoutesRead(ctx, d, meta)
 }
 
-func resourceSystemLldpDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Debugf("Beginning delete: %s", resourceSystemLldpString(d))
+func resourceNetworkInstanceInstanceAggregateRoutesDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Debugf("Beginning delete: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 
 	
-	p := "/system/lldp"
+	p := "/network-instance/aggregate-routes"
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

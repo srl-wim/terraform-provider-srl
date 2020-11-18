@@ -17,8 +17,6 @@ export GOPRIVATE=github.com/srl-wim/*
 
 go build -o example/terraform-provider-srl
 
-
-
 ## terraform
 
 export TF_LOG=DEBUG

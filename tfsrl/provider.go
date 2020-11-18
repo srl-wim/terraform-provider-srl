@@ -90,128 +90,44 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			
-            "srl_acl_capture_filter_ipv4_filter": dataAclCaptureFilterIpv4Filter(),
-            
-            "srl_acl_capture_filter_ipv6_filter": dataAclCaptureFilterIpv6Filter(),
-            
-            "srl_acl_cpm_filter_ipv4_filter": dataAclCpmFilterIpv4Filter(),
-            
-            "srl_acl_cpm_filter_ipv6_filter": dataAclCpmFilterIpv6Filter(),
-            
-            "srl_acl_ipv4_filter": dataAclIpv4Filter(),
-            
-            "srl_acl_ipv6_filter": dataAclIpv6Filter(),
-            
-            "srl_acl_policers_policer": dataAclPolicersPolicer(),
-            
-            "srl_acl_policers_system_cpu_policer": dataAclPolicersSystemCpuPolicer(),
-            
             "srl_interfaces": dataInterfaces(),
+            
+            "srl_interfaces_subinterface": dataInterfacesSubinterface(),
             
             "srl_network_instance_instance": dataNetworkInstanceInstance(),
             
-            "srl_system_aaa": dataSystemAaa(),
+            "srl_network_instance_instance_aggregate_routes": dataNetworkInstanceInstanceAggregateRoutes(),
             
-            "srl_system_banner": dataSystemBanner(),
+            "srl_network_instance_instance_next_hop_groups": dataNetworkInstanceInstanceNextHopGroups(),
             
-            "srl_system_boot": dataSystemBoot(),
+            "srl_network_instance_instance_protocols": dataNetworkInstanceInstanceProtocols(),
             
-            "srl_system_clock": dataSystemClock(),
-            
-            "srl_system_configuration": dataSystemConfiguration(),
-            
-            "srl_system_dns": dataSystemDns(),
-            
-            "srl_system_ftp_server": dataSystemFtpServer(),
-            
-            "srl_system_gnmi_server": dataSystemGnmiServer(),
-            
-            "srl_system_information": dataSystemInformation(),
-            
-            "srl_system_ip_load_balancing": dataSystemIpLoadBalancing(),
-            
-            "srl_system_json_rpc_server": dataSystemJsonRpcServer(),
-            
-            "srl_system_lldp": dataSystemLldp(),
-            
-            "srl_system_maintenance": dataSystemMaintenance(),
-            
-            "srl_system_mtu": dataSystemMtu(),
+            "srl_network_instance_instance_static_routes": dataNetworkInstanceInstanceStaticRoutes(),
             
             "srl_system_name": dataSystemName(),
             
             "srl_system_ntp": dataSystemNtp(),
             
-            "srl_system_sflow": dataSystemSflow(),
-            
-            "srl_system_snmp": dataSystemSnmp(),
-            
-            "srl_system_ssh_server": dataSystemSshServer(),
-            
-            "srl_system_tls": dataSystemTls(),
-            
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			
-            "srl_acl_capture_filter_ipv4_filter": resourceAclCaptureFilterIpv4Filter(),
-            
-            "srl_acl_capture_filter_ipv6_filter": resourceAclCaptureFilterIpv6Filter(),
-            
-            "srl_acl_cpm_filter_ipv4_filter": resourceAclCpmFilterIpv4Filter(),
-            
-            "srl_acl_cpm_filter_ipv6_filter": resourceAclCpmFilterIpv6Filter(),
-            
-            "srl_acl_ipv4_filter": resourceAclIpv4Filter(),
-            
-            "srl_acl_ipv6_filter": resourceAclIpv6Filter(),
-            
-            "srl_acl_policers_policer": resourceAclPolicersPolicer(),
-            
-            "srl_acl_policers_system_cpu_policer": resourceAclPolicersSystemCpuPolicer(),
-            
             "srl_interfaces": resourceInterfaces(),
+            
+            "srl_interfaces_subinterface": resourceInterfacesSubinterface(),
             
             "srl_network_instance_instance": resourceNetworkInstanceInstance(),
             
-            "srl_system_aaa": resourceSystemAaa(),
+            "srl_network_instance_instance_aggregate_routes": resourceNetworkInstanceInstanceAggregateRoutes(),
             
-            "srl_system_banner": resourceSystemBanner(),
+            "srl_network_instance_instance_next_hop_groups": resourceNetworkInstanceInstanceNextHopGroups(),
             
-            "srl_system_boot": resourceSystemBoot(),
+            "srl_network_instance_instance_protocols": resourceNetworkInstanceInstanceProtocols(),
             
-            "srl_system_clock": resourceSystemClock(),
-            
-            "srl_system_configuration": resourceSystemConfiguration(),
-            
-            "srl_system_dns": resourceSystemDns(),
-            
-            "srl_system_ftp_server": resourceSystemFtpServer(),
-            
-            "srl_system_gnmi_server": resourceSystemGnmiServer(),
-            
-            "srl_system_information": resourceSystemInformation(),
-            
-            "srl_system_ip_load_balancing": resourceSystemIpLoadBalancing(),
-            
-            "srl_system_json_rpc_server": resourceSystemJsonRpcServer(),
-            
-            "srl_system_lldp": resourceSystemLldp(),
-            
-            "srl_system_maintenance": resourceSystemMaintenance(),
-            
-            "srl_system_mtu": resourceSystemMtu(),
+            "srl_network_instance_instance_static_routes": resourceNetworkInstanceInstanceStaticRoutes(),
             
             "srl_system_name": resourceSystemName(),
             
             "srl_system_ntp": resourceSystemNtp(),
-            
-            "srl_system_sflow": resourceSystemSflow(),
-            
-            "srl_system_snmp": resourceSystemSnmp(),
-            
-            "srl_system_ssh_server": resourceSystemSshServer(),
-            
-            "srl_system_tls": resourceSystemTls(),
             
 		},
 		ConfigureContextFunc: providerConfigure,

@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemBootString function
-func dataSystemBootString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_boot")
+// dataNetworkInstanceInstanceAggregateRoutesString function
+func dataNetworkInstanceInstanceAggregateRoutesString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_aggregate_routes")
 }
 
-// dataSystemBoot function
-func dataSystemBoot() *schema.Resource {
+// dataNetworkInstanceInstanceAggregateRoutes function
+func dataNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemBootRead,
+		ReadContext:   dataNetworkInstanceInstanceAggregateRoutesRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,12 +38,16 @@ func dataSystemBoot() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "boot": {
+        "network_instance": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
+        "aggregate_routes": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "autoboot": {
+                    "route": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
@@ -52,28 +56,48 @@ func dataSystemBoot() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "attempts": {
-                                    Type:     schema.TypeInt,
+                                "aggregator": {
+                                    Type:     schema.TypeList,
+                                    Computed: true,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "address": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "as_number": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                        },
+                                    },
+                                },
+                                "communities": {
+                                    Type:     schema.TypeList,
+                                    Computed: true,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "add": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                        },
+                                    },
+                                },
+                                "generate_icmp": {
+                                    Type:     schema.TypeBool,
                                     Computed: true,
                                 },
-                                "client_id": {
+                                "prefix": {
                                     Type:     schema.TypeString,
                                     Computed: true,
                                 },
-                                "interface": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "timeout": {
-                                    Type:     schema.TypeInt,
+                                "summary_only": {
+                                    Type:     schema.TypeBool,
                                     Computed: true,
                                 },
                             },
                         },
-                    },
-                    "image": {
-                        Type:     schema.TypeString,
-                        Computed: true,
                     },
                 },
             },
@@ -83,15 +107,15 @@ func dataSystemBoot() *schema.Resource {
     }
 }
 
-func dataSystemBootRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemBootString(d))
+func dataNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/boot"
+	p := "/network-instance/aggregate-routes"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -114,13 +138,20 @@ func dataSystemBootRead(ctx context.Context, d *schema.ResourceData, meta interf
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["boot"].(type) {
+			switch x := upd.Values["aggregate-routes"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("boot", data); err != nil {
+			if err := d.Set("aggregate_routes", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

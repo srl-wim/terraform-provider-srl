@@ -20,18 +20,18 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// resourceSystemAaaString function
-func resourceSystemAaaString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_aaa")
+// resourceNetworkInstanceInstanceNextHopGroupsString function
+func resourceNetworkInstanceInstanceNextHopGroupsString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_next_hop_groups")
 }
 
-// resourceSystemAaa function
-func resourceSystemAaa() *schema.Resource {
+// resourceNetworkInstanceInstanceNextHopGroups function
+func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceSystemAaaCreate,
-		ReadContext:   resourceSystemAaaRead,
-		UpdateContext: resourceSystemAaaUpdate,
-		DeleteContext: resourceSystemAaaDelete,
+		CreateContext: resourceNetworkInstanceInstanceNextHopGroupsCreate,
+		ReadContext:   resourceNetworkInstanceInstanceNextHopGroupsRead,
+		UpdateContext: resourceNetworkInstanceInstanceNextHopGroupsUpdate,
+		DeleteContext: resourceNetworkInstanceInstanceNextHopGroupsDelete,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,133 +44,76 @@ func resourceSystemAaa() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "aaa": {
+        "next_hop_groups": {
             Type:     schema.TypeList,
             Optional: true,
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "accounting": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "accounting_method": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "event": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "event_type": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                                ForceNew: true,
-                                            },
-                                            "record": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_user": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "password": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "authentication_method": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "exit_on_reject": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                            },
-                        },
-                    },
-                    "server_group": {
+                    "group": {
                         Type:     schema.TypeList,
                         Optional: true,
                         MaxItems: 16,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
-                                "name": {
+                                "admin_state": {
                                     Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
+                                    Optional: true,
+                                    Default: "enable",
                                 },
-                                "server": {
+                                "blackhole": {
                                     Type:     schema.TypeList,
                                     Optional: true,
-                                    MaxItems: 16,
+                                    MaxItems: 1,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "address": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                                ForceNew: true,
-                                            },
-                                            "name": {
-                                                Type:     schema.TypeString,
+                                            "generate_icmp": {
+                                                Type:     schema.TypeBool,
                                                 Optional: true,
-                                            },
-                                            "network_instance": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                            "tacacs": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "port": {
-                                                            Type:     schema.TypeInt,
-                                                            Optional: true,
-                                                            Default: "49",
-                                                        },
-                                                        "secret_key": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
+                                                Default: false,
                                             },
                                         },
                                     },
                                 },
-                                "timeout": {
-                                    Type:     schema.TypeInt,
+                                "collect_stats": {
+                                    Type:     schema.TypeBool,
                                     Optional: true,
-                                    Default: "10",
+                                    Default: false,
                                 },
-                                "type": {
+                                "name": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                },
+                                "nexthop": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 65536,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "admin_state": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                                Default: "enable",
+                                            },
+                                            "index": {
+                                                Type:     schema.TypeInt,
+                                                Optional: true,
+                                            },
+                                            "ip_address": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "pushed_mpls_label_stack": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                            "resolve": {
+                                                Type:     schema.TypeBool,
+                                                Optional: true,
+                                                Default: true,
+                                            },
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -183,14 +126,14 @@ func resourceSystemAaa() *schema.Resource {
     }
 }
 
-func resourceSystemAaaCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Create: %s", resourceSystemAaaString(d))
+func resourceNetworkInstanceInstanceNextHopGroupsCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 	
-	key := "aaa"
+	key := "next_hop_groups"
 
-	p := "/system/aaa"
-	v := "aaa"
+	p := "/network-instance/next-hop-groups"
+	v := "next_hop_groups"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -206,15 +149,15 @@ func resourceSystemAaaCreate(ctx context.Context, d *schema.ResourceData, meta i
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemAaaRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceNextHopGroupsRead(ctx, d, meta)
 }
 
-// func resourceSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceSystemAaaString(d))
+// func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 // 	target := meta.(*Target)
 
 // 	
-// 	p := "/system/aaa"
+// 	p := "/network-instance/next-hop-groups"
 // 	
 // 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
 // 	if err != nil {
@@ -229,15 +172,15 @@ func resourceSystemAaaCreate(ctx context.Context, d *schema.ResourceData, meta i
 
 // 	return nil
 // }
-func resourceSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", resourceSystemAaaString(d))
+func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/aaa"
+	p := "/network-instance/next-hop-groups"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -260,13 +203,20 @@ func resourceSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta int
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["aaa"].(type) {
+			switch x := upd.Values["next-hop-groups"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("aaa", data); err != nil {
+			if err := d.Set("next_hop_groups", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
@@ -289,14 +239,14 @@ func resourceSystemAaaRead(ctx context.Context, d *schema.ResourceData, meta int
 	return diags
 }
 
-func resourceSystemAaaUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Update: %s", resourceSystemAaaString(d))
+func resourceNetworkInstanceInstanceNextHopGroupsUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 	
-	key := "aaa"
+	key := "next_hop_groups"
 
-	p := "/system/aaa"
-	v := "aaa"
+	p := "/network-instance/next-hop-groups"
+	v := "next_hop_groups"
 	
 
 	req, err := target.CreateSetRequest(&p, &v, d)
@@ -313,15 +263,15 @@ func resourceSystemAaaUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemAaaRead(ctx, d, meta)
+	return resourceNetworkInstanceInstanceNextHopGroupsRead(ctx, d, meta)
 }
 
-func resourceSystemAaaDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Debugf("Beginning delete: %s", resourceSystemAaaString(d))
+func resourceNetworkInstanceInstanceNextHopGroupsDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Debugf("Beginning delete: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 
 	
-	p := "/system/aaa"
+	p := "/network-instance/next-hop-groups"
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

@@ -20,15 +20,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataSystemClockString function
-func dataSystemClockString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_clock")
+// dataNetworkInstanceInstanceStaticRoutesString function
+func dataNetworkInstanceInstanceStaticRoutesString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_static_routes")
 }
 
-// dataSystemClock function
-func dataSystemClock() *schema.Resource {
+// dataNetworkInstanceInstanceStaticRoutes function
+func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataSystemClockRead,
+		ReadContext:   dataNetworkInstanceInstanceStaticRoutesRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -38,14 +38,42 @@ func dataSystemClock() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "clock": {
+        "network_instance": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
+        "static_routes": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "timezone": {
-                        Type:     schema.TypeString,
+                    "route": {
+                        Type:     schema.TypeList,
                         Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "metric": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "next_hop_group": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "preference": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "prefix": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                            },
+                        },
                     },
                 },
             },
@@ -55,15 +83,15 @@ func dataSystemClock() *schema.Resource {
     }
 }
 
-func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataSystemClockString(d))
+func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	p := "/system/clock"
+	p := "/network-instance/static-routes"
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -86,13 +114,20 @@ func dataSystemClockRead(ctx context.Context, d *schema.ResourceData, meta inter
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["clock"].(type) {
+			switch x := upd.Values["static-routes"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("clock", data); err != nil {
+			if err := d.Set("static_routes", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

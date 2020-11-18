@@ -58,7 +58,7 @@ func dataSystemNtp() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "address": {
                                     Type:     schema.TypeString,
-                                    Required: true,
+                                    Computed: true,
                                 },
                                 "iburst": {
                                     Type:     schema.TypeBool,
@@ -112,6 +112,13 @@ func dataSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interfa
 			data := make([]map[string]interface{}, 0)
 			switch x := upd.Values["ntp"].(type) {
 			case map[string]interface{}:
+				for k, v := range x {
+					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+                }
+                for k, v := range x {
+                    log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
+				}
 				
 				data = append(data, x)
 			}
