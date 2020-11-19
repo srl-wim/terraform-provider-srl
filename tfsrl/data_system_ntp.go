@@ -119,6 +119,7 @@ func dataSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interfa
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					
+					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)

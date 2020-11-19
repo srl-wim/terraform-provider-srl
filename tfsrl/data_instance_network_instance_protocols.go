@@ -992,6 +992,7 @@ func dataNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema.Res
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					
+					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
