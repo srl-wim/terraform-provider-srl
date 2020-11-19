@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	
 	"strconv"
 	"time"
 
@@ -92,26 +93,6 @@ func resourceSystemNameCreate(ctx context.Context, d *schema.ResourceData, meta 
 	return resourceSystemNameRead(ctx, d, meta)
 }
 
-// func resourceSystemNameRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceSystemNameString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/system/name"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceSystemNameRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceSystemNameString(d))
 	target := meta.(*Target)
@@ -120,7 +101,11 @@ func resourceSystemNameRead(ctx context.Context, d *schema.ResourceData, meta in
 	var diags diag.Diagnostics
 
 	
+
+	
+	
 	p := "/system/name"
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -147,6 +132,7 @@ func resourceSystemNameRead(ctx context.Context, d *schema.ResourceData, meta in
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {

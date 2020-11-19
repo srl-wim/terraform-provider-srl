@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -1060,7 +1061,7 @@ func resourceNetworkInstanceInstanceProtocolsCreate(ctx context.Context, d *sche
 	
 	key := "protocols"
 
-	p := "/network-instance/protocols"
+	p := "/network-instance[name=%s]/protocols"
 	v := "protocols"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
@@ -1080,26 +1081,6 @@ func resourceNetworkInstanceInstanceProtocolsCreate(ctx context.Context, d *sche
 	return resourceNetworkInstanceInstanceProtocolsRead(ctx, d, meta)
 }
 
-// func resourceNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceProtocolsString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/network-instance/protocols"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceProtocolsString(d))
 	target := meta.(*Target)
@@ -1107,8 +1088,12 @@ func resourceNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("network_instance_id").(string)
+
 	
-	p := "/network-instance/protocols"
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/protocols", hkey)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -1135,6 +1120,7 @@ func resourceNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {

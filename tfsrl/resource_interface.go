@@ -12,7 +12,9 @@ package tfsrl
 
 import (
 	"context"
+	
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -202,26 +204,6 @@ func resourceInterfacesCreate(ctx context.Context, d *schema.ResourceData, meta 
 	return resourceInterfacesRead(ctx, d, meta)
 }
 
-// func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceInterfacesString(d))
-// 	target := meta.(*Target)
-
-// 	 
-// 	p := fmt.Sprintf("/interface[name=%s]", d.Id())
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceInterfacesString(d))
 	target := meta.(*Target)
@@ -229,12 +211,16 @@ func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta in
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	
+
 	 
 	//rn := "interface"
 	rk := "name"
 	key:= d.Id()
 
+	
 	p := fmt.Sprintf("/interface[name=%s]", key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -262,11 +248,14 @@ func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta in
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					
-					if k == "sflow" {
+					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					
+					
+					if sk == "sflow" {
                         delete(x, k)
 					}    
 					
-					if k == "subinterface" {
+					if sk == "subinterface" {
                         delete(x, k)
 					}    
 					

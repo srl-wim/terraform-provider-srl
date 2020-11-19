@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -130,10 +131,10 @@ func resourceNetworkInstanceInstanceNextHopGroupsCreate(ctx context.Context, d *
 	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 	
-	key := "next_hop_groups"
+	key := "next-hop-groups"
 
-	p := "/network-instance/next-hop-groups"
-	v := "next_hop_groups"
+	p := "/network-instance[name=%s]/next-hop-groups"
+	v := "next-hop-groups"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -152,26 +153,6 @@ func resourceNetworkInstanceInstanceNextHopGroupsCreate(ctx context.Context, d *
 	return resourceNetworkInstanceInstanceNextHopGroupsRead(ctx, d, meta)
 }
 
-// func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/network-instance/next-hop-groups"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
@@ -179,8 +160,12 @@ func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *sc
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("network_instance_id").(string)
+
 	
-	p := "/network-instance/next-hop-groups"
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/next-hop-groups", hkey)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -207,6 +192,7 @@ func resourceNetworkInstanceInstanceNextHopGroupsRead(ctx context.Context, d *sc
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {

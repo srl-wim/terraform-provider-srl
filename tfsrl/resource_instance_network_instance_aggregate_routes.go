@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -119,10 +120,10 @@ func resourceNetworkInstanceInstanceAggregateRoutesCreate(ctx context.Context, d
 	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "aggregate_routes"
+	key := "aggregate-routes"
 
-	p := "/network-instance/aggregate-routes"
-	v := "aggregate_routes"
+	p := "/network-instance[name=%s]/aggregate-routes"
+	v := "aggregate-routes"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -141,26 +142,6 @@ func resourceNetworkInstanceInstanceAggregateRoutesCreate(ctx context.Context, d
 	return resourceNetworkInstanceInstanceAggregateRoutesRead(ctx, d, meta)
 }
 
-// func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/network-instance/aggregate-routes"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
@@ -168,8 +149,12 @@ func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("network_instance_id").(string)
+
 	
-	p := "/network-instance/aggregate-routes"
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/aggregate-routes", hkey)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -196,6 +181,7 @@ func resourceNetworkInstanceInstanceAggregateRoutesRead(ctx context.Context, d *
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {

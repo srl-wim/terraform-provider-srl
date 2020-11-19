@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -94,10 +95,10 @@ func resourceNetworkInstanceInstanceStaticRoutesCreate(ctx context.Context, d *s
 	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "static_routes"
+	key := "static-routes"
 
-	p := "/network-instance/static-routes"
-	v := "static_routes"
+	p := "/network-instance[name=%s]/static-routes"
+	v := "static-routes"
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
 	if err != nil {
@@ -116,26 +117,6 @@ func resourceNetworkInstanceInstanceStaticRoutesCreate(ctx context.Context, d *s
 	return resourceNetworkInstanceInstanceStaticRoutesRead(ctx, d, meta)
 }
 
-// func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/network-instance/static-routes"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
@@ -143,8 +124,12 @@ func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *sch
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("network_instance_id").(string)
+
 	
-	p := "/network-instance/static-routes"
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes", hkey)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -171,6 +156,7 @@ func resourceNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *sch
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {

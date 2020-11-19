@@ -13,6 +13,7 @@ package tfsrl
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -50,49 +51,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "acl": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "input": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ipv4_filter": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                            "ipv6_filter": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "output": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ipv4_filter": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                            "ipv6_filter": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "admin_state": {
                         Type:     schema.TypeString,
                         Optional: true,
@@ -110,171 +68,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                     "ip_mtu": {
                         Type:     schema.TypeInt,
                         Optional: true,
-                    },
-                    "ipv4": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "address": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 16,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ip_prefix": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "allow_directed_broadcast": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "arp": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "neighbor": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 16,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "ipv4_address": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                        "link_layer_address": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "timeout": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "14400",
-                                            },
-                                        },
-                                    },
-                                },
-                                "dhcp_client": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace_options": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "trace": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "ipv6": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "address": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 16,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ip_prefix": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "dhcp_client": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace_options": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "trace": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                                "neighbor_discovery": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "duplicate_address_detection": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: true,
-                                            },
-                                            "neighbor": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 16,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "ipv6_address": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                        "link_layer_address": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "reachable_time": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "30",
-                                            },
-                                            "stale_time": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "14400",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
                     },
                     "qos": {
                         Type:     schema.TypeList,
@@ -394,7 +187,7 @@ func resourceInterfacesSubinterfaceCreate(ctx context.Context, d *schema.Resourc
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	p := "/interface/"
+	p := "/interface[name=%s]/"
 	v := ""
 	
 	req, err := target.CreateSetRequest(&p, &v, d)
@@ -414,26 +207,6 @@ func resourceInterfacesSubinterfaceCreate(ctx context.Context, d *schema.Resourc
 	return resourceInterfacesSubinterfaceRead(ctx, d, meta)
 }
 
-// func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceInterfacesSubinterfaceString(d))
-// 	target := meta.(*Target)
-
-// 	 
-// 	p := fmt.Sprintf("/interface/subinterface[index=%s]", d.Id())
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceInterfacesSubinterfaceString(d))
 	target := meta.(*Target)
@@ -441,12 +214,16 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("interface_id").(string)
+
 	 
 	//rn := "subinterface"
 	rk := "index"
 	key:= d.Id()
 
-	p := fmt.Sprintf("/interface/subinterface[index=%s]", key)
+	
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]", hkey, key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -473,6 +250,21 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
+					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					
+					
+					if sk == "acl" {
+                        delete(x, k)
+					}    
+					
+					if sk == "ipv4" {
+                        delete(x, k)
+					}    
+					
+					if sk == "ipv6" {
+                        delete(x, k)
+					}    
 					
                 }
                 for k, v := range x {

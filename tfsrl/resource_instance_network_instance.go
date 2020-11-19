@@ -12,7 +12,9 @@ package tfsrl
 
 import (
 	"context"
+	
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -98,8 +100,7 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
+                                    Optional: true,
                                 },
                             },
                         },
@@ -246,7 +247,7 @@ func resourceNetworkInstanceInstanceCreate(ctx context.Context, d *schema.Resour
 	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceString(d))
 	target := meta.(*Target)
 	 
-	rn := "network_instance"
+	rn := "network-instance"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
@@ -272,26 +273,6 @@ func resourceNetworkInstanceInstanceCreate(ctx context.Context, d *schema.Resour
 	return resourceNetworkInstanceInstanceRead(ctx, d, meta)
 }
 
-// func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceString(d))
-// 	target := meta.(*Target)
-
-// 	 
-// 	p := fmt.Sprintf("/network-instance[name=%s]", d.Id())
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceNetworkInstanceInstanceString(d))
 	target := meta.(*Target)
@@ -299,12 +280,16 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	
+
 	 
 	//rn := "network_instance"
 	rk := "name"
 	key:= d.Id()
 
+	
 	p := fmt.Sprintf("/network-instance[name=%s]", key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -332,19 +317,22 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					
-					if k == "protocols" {
+					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					
+					
+					if sk == "static_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "static_routes" {
+					if sk == "aggregate_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "aggregate_routes" {
+					if sk == "next_hop_groups" {
                         delete(x, k)
 					}    
 					
-					if k == "next_hop_groups" {
+					if sk == "protocols" {
                         delete(x, k)
 					}    
 					

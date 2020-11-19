@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	
 	"strconv"
 	"time"
 
@@ -115,26 +116,6 @@ func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta i
 	return resourceSystemNtpRead(ctx, d, meta)
 }
 
-// func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-// 	log.Infof("Beginning Read: %s", resourceSystemNtpString(d))
-// 	target := meta.(*Target)
-
-// 	
-// 	p := "/system/ntp"
-// 	
-// 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-// 	response, err := target.Get(ctx, req)
-// 	if err != nil {
-// 		return diag.FromErr(err)
-// 	}
-
-// 	log.Debugf("Get Gnmi read response: %v", response)
-
-// 	return nil
-// }
 func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	log.Infof("Beginning Read: %s", resourceSystemNtpString(d))
 	target := meta.(*Target)
@@ -143,7 +124,11 @@ func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta int
 	var diags diag.Diagnostics
 
 	
+
+	
+	
 	p := "/system/ntp"
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -170,6 +155,7 @@ func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta int
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					
 					
                 }
                 for k, v := range x {
