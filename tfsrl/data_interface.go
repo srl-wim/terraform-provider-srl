@@ -77,7 +77,7 @@ func dataInterfaces() *schema.Resource {
                     },
                     "name": {
                         Type:     schema.TypeString,
-                        Computed: true,
+                        Required: true,
                     },
                     "qos": {
                         Type:     schema.TypeList,
@@ -162,12 +162,16 @@ func dataInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interf
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	
+
 	 
 	rn := "interface"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 
-	p := fmt.Sprintf("/interface[name=%s]", key)
+	
+	p := fmt.Sprintf("/interface[name%s]", key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)

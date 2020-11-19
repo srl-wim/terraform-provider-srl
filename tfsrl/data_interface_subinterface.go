@@ -13,7 +13,8 @@ package tfsrl
 import (
 	"context"
 	"fmt"
-	"time"
+    "time"
+    "strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,7 +39,7 @@ func dataInterfacesSubinterface() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "interface": {
+        "interface_id": {
             Type:     schema.TypeString,
             Required: true,
         },
@@ -97,7 +98,7 @@ func dataInterfacesSubinterface() *schema.Resource {
                     },
                     "index": {
                         Type:     schema.TypeInt,
-                        Computed: true,
+                        Required: true,
                     },
                     "ip_mtu": {
                         Type:     schema.TypeInt,
@@ -358,12 +359,16 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("interface_id").(string)
+
 	 
 	rn := "subinterface"
 	rk := "index"
 	key, err := getResourceListKey(&rn, &rk, d)
 
-	p := fmt.Sprintf("/interface/subinterface[index=%s]", key)
+	
+	p := fmt.Sprintf("/interface[name%s]/subinterface[index%s]", hkey, key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -397,7 +402,7 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 				}
 				 
 				// add key to the get resp data since it is not returned in the gnmi data
-				x[rk] = key
+				x[rk], err = strconv.ParseInt(key, 10, 32)
 				// append the get resp to data
 				
 				data = append(data, x)

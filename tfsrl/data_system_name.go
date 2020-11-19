@@ -67,7 +67,11 @@ func dataSystemNameRead(ctx context.Context, d *schema.ResourceData, meta interf
 	var diags diag.Diagnostics
 
 	
+
+	
+	
 	p := "/system/name"
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)

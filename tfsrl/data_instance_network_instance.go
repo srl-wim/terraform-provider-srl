@@ -86,7 +86,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                             },
                         },
@@ -193,7 +193,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                     },
                     "name": {
                         Type:     schema.TypeString,
-                        Computed: true,
+                        Required: true,
                     },
                     "router_id": {
                         Type:     schema.TypeString,
@@ -218,12 +218,16 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	
+
 	 
 	rn := "network_instance"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 
-	p := fmt.Sprintf("/network-instance[name=%s]", key)
+	
+	p := fmt.Sprintf("/network-instance[name%s]", key)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)
@@ -255,15 +259,15 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
                         delete(x, k)
 					}    
 					
-					if k == "static-routes" {
+					if k == "static_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "aggregate-routes" {
+					if k == "aggregate_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "next-hop-groups" {
+					if k == "next_hop_groups" {
                         delete(x, k)
 					}    
 					

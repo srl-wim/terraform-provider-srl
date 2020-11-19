@@ -12,7 +12,8 @@ package tfsrl
 
 import (
 	"context"
-	"strconv"
+    "strconv"
+    "fmt"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -38,7 +39,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "network_instance": {
+        "network-instance_id": {
             Type:     schema.TypeString,
             Required: true,
         },
@@ -958,8 +959,12 @@ func dataNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema.Res
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	hkey := d.Get("network-instance_id").(string)
+
 	
-	p := "/network-instance/protocols"
+	
+	p := fmt.Sprintf("/network-instance[name%s]/protocols", hkey)
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)

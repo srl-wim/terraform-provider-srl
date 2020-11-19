@@ -98,7 +98,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                             },
                         },
@@ -221,7 +222,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                     },
                     "name": {
                         Type:     schema.TypeString,
-                        Optional: true,
+                        Required: true,
+                        ForceNew: true,
                     },
                     "router_id": {
                         Type:     schema.TypeString,
@@ -334,15 +336,15 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
                         delete(x, k)
 					}    
 					
-					if k == "static-routes" {
+					if k == "static_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "aggregate-routes" {
+					if k == "aggregate_routes" {
                         delete(x, k)
 					}    
 					
-					if k == "next-hop-groups" {
+					if k == "next_hop_groups" {
                         delete(x, k)
 					}    
 					

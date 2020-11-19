@@ -87,7 +87,8 @@ func resourceInterfaces() *schema.Resource {
                     },
                     "name": {
                         Type:     schema.TypeString,
-                        Optional: true,
+                        Required: true,
+                        ForceNew: true,
                     },
                     "qos": {
                         Type:     schema.TypeList,

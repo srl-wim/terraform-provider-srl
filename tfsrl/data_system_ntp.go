@@ -87,7 +87,11 @@ func dataSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	var diags diag.Diagnostics
 
 	
+
+	
+	
 	p := "/system/ntp"
+	
 	
 
 	req, err := target.CreateGetRequest(&p, "CONFIG", d)

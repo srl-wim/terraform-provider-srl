@@ -104,7 +104,8 @@ func resourceInterfacesSubinterface() *schema.Resource {
                     },
                     "index": {
                         Type:     schema.TypeInt,
-                        Optional: true,
+                        Required: true,
+                        ForceNew: true,
                     },
                     "ip_mtu": {
                         Type:     schema.TypeInt,

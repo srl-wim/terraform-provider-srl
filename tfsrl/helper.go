@@ -1,6 +1,7 @@
 package tfsrl
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +49,12 @@ func getResourceListKey(rn, rk *string, d *schema.ResourceData) (key string, err
 		switch x := i.(type) {
 		case map[string]interface{}:
 			if v, ok := x[*rk]; ok {
-				key = v.(string)
+				switch v.(type) {
+				case string:
+					key = v.(string)
+				case int:
+					key = strconv.Itoa(v.(int))
+				}
 				break
 			}
 		}
