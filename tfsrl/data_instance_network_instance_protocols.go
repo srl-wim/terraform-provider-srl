@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"strings"
 	"fmt"
 	"strconv"
 	"time"
@@ -991,8 +992,19 @@ func dataNetworkInstanceInstanceProtocolsRead(ctx context.Context, d *schema.Res
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
+					//
+					//
+
+					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+
+					switch sk {
 					
-					
+					default:
+						if k != sk {
+							delete(x, k)
+							x[sk] = v
+						}
+					}					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)

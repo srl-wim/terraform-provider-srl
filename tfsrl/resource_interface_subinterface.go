@@ -12,8 +12,8 @@ package tfsrl
 
 import (
 	"context"
-	"fmt"
 	"strings"
+	"fmt"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -45,6 +45,11 @@ func resourceInterfacesSubinterface() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
+        "interface_id": {
+            Type:     schema.TypeString,
+            Required: true,
+            ForceNew: true,
+        },
         "subinterface": {
             Type:     schema.TypeList,
             Optional: true,
@@ -250,22 +255,42 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
-					
+					//
+					//sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					//
+					//
+					//if sk == "acl" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "ipv4" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "ipv6" {
+                    //    delete(x, k)
+					//}    
+					//
+
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+
+					switch sk {
 					
+					case "acl":
+						delete(x, k)
 					
-					if sk == "acl" {
-                        delete(x, k)
-					}    
+					case "ipv4":
+						delete(x, k)
 					
-					if sk == "ipv4" {
-                        delete(x, k)
-					}    
+					case "ipv6":
+						delete(x, k)
 					
-					if sk == "ipv6" {
-                        delete(x, k)
-					}    
-					
+					default:
+						if k != sk {
+							delete(x, k)
+							x[sk] = v
+						}
+					}
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)

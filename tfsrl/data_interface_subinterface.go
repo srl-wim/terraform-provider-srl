@@ -12,9 +12,9 @@ package tfsrl
 
 import (
 	"context"
+	"strings"
 	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -208,22 +208,42 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
-					
+					//
+					//sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					//
+					//
+					//if sk == "acl" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "ipv4" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "ipv6" {
+                    //    delete(x, k)
+					//}    
+					//
+
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+
+					switch sk {
 					
+					case "acl":
+						delete(x, k)
 					
-					if sk == "acl" {
-                        delete(x, k)
-					}    
+					case "ipv4":
+						delete(x, k)
 					
-					if sk == "ipv4" {
-                        delete(x, k)
-					}    
+					case "ipv6":
+						delete(x, k)
 					
-					if sk == "ipv6" {
-                        delete(x, k)
-					}    
-					
+					default:
+						if k != sk {
+							delete(x, k)
+							x[sk] = v
+						}
+					}					
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)

@@ -12,9 +12,9 @@ package tfsrl
 
 import (
 	"context"
+	"strings"
 	
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -316,26 +316,49 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
-					
+					//
+					//sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+					//
+					//
+					//if sk == "static_routes" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "aggregate_routes" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "next_hop_groups" {
+                    //    delete(x, k)
+					//}    
+					//
+					//if sk == "protocols" {
+                    //    delete(x, k)
+					//}    
+					//
+
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
+
+					switch sk {
 					
+					case "static_routes":
+						delete(x, k)
 					
-					if sk == "static_routes" {
-                        delete(x, k)
-					}    
+					case "aggregate_routes":
+						delete(x, k)
 					
-					if sk == "aggregate_routes" {
-                        delete(x, k)
-					}    
+					case "next_hop_groups":
+						delete(x, k)
 					
-					if sk == "next_hop_groups" {
-                        delete(x, k)
-					}    
+					case "protocols":
+						delete(x, k)
 					
-					if sk == "protocols" {
-                        delete(x, k)
-					}    
-					
+					default:
+						if k != sk {
+							delete(x, k)
+							x[sk] = v
+						}
+					}
                 }
                 for k, v := range x {
                     log.Debugf("AFTER KEY: %s, VALUE: %v", k, v)
