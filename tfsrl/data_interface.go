@@ -170,7 +170,7 @@ func dataInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interf
 	key, err := getResourceListKey(&rn, &rk, d)
 
 	
-	p := fmt.Sprintf("/interface[name%s]", key)
+	p := fmt.Sprintf("/interface[name=%s]", key)
 	
 	
 

@@ -13,7 +13,6 @@ package tfsrl
 import (
 	"context"
 	"strconv"
-	"fmt"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -39,7 +38,7 @@ func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "network-instance_id": {
+        "network_instance_id": {
             Type:     schema.TypeString,
             Required: true,
         },
@@ -91,11 +90,11 @@ func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	hkey := d.Get("network-instance_id").(string)
+	hkey := d.Get("network_instance_id").(string)
 
 	
 	
-	p := fmt.Sprintf("/network-instance[name%s]/static-routes", hkey)
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes", hkey)
 	
 	
 

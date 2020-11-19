@@ -226,7 +226,7 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 	key, err := getResourceListKey(&rn, &rk, d)
 
 	
-	p := fmt.Sprintf("/network-instance[name%s]", key)
+	p := fmt.Sprintf("/network-instance[name=%s]", key)
 	
 	
 

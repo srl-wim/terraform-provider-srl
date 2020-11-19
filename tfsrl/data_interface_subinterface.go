@@ -13,8 +13,7 @@ package tfsrl
 import (
 	"context"
 	"fmt"
-    "time"
-    "strconv"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -367,7 +366,7 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 	key, err := getResourceListKey(&rn, &rk, d)
 
 	
-	p := fmt.Sprintf("/interface[name%s]/subinterface[index%s]", hkey, key)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]", hkey, key)
 	
 	
 
