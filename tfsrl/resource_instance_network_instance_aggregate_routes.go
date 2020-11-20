@@ -127,11 +127,16 @@ func resourceNetworkInstanceInstanceAggregateRoutesCreate(ctx context.Context, d
 	target := meta.(*Target)
 	
 	key := "aggregate-routes"
-
-	p := "/network-instance[name=%s]/aggregate-routes"
-	v := "aggregate-routes"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/aggregate-routes", hkey)
+	
+	v := "aggregate_routes"
+	
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -235,13 +240,17 @@ func resourceNetworkInstanceInstanceAggregateRoutesUpdate(ctx context.Context, d
 	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceAggregateRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "aggregate_routes"
-
-	p := "/network-instance/aggregate-routes"
+	key := "aggregate-routes"
+	
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/aggregate-routes", hkey)
+	
 	v := "aggregate_routes"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

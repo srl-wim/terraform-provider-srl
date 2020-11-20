@@ -96,11 +96,15 @@ func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta i
 	target := meta.(*Target)
 	
 	key := "ntp"
-
+	
 	p := "/system/ntp"
+	
 	v := "ntp"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -205,12 +209,15 @@ func resourceSystemNtpUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	target := meta.(*Target)
 	
 	key := "ntp"
-
+	
 	p := "/system/ntp"
+	
 	v := "ntp"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

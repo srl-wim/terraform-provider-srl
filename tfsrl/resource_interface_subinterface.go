@@ -192,10 +192,16 @@ func resourceInterfacesSubinterfaceCreate(ctx context.Context, d *schema.Resourc
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	p := "/interface[name=%s]/"
+	
+	hkey := d.Get("interface_id").(string)
+	p := fmt.Sprintf("/interface[name=%s]", hkey)
+	
 	v := ""
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "interface_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -336,11 +342,16 @@ func resourceInterfacesSubinterfaceUpdate(ctx context.Context, d *schema.Resourc
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	p := "/interface/"
+	
+	hkey := d.Get("interface_id").(string)
+	p := fmt.Sprintf("/interface[name=%s]", hkey)
+	
 	v := ""
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "interface_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

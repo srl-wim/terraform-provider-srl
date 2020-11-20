@@ -73,11 +73,15 @@ func resourceSystemNameCreate(ctx context.Context, d *schema.ResourceData, meta 
 	target := meta.(*Target)
 	
 	key := "name"
-
+	
 	p := "/system/name"
+	
 	v := "name"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -182,12 +186,15 @@ func resourceSystemNameUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	target := meta.(*Target)
 	
 	key := "name"
-
+	
 	p := "/system/name"
+	
 	v := "name"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

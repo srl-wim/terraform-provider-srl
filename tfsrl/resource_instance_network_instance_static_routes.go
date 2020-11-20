@@ -102,11 +102,16 @@ func resourceNetworkInstanceInstanceStaticRoutesCreate(ctx context.Context, d *s
 	target := meta.(*Target)
 	
 	key := "static-routes"
-
-	p := "/network-instance[name=%s]/static-routes"
-	v := "static-routes"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes", hkey)
+	
+	v := "static_routes"
+	
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -210,13 +215,17 @@ func resourceNetworkInstanceInstanceStaticRoutesUpdate(ctx context.Context, d *s
 	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 	
-	key := "static_routes"
-
-	p := "/network-instance/static-routes"
+	key := "static-routes"
+	
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes", hkey)
+	
 	v := "static_routes"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

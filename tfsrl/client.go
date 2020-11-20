@@ -119,9 +119,25 @@ func loadCerts(tlscfg *tls.Config, c *TargetConfig) error {
 	return nil
 }
 
-func (t *Target) CreateSetRequest(path, data *string, d *schema.ResourceData) (*gnmi.SetRequest, error) {
+// CreateSetRequest function
+func (t *Target) CreateSetRequest(path, data, hid *string, d *schema.ResourceData) (*gnmi.SetRequest, error) {
 	// parse input data from provider
-	update := replaceInKeys(d.Get(*data), "_", "-")
+	update := d.Get(*data)
+	log.Debugf("Set Req update before json: %s \n", update)
+	switch x := update.(type) {
+	case map[string]interface{}:
+		for k, v := range x {
+			log.Debugf("CREATE/SET BEFORE KEY: %s, VALUE: %v", k, v)
+			switch k {
+			case *hid:
+				delete(x, k)
+			}
+		}
+		for k, v := range x {
+			log.Debugf("CREATE/SET AFTER KEY: %s, VALUE: %v", k, v)
+		}
+	}
+	update = replaceInKeys(update, "_", "-")
 	updateBytes, _ := json.Marshal(update)
 	log.Debugf("update bytes: %s \n", updateBytes)
 	value := new(gnmi.TypedValue)
@@ -155,6 +171,7 @@ func (t *Target) CreateSetRequest(path, data *string, d *schema.ResourceData) (*
 
 }
 
+// CreateDeleteRequest function
 func (t *Target) CreateDeleteRequest(path *string, d *schema.ResourceData) (*gnmi.SetRequest, error) {
 	gnmiPrefix, err := CreatePrefix("", "")
 	if err != nil {
@@ -179,6 +196,7 @@ func (t *Target) CreateDeleteRequest(path *string, d *schema.ResourceData) (*gnm
 
 }
 
+// CreateGetRequest function
 func (t *Target) CreateGetRequest(path *string, dataType string, d *schema.ResourceData) (*gnmi.GetRequest, error) {
 	encodingVal, ok := gnmi.Encoding_value[strings.Replace(strings.ToUpper(*t.Config.Encoding), "-", "_", -1)]
 	if !ok {

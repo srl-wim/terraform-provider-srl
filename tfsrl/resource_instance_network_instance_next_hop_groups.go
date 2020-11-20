@@ -138,11 +138,16 @@ func resourceNetworkInstanceInstanceNextHopGroupsCreate(ctx context.Context, d *
 	target := meta.(*Target)
 	
 	key := "next-hop-groups"
-
-	p := "/network-instance[name=%s]/next-hop-groups"
-	v := "next-hop-groups"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/next-hop-groups", hkey)
+	
+	v := "next_hop_groups"
+	
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -246,13 +251,17 @@ func resourceNetworkInstanceInstanceNextHopGroupsUpdate(ctx context.Context, d *
 	log.Infof("Beginning Update: %s", resourceNetworkInstanceInstanceNextHopGroupsString(d))
 	target := meta.(*Target)
 	
-	key := "next_hop_groups"
-
-	p := "/network-instance/next-hop-groups"
+	key := "next-hop-groups"
+	
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/next-hop-groups", hkey)
+	
 	v := "next_hop_groups"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

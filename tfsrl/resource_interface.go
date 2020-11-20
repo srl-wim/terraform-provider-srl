@@ -184,10 +184,15 @@ func resourceInterfacesCreate(ctx context.Context, d *schema.ResourceData, meta 
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	
 	p := "/"
+	
 	v := ""
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -321,11 +326,15 @@ func resourceInterfacesUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	
 	p := "/"
+	
 	v := ""
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

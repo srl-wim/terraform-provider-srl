@@ -260,6 +260,10 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 					//sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 					//
 					//
+					//if sk == "protocols" {
+                    //    delete(x, k)
+					//}    
+					//
 					//if sk == "static_routes" {
                     //    delete(x, k)
 					//}    
@@ -272,14 +276,13 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
                     //    delete(x, k)
 					//}    
 					//
-					//if sk == "protocols" {
-                    //    delete(x, k)
-					//}    
-					//
 
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "protocols":
+						delete(x, k)
 					
 					case "static_routes":
 						delete(x, k)
@@ -288,9 +291,6 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 						delete(x, k)
 					
 					case "next_hop_groups":
-						delete(x, k)
-					
-					case "protocols":
 						delete(x, k)
 					
 					default:

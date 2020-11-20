@@ -247,16 +247,21 @@ func resourceNetworkInstanceInstanceCreate(ctx context.Context, d *schema.Resour
 	log.Infof("Beginning Create: %s", resourceNetworkInstanceInstanceString(d))
 	target := meta.(*Target)
 	 
-	rn := "network-instance"
+	rn := "network_instance"
 	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	
 	p := "/"
+	
 	v := ""
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -320,6 +325,10 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 					//sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 					//
 					//
+					//if sk == "protocols" {
+                    //    delete(x, k)
+					//}    
+					//
 					//if sk == "static_routes" {
                     //    delete(x, k)
 					//}    
@@ -332,14 +341,13 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
                     //    delete(x, k)
 					//}    
 					//
-					//if sk == "protocols" {
-                    //    delete(x, k)
-					//}    
-					//
 
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "protocols":
+						delete(x, k)
 					
 					case "static_routes":
 						delete(x, k)
@@ -348,9 +356,6 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 						delete(x, k)
 					
 					case "next_hop_groups":
-						delete(x, k)
-					
-					case "protocols":
 						delete(x, k)
 					
 					default:
@@ -404,11 +409,15 @@ func resourceNetworkInstanceInstanceUpdate(ctx context.Context, d *schema.Resour
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	
 	p := "/"
+	
 	v := ""
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := ""
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}

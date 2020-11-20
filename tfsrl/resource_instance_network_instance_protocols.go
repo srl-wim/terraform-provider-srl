@@ -1066,11 +1066,16 @@ func resourceNetworkInstanceInstanceProtocolsCreate(ctx context.Context, d *sche
 	target := meta.(*Target)
 	
 	key := "protocols"
-
-	p := "/network-instance[name=%s]/protocols"
+	
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/protocols", hkey)
+	
 	v := "protocols"
 	
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -1175,12 +1180,16 @@ func resourceNetworkInstanceInstanceProtocolsUpdate(ctx context.Context, d *sche
 	target := meta.(*Target)
 	
 	key := "protocols"
-
-	p := "/network-instance/protocols"
+	
+	hkey := d.Get("network_instance_id").(string)
+	p := fmt.Sprintf("/network-instance[name=%s]/protocols", hkey)
+	
 	v := "protocols"
 	
-
-	req, err := target.CreateSetRequest(&p, &v, d)
+	
+	hid := "network_instance_id"
+	req, err := target.CreateSetRequest(&p, &v, &hid, d)
+	
 	if err != nil {
 		return diag.FromErr(err)
 	}
