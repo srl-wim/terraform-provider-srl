@@ -72,7 +72,7 @@ func dataNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                 },
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                                 "nexthop": {
                                     Type:     schema.TypeList,
@@ -85,7 +85,7 @@ func dataNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                             },
                                             "index": {
                                                 Type:     schema.TypeInt,
-                                                Computed: true,
+                                                Required: true,
                                             },
                                             "ip_address": {
                                                 Type:     schema.TypeString,

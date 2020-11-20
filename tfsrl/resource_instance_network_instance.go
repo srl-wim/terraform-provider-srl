@@ -65,7 +65,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "address_family": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                             },
                         },
@@ -100,7 +101,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                             },
                         },
@@ -143,7 +145,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                             },
                                             "ip_prefix": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Required: true,
+                                                ForceNew: true,
                                             },
                                             "max_paths": {
                                                 Type:     schema.TypeInt,
@@ -194,7 +197,8 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                             },
                                             "top_label": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Required: true,
+                                                ForceNew: true,
                                             },
                                         },
                                     },

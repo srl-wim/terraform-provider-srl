@@ -56,7 +56,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "address_family": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                             },
                         },
@@ -88,7 +88,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                             },
                         },
@@ -125,7 +125,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                                             },
                                             "ip_prefix": {
                                                 Type:     schema.TypeString,
-                                                Computed: true,
+                                                Required: true,
                                             },
                                             "max_paths": {
                                                 Type:     schema.TypeInt,
@@ -169,7 +169,7 @@ func dataNetworkInstanceInstance() *schema.Resource {
                                             },
                                             "top_label": {
                                                 Type:     schema.TypeString,
-                                                Computed: true,
+                                                Required: true,
                                             },
                                         },
                                     },

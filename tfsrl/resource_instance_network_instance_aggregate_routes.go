@@ -104,7 +104,8 @@ func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
                                 },
                                 "prefix": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                                 "summary_only": {
                                     Type:     schema.TypeBool,

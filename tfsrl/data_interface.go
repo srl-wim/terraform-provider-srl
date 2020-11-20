@@ -98,7 +98,7 @@ func dataInterfaces() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "queue_id": {
                                                             Type:     schema.TypeString,
-                                                            Computed: true,
+                                                            Required: true,
                                                         },
                                                         "queue_scheduler": {
                                                             Type:     schema.TypeList,

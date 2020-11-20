@@ -112,7 +112,8 @@ func resourceInterfaces() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "queue_id": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Required: true,
+                                                            ForceNew: true,
                                                         },
                                                         "queue_scheduler": {
                                                             Type:     schema.TypeList,

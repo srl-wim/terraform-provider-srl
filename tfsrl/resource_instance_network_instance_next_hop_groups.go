@@ -84,7 +84,8 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                 },
                                 "name": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                                 "nexthop": {
                                     Type:     schema.TypeList,
@@ -99,7 +100,8 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                             },
                                             "index": {
                                                 Type:     schema.TypeInt,
-                                                Optional: true,
+                                                Required: true,
+                                                ForceNew: true,
                                             },
                                             "ip_address": {
                                                 Type:     schema.TypeString,

@@ -60,7 +60,7 @@ func dataSystemNtp() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "address": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                                 "iburst": {
                                     Type:     schema.TypeBool,

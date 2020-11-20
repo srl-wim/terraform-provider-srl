@@ -245,7 +245,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                             },
                                             "group_name": {
                                                 Type:     schema.TypeString,
-                                                Computed: true,
+                                                Required: true,
                                             },
                                             "import_policy": {
                                                 Type:     schema.TypeString,
@@ -322,7 +322,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "as_number": {
                                                             Type:     schema.TypeString,
-                                                            Computed: true,
+                                                            Required: true,
                                                         },
                                                         "prepend_global_as": {
                                                             Type:     schema.TypeBool,
@@ -423,7 +423,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                                                     },
                                                                     "name": {
                                                                         Type:     schema.TypeString,
-                                                                        Computed: true,
+                                                                        Required: true,
                                                                     },
                                                                 },
                                                             },
@@ -694,7 +694,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "as_number": {
                                                             Type:     schema.TypeString,
-                                                            Computed: true,
+                                                            Required: true,
                                                         },
                                                         "prepend_global_as": {
                                                             Type:     schema.TypeBool,
@@ -717,7 +717,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                             },
                                             "peer_address": {
                                                 Type:     schema.TypeString,
-                                                Computed: true,
+                                                Required: true,
                                             },
                                             "peer_as": {
                                                 Type:     schema.TypeString,
@@ -803,7 +803,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                                                     },
                                                                     "name": {
                                                                         Type:     schema.TypeString,
-                                                                        Computed: true,
+                                                                        Required: true,
                                                                     },
                                                                 },
                                                             },
@@ -902,7 +902,7 @@ func dataNetworkInstanceInstanceProtocols() *schema.Resource {
                                                         },
                                                         "name": {
                                                             Type:     schema.TypeString,
-                                                            Computed: true,
+                                                            Required: true,
                                                         },
                                                     },
                                                 },

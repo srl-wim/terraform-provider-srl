@@ -277,7 +277,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                             },
                                             "group_name": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Required: true,
+                                                ForceNew: true,
                                             },
                                             "import_policy": {
                                                 Type:     schema.TypeString,
@@ -363,7 +364,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "as_number": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Required: true,
+                                                            ForceNew: true,
                                                         },
                                                         "prepend_global_as": {
                                                             Type:     schema.TypeBool,
@@ -477,7 +479,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                                                     },
                                                                     "name": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Required: true,
+                                                                        ForceNew: true,
                                                                     },
                                                                 },
                                                             },
@@ -779,7 +782,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                                 	Schema: map[string]*schema.Schema{
                                                         "as_number": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Required: true,
+                                                            ForceNew: true,
                                                         },
                                                         "prepend_global_as": {
                                                             Type:     schema.TypeBool,
@@ -802,7 +806,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                             },
                                             "peer_address": {
                                                 Type:     schema.TypeString,
-                                                Optional: true,
+                                                Required: true,
+                                                ForceNew: true,
                                             },
                                             "peer_as": {
                                                 Type:     schema.TypeString,
@@ -893,7 +898,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                                                     },
                                                                     "name": {
                                                                         Type:     schema.TypeString,
-                                                                        Optional: true,
+                                                                        Required: true,
+                                                                        ForceNew: true,
                                                                     },
                                                                 },
                                                             },
@@ -1004,7 +1010,8 @@ func resourceNetworkInstanceInstanceProtocols() *schema.Resource {
                                                         },
                                                         "name": {
                                                             Type:     schema.TypeString,
-                                                            Optional: true,
+                                                            Required: true,
+                                                            ForceNew: true,
                                                         },
                                                     },
                                                 },

@@ -68,7 +68,8 @@ func resourceSystemNtp() *schema.Resource {
                         	Schema: map[string]*schema.Schema{
                                 "address": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                                 "iburst": {
                                     Type:     schema.TypeBool,

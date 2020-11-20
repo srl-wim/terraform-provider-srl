@@ -72,7 +72,7 @@ func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
                                 },
                                 "prefix": {
                                     Type:     schema.TypeString,
-                                    Computed: true,
+                                    Required: true,
                                 },
                             },
                         },

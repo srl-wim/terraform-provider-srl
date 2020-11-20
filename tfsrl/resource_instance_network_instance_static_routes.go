@@ -84,7 +84,8 @@ func resourceNetworkInstanceInstanceStaticRoutes() *schema.Resource {
                                 },
                                 "prefix": {
                                     Type:     schema.TypeString,
-                                    Optional: true,
+                                    Required: true,
+                                    ForceNew: true,
                                 },
                             },
                         },
