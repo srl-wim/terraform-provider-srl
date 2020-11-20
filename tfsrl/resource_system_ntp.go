@@ -239,7 +239,9 @@ func resourceSystemNtpDelete(ctx context.Context, d *schema.ResourceData, meta i
 	target := meta.(*Target)
 
 	
+	
 	p := "/system/ntp"
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

@@ -355,8 +355,10 @@ func resourceInterfacesDelete(ctx context.Context, d *schema.ResourceData, meta 
 	log.Debugf("Beginning delete: %s", resourceInterfacesString(d))
 	target := meta.(*Target)
 
+	
 	 
 	p := fmt.Sprintf("/interface[name=%s]", d.Id())
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

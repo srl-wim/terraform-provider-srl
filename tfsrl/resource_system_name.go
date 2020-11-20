@@ -216,7 +216,9 @@ func resourceSystemNameDelete(ctx context.Context, d *schema.ResourceData, meta 
 	target := meta.(*Target)
 
 	
+	
 	p := "/system/name"
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

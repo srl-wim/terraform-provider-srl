@@ -438,8 +438,10 @@ func resourceNetworkInstanceInstanceDelete(ctx context.Context, d *schema.Resour
 	log.Debugf("Beginning delete: %s", resourceNetworkInstanceInstanceString(d))
 	target := meta.(*Target)
 
+	
 	 
 	p := fmt.Sprintf("/network-instance[name=%s]", d.Id())
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

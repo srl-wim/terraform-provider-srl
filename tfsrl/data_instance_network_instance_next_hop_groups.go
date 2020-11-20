@@ -70,10 +70,6 @@ func dataNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                         },
                                     },
                                 },
-                                "collect_stats": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
                                 "name": {
                                     Type:     schema.TypeString,
                                     Computed: true,

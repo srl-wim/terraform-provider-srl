@@ -247,7 +247,10 @@ func resourceNetworkInstanceInstanceStaticRoutesDelete(ctx context.Context, d *s
 	target := meta.(*Target)
 
 	
-	p := "/network-instance/static-routes"
+	hkey := d.Get("network_instance_id").(string)
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes", hkey)
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

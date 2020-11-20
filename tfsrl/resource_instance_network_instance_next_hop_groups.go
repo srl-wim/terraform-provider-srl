@@ -82,11 +82,6 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                         },
                                     },
                                 },
-                                "collect_stats": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
                                 "name": {
                                     Type:     schema.TypeString,
                                     Optional: true,
@@ -283,7 +278,10 @@ func resourceNetworkInstanceInstanceNextHopGroupsDelete(ctx context.Context, d *
 	target := meta.(*Target)
 
 	
-	p := "/network-instance/next-hop-groups"
+	hkey := d.Get("network_instance_id").(string)
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/next-hop-groups", hkey)
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {

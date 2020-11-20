@@ -1211,7 +1211,10 @@ func resourceNetworkInstanceInstanceProtocolsDelete(ctx context.Context, d *sche
 	target := meta.(*Target)
 
 	
-	p := "/network-instance/protocols"
+	hkey := d.Get("network_instance_id").(string)
+	
+	p := fmt.Sprintf("/network-instance[name=%s]/protocols", hkey)
+	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
 	if err != nil {
