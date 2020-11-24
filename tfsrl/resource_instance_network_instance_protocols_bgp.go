@@ -97,25 +97,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "ebgp_default_policy": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "export_reject_all": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                                "import_reject_all": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                            },
-                        },
-                    },
                     "graceful_restart": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -331,10 +312,13 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 					case "as_path_options":
 						delete(x, k)
 					
-					case "neighbor":
+					case "ebgp_default_policy":
 						delete(x, k)
 					
 					case "group":
+						delete(x, k)
+					
+					case "neighbor":
 						delete(x, k)
 					
 					default:

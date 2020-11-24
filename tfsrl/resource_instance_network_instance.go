@@ -443,6 +443,12 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 					case "protocols":
 						delete(x, k)
 					
+					case "protocols/bgp":
+						delete(x, k)
+					
+					case "protocols/isis":
+						delete(x, k)
+					
 					case "protocols/ospf":
 						delete(x, k)
 					
@@ -453,12 +459,6 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 						delete(x, k)
 					
 					case "next_hop_groups":
-						delete(x, k)
-					
-					case "protocols/bgp":
-						delete(x, k)
-					
-					case "protocols/isis":
 						delete(x, k)
 					
 					default:
