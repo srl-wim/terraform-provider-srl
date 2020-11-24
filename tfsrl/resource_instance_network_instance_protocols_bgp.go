@@ -216,24 +216,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "route_reflector": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "client": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "cluster_id": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
                     "router_id": {
                         Type:     schema.TypeString,
                         Optional: true,
@@ -379,6 +361,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "send_community":
+						delete(x, k)
+					
+					case "route_reflector":
 						delete(x, k)
 					
 					case "group":
