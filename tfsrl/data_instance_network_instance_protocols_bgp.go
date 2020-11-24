@@ -65,22 +65,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeInt,
                         Computed: true,
                     },
-                    "preference": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "ebgp": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "ibgp": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "router_id": {
                         Type:     schema.TypeString,
                         Computed: true,
@@ -188,6 +172,9 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "trace_options":
+						delete(x, k)
+					
+					case "preference":
 						delete(x, k)
 					
 					case "group":

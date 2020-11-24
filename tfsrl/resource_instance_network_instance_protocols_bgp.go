@@ -75,25 +75,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Optional: true,
                         Default: "100",
                     },
-                    "preference": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "ebgp": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "170",
-                                },
-                                "ibgp": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "170",
-                                },
-                            },
-                        },
-                    },
                     "router_id": {
                         Type:     schema.TypeString,
                         Optional: true,
@@ -236,6 +217,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "trace_options":
+						delete(x, k)
+					
+					case "preference":
 						delete(x, k)
 					
 					case "group":
