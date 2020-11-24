@@ -261,8 +261,8 @@ func resourceInterfacesSubinterfaceVlanDelete(ctx context.Context, d *schema.Res
     
 	//hkey := d.Get("[interface_id subinterface_id]").(string)
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1, d.Id())", hkey)
-	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1, d.Id())
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)
 	
 	
 	req, err := target.CreateDeleteRequest(&p, d)

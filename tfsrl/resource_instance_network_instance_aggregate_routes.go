@@ -289,8 +289,8 @@ func resourceNetworkInstanceInstanceAggregateRoutesDelete(ctx context.Context, d
     
 	//hkey := d.Get("[network_instance_id]").(string)
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/network-instance[name=%s]/aggregate-routes",hkey0, d.Id())", hkey)
-	p := fmt.Sprintf("/network-instance[name=%s]/aggregate-routes",hkey0, d.Id())
+	//p := fmt.Sprintf("fmt.Sprintf("/network-instance[name=%s]/aggregate-routes",hkey0)", hkey)
+	p := fmt.Sprintf("/network-instance[name=%s]/aggregate-routes",hkey0)
 	
 	
 	req, err := target.CreateDeleteRequest(&p, d)
