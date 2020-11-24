@@ -289,45 +289,18 @@ func dataNetworkInstanceInstance() *schema.Resource {
                         Type:     schema.TypeString,
                         Required: true,
                     },
-                    "protocols": {
-                        Type:     schema.TypeList,
+                    "router_id": {
+                        Type:     schema.TypeString,
                         Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "linux": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "export_neighbors": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "export_routes": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "import_routes": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            "router_id": {
-                                Type:     schema.TypeString,
-                                Computed: true,
-                            },
-                            "type": {
-                                Type:     schema.TypeString,
-                                Computed: true,
-                            },
-                        },
+                    },
+                    "type": {
+                        Type:     schema.TypeString,
+                        Computed: true,
                     },
                 },
             },
         },
-    },
+
         },
     }
 }
@@ -379,6 +352,9 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "protocols":
+						delete(x, k)
 					
 					default:
 						if k != sk {

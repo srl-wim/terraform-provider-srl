@@ -336,51 +336,18 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         Required: true,
                         ForceNew: true,
                     },
-                    "protocols": {
-                        Type:     schema.TypeList,
+                    "router_id": {
+                        Type:     schema.TypeString,
                         Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "linux": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "export_neighbors": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: true,
-                                            },
-                                            "export_routes": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                            "import_routes": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                        },
-                                    },
-                                },
-                            "router_id": {
-                                Type:     schema.TypeString,
-                                Optional: true,
-                            },
-                            "type": {
-                                Type:     schema.TypeString,
-                                Optional: true,
-                                Default: "default",
-                            },
-                        },
+                    },
+                    "type": {
+                        Type:     schema.TypeString,
+                        Optional: true,
+                        Default: "default",
                     },
                 },
             },
         },
-    },
 
         },
     }
@@ -468,6 +435,9 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "protocols":
+						delete(x, k)
 					
 					default:
 						if k != sk {

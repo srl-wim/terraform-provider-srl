@@ -238,7 +238,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                 },
             },
         },
-
         },
     }
 }
