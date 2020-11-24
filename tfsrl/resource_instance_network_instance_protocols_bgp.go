@@ -66,44 +66,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Optional: true,
                         Default: "enable",
                     },
-                    "as_path_options": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "allow_own_as": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "0",
-                                },
-                                "remove_private_as": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ignore_peer_as": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                            "leading_only": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                            "mode": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                Default: "disabled",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "authentication": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -366,10 +328,13 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 					case "route_reflector":
 						delete(x, k)
 					
-					case "group":
+					case "as_path_options":
 						delete(x, k)
 					
 					case "neighbor":
+						delete(x, k)
+					
+					case "group":
 						delete(x, k)
 					
 					default:

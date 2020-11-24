@@ -57,38 +57,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "as_path_options": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "allow_own_as": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "remove_private_as": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ignore_peer_as": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "leading_only": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "mode": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "authentication": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -297,10 +265,13 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 					case "route_reflector":
 						delete(x, k)
 					
-					case "group":
+					case "as_path_options":
 						delete(x, k)
 					
 					case "neighbor":
+						delete(x, k)
+					
+					case "group":
 						delete(x, k)
 					
 					default:
