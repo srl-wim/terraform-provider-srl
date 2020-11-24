@@ -205,22 +205,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "send_community": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "large": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "standard": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "trace_options": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -321,6 +305,9 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "failure_detection":
+						delete(x, k)
+					
+					case "send_community":
 						delete(x, k)
 					
 					case "group":

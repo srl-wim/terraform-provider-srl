@@ -238,25 +238,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                     },
-                    "send_community": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "large": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                                "standard": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                            },
-                        },
-                    },
                     "trace_options": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -395,6 +376,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "failure_detection":
+						delete(x, k)
+					
+					case "send_community":
 						delete(x, k)
 					
 					case "group":
