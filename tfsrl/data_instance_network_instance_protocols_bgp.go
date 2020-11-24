@@ -470,6 +470,12 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 
 					switch sk {
 					
+					case "neighbor":
+						delete(x, k)
+					
+					case "group":
+						delete(x, k)
+					
 					default:
 						if k != sk {
 							delete(x, k)

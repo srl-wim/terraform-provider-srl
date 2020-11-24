@@ -238,6 +238,7 @@ func resourceInterfacesSubinterface() *schema.Resource {
                 },
             },
         },
+
         },
     }
 }
@@ -341,6 +342,9 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "ipv6":
+						delete(x, k)
+					
+					case "vlan":
 						delete(x, k)
 					
 					default:

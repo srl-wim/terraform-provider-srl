@@ -280,6 +280,9 @@ func dataInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interf
 					case "sflow":
 						delete(x, k)
 					
+					case "subinterface":
+						delete(x, k)
+					
 					default:
 						if k != sk {
 							delete(x, k)

@@ -439,6 +439,24 @@ func resourceNetworkInstanceInstanceRead(ctx context.Context, d *schema.Resource
 					case "protocols":
 						delete(x, k)
 					
+					case "protocols/bgp":
+						delete(x, k)
+					
+					case "protocols/isis":
+						delete(x, k)
+					
+					case "protocols/ospf":
+						delete(x, k)
+					
+					case "static_routes":
+						delete(x, k)
+					
+					case "aggregate_routes":
+						delete(x, k)
+					
+					case "next_hop_groups":
+						delete(x, k)
+					
 					default:
 						if k != sk {
 							delete(x, k)
