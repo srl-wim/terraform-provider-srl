@@ -133,22 +133,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "failure_detection": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "enable_bfd": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "fast_failover": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "graceful_restart": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -334,6 +318,9 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "ipv6_unicast":
+						delete(x, k)
+					
+					case "failure_detection":
 						delete(x, k)
 					
 					case "group":

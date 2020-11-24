@@ -154,25 +154,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "failure_detection": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "enable_bfd": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "fast_failover": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                            },
-                        },
-                    },
                     "graceful_restart": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -411,6 +392,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "ipv6_unicast":
+						delete(x, k)
+					
+					case "failure_detection":
 						delete(x, k)
 					
 					case "group":
