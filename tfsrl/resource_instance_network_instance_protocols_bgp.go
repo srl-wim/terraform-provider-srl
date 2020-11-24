@@ -192,120 +192,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "ipv4_unicast": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "enable",
-                                },
-                                "advertise_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "convergence": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_wait_to_advertise": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "0",
-                                            },
-                                        },
-                                    },
-                                },
-                                "multipath": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "allow_multiple_as": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: true,
-                                            },
-                                            "max_paths_level_1": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                Default: "1",
-                                            },
-                                            "max_paths_level_2": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                Default: "1",
-                                            },
-                                        },
-                                    },
-                                },
-                                "receive_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                            },
-                        },
-                    },
-                    "ipv6_unicast": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "disable",
-                                },
-                                "convergence": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_wait_to_advertise": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "0",
-                                            },
-                                        },
-                                    },
-                                },
-                                "multipath": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "allow_multiple_as": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: true,
-                                            },
-                                            "max_paths_level_1": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                Default: "1",
-                                            },
-                                            "max_paths_level_2": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                Default: "1",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Optional: true,
@@ -519,6 +405,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "transport":
+						delete(x, k)
+					
+					case "ipv4_unicast":
+						delete(x, k)
+					
+					case "ipv6_unicast":
 						delete(x, k)
 					
 					case "group":

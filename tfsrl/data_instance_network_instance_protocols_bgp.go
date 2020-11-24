@@ -165,102 +165,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "ipv4_unicast": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "advertise_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "convergence": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_wait_to_advertise": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "multipath": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "allow_multiple_as": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "max_paths_level_1": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "max_paths_level_2": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "receive_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "ipv6_unicast": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "convergence": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_wait_to_advertise": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "multipath": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "allow_multiple_as": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "max_paths_level_1": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "max_paths_level_2": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Computed: true,
@@ -424,6 +328,12 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "transport":
+						delete(x, k)
+					
+					case "ipv4_unicast":
+						delete(x, k)
+					
+					case "ipv6_unicast":
 						delete(x, k)
 					
 					case "group":
