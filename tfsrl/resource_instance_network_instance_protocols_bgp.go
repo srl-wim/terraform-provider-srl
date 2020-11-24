@@ -199,10 +199,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "export_policy": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
                     "failure_detection": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -240,10 +236,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                                 },
                             },
                         },
-                    },
-                    "import_policy": {
-                        Type:     schema.TypeString,
-                        Optional: true,
                     },
                     "ipv4_unicast": {
                         Type:     schema.TypeList,
@@ -575,6 +567,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "import_policy":
+						delete(x, k)
+					
+					case "export_policy":
+						delete(x, k)
 					
 					case "group":
 						delete(x, k)
