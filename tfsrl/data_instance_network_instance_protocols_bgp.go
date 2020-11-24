@@ -357,18 +357,6 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "transport": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "tcp_mss": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                 },
             },
         },
@@ -433,6 +421,9 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "dynamic_neighbors":
+						delete(x, k)
+					
+					case "transport":
 						delete(x, k)
 					
 					case "group":
