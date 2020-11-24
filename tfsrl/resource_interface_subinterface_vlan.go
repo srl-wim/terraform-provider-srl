@@ -13,7 +13,7 @@ package tfsrl
 import (
 	"context"
 	"strings"
-	
+	"fmt"
 	"strconv"
 	"time"
 
@@ -22,18 +22,18 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// resourceSystemNtpString function
-func resourceSystemNtpString(d resourceIDStringer) string {
-	return resourceIDString(d, "system_ntp")
+// resourceInterfacesSubinterfaceVlanString function
+func resourceInterfacesSubinterfaceVlanString(d resourceIDStringer) string {
+	return resourceIDString(d, "interfaces_subinterface_vlan")
 }
 
-// resourceSystemNtp function
-func resourceSystemNtp() *schema.Resource {
+// resourceInterfacesSubinterfaceVlan function
+func resourceInterfacesSubinterfaceVlan() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceSystemNtpCreate,
-		ReadContext:   resourceSystemNtpRead,
-		UpdateContext: resourceSystemNtpUpdate,
-		DeleteContext: resourceSystemNtpDelete,
+		CreateContext: resourceInterfacesSubinterfaceVlanCreate,
+		ReadContext:   resourceInterfacesSubinterfaceVlanRead,
+		UpdateContext: resourceInterfacesSubinterfaceVlanUpdate,
+		DeleteContext: resourceInterfacesSubinterfaceVlanDelete,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -46,40 +46,35 @@ func resourceSystemNtp() *schema.Resource {
 			Delete: schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "ntp": {
+        "subinterface_id": {
+            Type:     schema.TypeString,
+            Required: true,
+            ForceNew: true,
+        },
+        "vlan": {
             Type:     schema.TypeList,
             Optional: true,
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "admin_state": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
-                    "network_instance": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
-                    "server": {
+                    "encap": {
                         Type:     schema.TypeList,
                         Optional: true,
-                        MaxItems: 16,
+                        MaxItems: 1,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
-                                "address": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
-                                },
-                                "iburst": {
-                                    Type:     schema.TypeBool,
+                                "single_tagged": {
+                                    Type:     schema.TypeList,
                                     Optional: true,
-                                    Default: false,
-                                },
-                                "prefer": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "vlan_id": {
+                                                Type:     schema.TypeString,
+                                                Optional: true,
+                                            },
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -92,18 +87,25 @@ func resourceSystemNtp() *schema.Resource {
     }
 }
 
-func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Create: %s", resourceSystemNtpString(d))
+func resourceInterfacesSubinterfaceVlanCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Create: %s", resourceInterfacesSubinterfaceVlanString(d))
 	target := meta.(*Target)
 	
-	key := "ntp"
-	
-	p := "/system/ntp"
-	
-	v := "ntp"
+	key := "vlan"
 	
 	
-	hid := ""
+	hkey0 := d.Get("interface_id").(string)
+    
+	hkey1 := d.Get("subinterface_id").(string)
+    
+	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)
+	
+	v := "vlan"
+	
+	
+	hid := "subinterface_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -119,21 +121,29 @@ func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta i
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemNtpRead(ctx, d, meta)
+	return resourceInterfacesSubinterfaceVlanRead(ctx, d, meta)
 }
 
-func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", resourceSystemNtpString(d))
+func resourceInterfacesSubinterfaceVlanRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", resourceInterfacesSubinterfaceVlanString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
+	
+	hkey0 := d.Get("interface_id").(string)
+    
+	hkey1 := d.Get("subinterface_id").(string)
+    
+	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	
 
 	
 	
-	p := "/system/ntp"
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)
 	
 	
 
@@ -157,7 +167,7 @@ func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta int
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["ntp"].(type) {
+			switch x := upd.Values["vlan"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
@@ -179,7 +189,7 @@ func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta int
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("ntp", data); err != nil {
+			if err := d.Set("vlan", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
@@ -202,18 +212,25 @@ func resourceSystemNtpRead(ctx context.Context, d *schema.ResourceData, meta int
 	return diags
 }
 
-func resourceSystemNtpUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Update: %s", resourceSystemNtpString(d))
+func resourceInterfacesSubinterfaceVlanUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Update: %s", resourceInterfacesSubinterfaceVlanString(d))
 	target := meta.(*Target)
 	
-	key := "ntp"
-	
-	p := "/system/ntp"
-	
-	v := "ntp"
+	key := "vlan"
 	
 	
-	hid := ""
+	hkey0 := d.Get("interface_id").(string)
+    
+	hkey1 := d.Get("subinterface_id").(string)
+    
+	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)
+	
+	v := "vlan"
+	
+	
+	hid := "subinterface_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -229,16 +246,23 @@ func resourceSystemNtpUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	log.Debugf("Set response: %v", response)
 
 	d.SetId(key)
-	return resourceSystemNtpRead(ctx, d, meta)
+	return resourceInterfacesSubinterfaceVlanRead(ctx, d, meta)
 }
 
-func resourceSystemNtpDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Debugf("Beginning delete: %s", resourceSystemNtpString(d))
+func resourceInterfacesSubinterfaceVlanDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Debugf("Beginning delete: %s", resourceInterfacesSubinterfaceVlanString(d))
 	target := meta.(*Target)
 
 	
 	
-	p := "/system/ntp"
+	hkey0 := d.Get("interface_id").(string)
+    
+	hkey1 := d.Get("subinterface_id").(string)
+    
+	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1, d.Id())", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1, d.Id())
 	
 	
 	req, err := target.CreateDeleteRequest(&p, d)

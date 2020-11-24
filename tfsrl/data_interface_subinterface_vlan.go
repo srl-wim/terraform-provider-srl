@@ -22,15 +22,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataNetworkInstanceInstanceStaticRoutesString function
-func dataNetworkInstanceInstanceStaticRoutesString(d resourceIDStringer) string {
-	return resourceIDString(d, "network_instance_instance_static_routes")
+// dataInterfacesSubinterfaceVlanString function
+func dataInterfacesSubinterfaceVlanString(d resourceIDStringer) string {
+	return resourceIDString(d, "interfaces_subinterface_vlan")
 }
 
-// dataNetworkInstanceInstanceStaticRoutes function
-func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
+// dataInterfacesSubinterfaceVlan function
+func dataInterfacesSubinterfaceVlan() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataNetworkInstanceInstanceStaticRoutesRead,
+		ReadContext:   dataInterfacesSubinterfaceVlanRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -40,39 +40,31 @@ func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "network_instance_id": {
+        "subinterface_id": {
             Type:     schema.TypeString,
             Required: true,
         },
-        "static_routes": {
+        "vlan": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "route": {
+                    "encap": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
+                                "single_tagged": {
+                                    Type:     schema.TypeList,
                                     Computed: true,
-                                },
-                                "metric": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "next_hop_group": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "preference": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "prefix": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "vlan_id": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                        },
+                                    },
                                 },
                             },
                         },
@@ -85,8 +77,8 @@ func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
     }
 }
 
-func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceStaticRoutesString(d))
+func dataInterfacesSubinterfaceVlanRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataInterfacesSubinterfaceVlanString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
@@ -94,15 +86,17 @@ func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.
 
 	
 	
-	hkey0 := d.Get("network_instance_id").(string)
+	hkey0 := d.Get("interface_id").(string)
     
-	//hkey := d.Get("[network_instance_id]").(string)
+	hkey1 := d.Get("subinterface_id").(string)
+    
+	//hkey := d.Get("[interface_id subinterface_id]").(string)
 	
 
 	
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/network-instance[name=%s]/static-routes",hkey0)", hkey)
-	p := fmt.Sprintf("/network-instance[name=%s]/static-routes",hkey0)
+	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)", hkey)
+	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/vlan",hkey0,hkey1)
 	
 	
 
@@ -126,7 +120,7 @@ func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["static-routes"].(type) {
+			switch x := upd.Values["vlan"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
@@ -148,7 +142,7 @@ func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("static_routes", data); err != nil {
+			if err := d.Set("vlan", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
