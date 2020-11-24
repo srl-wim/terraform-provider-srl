@@ -135,51 +135,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "dynamic_neighbors": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "accept": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "match": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 16,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "allowed_peer_as": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                        "peer_group": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                        "prefix": {
-                                                            Type:     schema.TypeString,
-                                                            Required: true,
-                                                            ForceNew: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "max_sessions": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                Default: "0",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "ebgp_default_policy": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -572,6 +527,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "export_policy":
+						delete(x, k)
+					
+					case "dynamic_neighbors":
 						delete(x, k)
 					
 					case "group":
