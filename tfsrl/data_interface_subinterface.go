@@ -13,8 +13,14 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	
 	"fmt"
+	
+	
 	"strconv"
+	
+	
+	
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -209,6 +215,34 @@ func dataInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
+                    "vlan": {
+                        Type:     schema.TypeList,
+                        Computed: true,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "encap": {
+                                    Type:     schema.TypeList,
+                                    Computed: true,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "single_tagged": {
+                                                Type:     schema.TypeList,
+                                                Computed: true,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "vlan_id": {
+                                                            Type:     schema.TypeString,
+                                                            Computed: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
@@ -277,9 +311,6 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 						delete(x, k)
 					
 					case "ipv6":
-						delete(x, k)
-					
-					case "vlan":
 						delete(x, k)
 					
 					default:

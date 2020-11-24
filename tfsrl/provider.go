@@ -94,8 +94,6 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface": dataInterfacesSubinterface(),
             
-            "srl_interfaces_subinterface_vlan": dataInterfacesSubinterfaceVlan(),
-            
             "srl_network_instance_instance": dataNetworkInstanceInstance(),
             
             "srl_network_instance_instance_aggregate_routes": dataNetworkInstanceInstanceAggregateRoutes(),
@@ -124,8 +122,6 @@ func Provider() *schema.Provider {
             "srl_interfaces": resourceInterfaces(),
             
             "srl_interfaces_subinterface": resourceInterfacesSubinterface(),
-            
-            "srl_interfaces_subinterface_vlan": resourceInterfacesSubinterfaceVlan(),
             
             "srl_network_instance_instance": resourceNetworkInstanceInstance(),
             

@@ -13,8 +13,14 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	
 	"fmt"
+	
+	
 	"strconv"
+	
+	
+	
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -235,6 +241,37 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                     },
+                    "vlan": {
+                        Type:     schema.TypeList,
+                        Optional: true,
+                        MaxItems: 1,
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "encap": {
+                                    Type:     schema.TypeList,
+                                    Optional: true,
+                                    MaxItems: 1,
+                                    Elem: &schema.Resource{
+                                    	Schema: map[string]*schema.Schema{
+                                            "single_tagged": {
+                                                Type:     schema.TypeList,
+                                                Optional: true,
+                                                MaxItems: 1,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "vlan_id": {
+                                                            Type:     schema.TypeString,
+                                                            Optional: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
@@ -342,9 +379,6 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "ipv6":
-						delete(x, k)
-					
-					case "vlan":
 						delete(x, k)
 					
 					default:
