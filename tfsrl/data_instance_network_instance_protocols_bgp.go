@@ -57,49 +57,9 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "keychain": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "autonomous_system": {
                         Type:     schema.TypeString,
                         Computed: true,
-                    },
-                    "convergence": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "min_wait_to_advertise": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "graceful_restart": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "stale_routes_time": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
                     },
                     "local_preference": {
                         Type:     schema.TypeInt,
@@ -121,49 +81,9 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "route_advertisement": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "rapid_withdrawal": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "wait_for_fib_install": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "router_id": {
                         Type:     schema.TypeString,
                         Computed: true,
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "flag": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "modifier": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "name": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -253,6 +173,21 @@ func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.
 						delete(x, k)
 					
 					case "ebgp_default_policy":
+						delete(x, k)
+					
+					case "route_advertisement":
+						delete(x, k)
+					
+					case "authentication":
+						delete(x, k)
+					
+					case "convergence":
+						delete(x, k)
+					
+					case "graceful_restart":
+						delete(x, k)
+					
+					case "trace_options":
 						delete(x, k)
 					
 					case "group":

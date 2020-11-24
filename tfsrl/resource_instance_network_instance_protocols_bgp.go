@@ -66,55 +66,9 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Optional: true,
                         Default: "enable",
                     },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "keychain": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
                     "autonomous_system": {
                         Type:     schema.TypeString,
                         Optional: true,
-                    },
-                    "convergence": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "min_wait_to_advertise": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "0",
-                                },
-                            },
-                        },
-                    },
-                    "graceful_restart": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "disable",
-                                },
-                                "stale_routes_time": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "360",
-                                },
-                            },
-                        },
                     },
                     "local_preference": {
                         Type:     schema.TypeInt,
@@ -140,55 +94,9 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                             },
                         },
                     },
-                    "route_advertisement": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "rapid_withdrawal": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "wait_for_fib_install": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: true,
-                                },
-                            },
-                        },
-                    },
                     "router_id": {
                         Type:     schema.TypeString,
                         Optional: true,
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "flag": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "modifier": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                            "name": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                                ForceNew: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -313,6 +221,21 @@ func resourceNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *sch
 						delete(x, k)
 					
 					case "ebgp_default_policy":
+						delete(x, k)
+					
+					case "route_advertisement":
+						delete(x, k)
+					
+					case "authentication":
+						delete(x, k)
+					
+					case "convergence":
+						delete(x, k)
+					
+					case "graceful_restart":
+						delete(x, k)
+					
+					case "trace_options":
 						delete(x, k)
 					
 					case "group":
