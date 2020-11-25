@@ -71,172 +71,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Optional: true,
                         Default: "enable",
                     },
-                    "as_path_options": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "allow_own_as": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "remove_private_as": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ignore_peer_as": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                            "leading_only": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                                Default: false,
-                                            },
-                                            "mode": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "replace_peer_as": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "keychain": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
                     "description": {
                         Type:     schema.TypeString,
                         Optional: true,
-                    },
-                    "export_policy": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
-                    "failure_detection": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "enable_bfd": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "fast_failover": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "graceful_restart": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "stale_routes_time": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "import_policy": {
-                        Type:     schema.TypeString,
-                        Optional: true,
-                    },
-                    "ipv4_unicast": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "advertise_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "prefix_limit": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_received_routes": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                            },
-                                            "warning_threshold_pct": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "receive_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "ipv6_unicast": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "prefix_limit": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_received_routes": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                            },
-                                            "warning_threshold_pct": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
                     },
                     "local_as": {
                         Type:     schema.TypeList,
@@ -245,7 +82,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "as_number": {
-                                    Type:     schema.TypeString,
+                                    Type:     schema.TypeInt,
                                     Required: true,
                                     ForceNew: true,
                                 },
@@ -274,140 +111,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         ForceNew: true,
                     },
                     "peer_as": {
-                        Type:     schema.TypeString,
+                        Type:     schema.TypeInt,
                         Optional: true,
                     },
                     "peer_group": {
                         Type:     schema.TypeString,
                         Optional: true,
-                    },
-                    "route_reflector": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "client": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "cluster_id": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "send_community": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "large": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "standard": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "send_default_route": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "export_policy": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "ipv4_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "ipv6_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "timers": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "connect_retry": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "hold_time": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "keepalive_interval": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "minimum_advertisement_interval": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                            },
-                        },
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "flag": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "modifier": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                            },
-                                            "name": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                                ForceNew: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "transport": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "local_address": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "passive_mode": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                },
-                                "tcp_mss": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -515,6 +224,63 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighborRead(ctx context.Context
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "import_policy":
+						delete(x, k)
+					
+					case "export_policy":
+						delete(x, k)
+					
+					case "dynamic_neighbors":
+						delete(x, k)
+					
+					case "transport":
+						delete(x, k)
+					
+					case "ipv4_unicast":
+						delete(x, k)
+					
+					case "ipv6_unicast":
+						delete(x, k)
+					
+					case "failure_detection":
+						delete(x, k)
+					
+					case "send_community":
+						delete(x, k)
+					
+					case "route_reflector":
+						delete(x, k)
+					
+					case "as_path_options":
+						delete(x, k)
+					
+					case "ebgp_default_policy":
+						delete(x, k)
+					
+					case "route_advertisement":
+						delete(x, k)
+					
+					case "authentication":
+						delete(x, k)
+					
+					case "convergence":
+						delete(x, k)
+					
+					case "graceful_restart":
+						delete(x, k)
+					
+					case "trace_options":
+						delete(x, k)
+					
+					case "preference":
+						delete(x, k)
+					
+					case "timers":
+						delete(x, k)
+					
+					case "send_default_route":
+						delete(x, k)
 					
 					default:
 						if k != sk {
