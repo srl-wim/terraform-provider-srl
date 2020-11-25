@@ -75,7 +75,7 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "as_number": {
-                                    Type:     schema.TypeString,
+                                    Type:     schema.TypeInt,
                                     Required: true,
                                 },
                                 "prepend_global_as": {
@@ -98,52 +98,8 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Computed: true,
                     },
                     "peer_as": {
-                        Type:     schema.TypeString,
+                        Type:     schema.TypeInt,
                         Computed: true,
-                    },
-                    "send_default_route": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "export_policy": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "ipv4_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "ipv6_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "timers": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "connect_retry": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "hold_time": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "keepalive_interval": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "minimum_advertisement_interval": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -255,6 +211,12 @@ func dataNetworkInstanceInstanceProtocolsBgpGroupRead(ctx context.Context, d *sc
 						delete(x, k)
 					
 					case "preference":
+						delete(x, k)
+					
+					case "timers":
+						delete(x, k)
+					
+					case "send_default_route":
 						delete(x, k)
 					
 					default:

@@ -87,7 +87,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "as_number": {
-                                    Type:     schema.TypeString,
+                                    Type:     schema.TypeInt,
                                     Required: true,
                                     ForceNew: true,
                                 },
@@ -114,59 +114,8 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Default: false,
                     },
                     "peer_as": {
-                        Type:     schema.TypeString,
+                        Type:     schema.TypeInt,
                         Optional: true,
-                    },
-                    "send_default_route": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "export_policy": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                },
-                                "ipv4_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                                "ipv6_unicast": {
-                                    Type:     schema.TypeBool,
-                                    Optional: true,
-                                    Default: false,
-                                },
-                            },
-                        },
-                    },
-                    "timers": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "connect_retry": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "120",
-                                },
-                                "hold_time": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "90",
-                                },
-                                "keepalive_interval": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                },
-                                "minimum_advertisement_interval": {
-                                    Type:     schema.TypeInt,
-                                    Optional: true,
-                                    Default: "5",
-                                },
-                            },
-                        },
                     },
                 },
             },
@@ -181,7 +130,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupCreate(ctx context.Context,
 	target := meta.(*Target)
 	 
 	rn := "group"
-	rk := "group-name"
+	rk := "group_name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
 		return diag.FromErr(err)
@@ -238,7 +187,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupRead(ctx context.Context, d
 
 	 
 	//rn := "group"
-	rk := "group-name"
+	rk := "group_name"
 	key:= d.Id()
 
 	
@@ -326,6 +275,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupRead(ctx context.Context, d
 					case "preference":
 						delete(x, k)
 					
+					case "timers":
+						delete(x, k)
+					
+					case "send_default_route":
+						delete(x, k)
+					
 					default:
 						if k != sk {
 							delete(x, k)
@@ -372,7 +327,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupUpdate(ctx context.Context,
 	target := meta.(*Target)
 	 
 	rn := "group"
-	rk := "group-name"
+	rk := "group_name"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
 		return diag.FromErr(err)

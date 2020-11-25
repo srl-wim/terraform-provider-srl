@@ -422,7 +422,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighborCreate(ctx context.Conte
 	target := meta.(*Target)
 	 
 	rn := "neighbor"
-	rk := "peer-address"
+	rk := "peer_address"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
 		return diag.FromErr(err)
@@ -479,7 +479,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighborRead(ctx context.Context
 
 	 
 	//rn := "neighbor"
-	rk := "peer-address"
+	rk := "peer_address"
 	key:= d.Id()
 
 	
@@ -562,7 +562,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighborUpdate(ctx context.Conte
 	target := meta.(*Target)
 	 
 	rn := "neighbor"
-	rk := "peer-address"
+	rk := "peer_address"
 	key, err := getResourceListKey(&rn, &rk, d)
 	if err != nil {
 		return diag.FromErr(err)
