@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -71,6 +72,10 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "enable",
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "disable",
+                                        "enable",
+                                    }, false),
                                 },
                                 "blackhole": {
                                     Type:     schema.TypeList,
@@ -101,11 +106,16 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                             "index": {
                                                 Type:     schema.TypeInt,
                                                 Required: true,
                                                 ForceNew: true,
+                                                ValidateFunc: validation.IntBetween(0, 65535),
                                             },
                                             "ip_address": {
                                                 Type:     schema.TypeString,

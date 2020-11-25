@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -71,6 +72,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "disable",
+                                        "enable",
+                                    }, false),
                                 },
                                 "attached_bit": {
                                     Type:     schema.TypeList,
@@ -125,6 +130,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                             "reference_bandwidth": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
+                                                ValidateFunc: validation.IntBetween(1, 100000000),
                                             },
                                         },
                                     },
@@ -173,6 +179,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                                     "route_tag": {
                                                                         Type:     schema.TypeInt,
                                                                         Optional: true,
+                                                                        ValidateFunc: validation.IntBetween(1, 4294967295),
                                                                     },
                                                                 },
                                                             },
@@ -193,6 +200,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                             "authentication": {
                                                 Type:     schema.TypeList,
@@ -214,6 +225,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                             "circuit_type": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "broadcast",
+                                                    "point-to-point",
+                                                }, false),
                                             },
                                             "hello_padding": {
                                                 Type:     schema.TypeString,
@@ -235,6 +250,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "disable",
+                                                                "enable",
+                                                            }, false),
                                                         },
                                                         "enable_bfd": {
                                                             Type:     schema.TypeBool,
@@ -259,6 +278,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "disable",
+                                                                "enable",
+                                                            }, false),
                                                         },
                                                     },
                                                 },
@@ -290,20 +313,24 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                         "ipv6_unicast_metric": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(1, 16777215),
                                                         },
                                                         "level_number": {
                                                             Type:     schema.TypeInt,
                                                             Required: true,
                                                             ForceNew: true,
+                                                            ValidateFunc: validation.IntBetween(1, 2),
                                                         },
                                                         "metric": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(1, 16777215),
                                                         },
                                                         "priority": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "64",
+                                                            ValidateFunc: validation.IntBetween(0, 127),
                                                         },
                                                         "timers": {
                                                             Type:     schema.TypeList,
@@ -315,11 +342,13 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                                         Type:     schema.TypeInt,
                                                                         Optional: true,
                                                                         Default: "9",
+                                                                        ValidateFunc: validation.IntBetween(1, 20000),
                                                                     },
                                                                     "hello_multiplier": {
                                                                         Type:     schema.TypeInt,
                                                                         Optional: true,
                                                                         Default: "3",
+                                                                        ValidateFunc: validation.IntBetween(2, 100),
                                                                     },
                                                                 },
                                                             },
@@ -342,11 +371,13 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "10",
+                                                            ValidateFunc: validation.IntBetween(1, 65535),
                                                         },
                                                         "lsp_pacing_interval": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "100",
+                                                            ValidateFunc: validation.IntBetween(0, 100000),
                                                         },
                                                     },
                                                 },
@@ -360,6 +391,19 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                         "trace": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "adjacencies",
+                                                                "packets-all",
+                                                                "packets-l1-csnp",
+                                                                "packets-l1-hello",
+                                                                "packets-l1-lsp",
+                                                                "packets-l1-psnp",
+                                                                "packets-l2-csnp",
+                                                                "packets-l2-hello",
+                                                                "packets-l2-lsp",
+                                                                "packets-l2-psnp",
+                                                                "packets-p2p-hello",
+                                                            }, false),
                                                         },
                                                     },
                                                 },
@@ -377,6 +421,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                         },
                                     },
@@ -391,6 +439,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                         },
                                     },
@@ -430,11 +482,16 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Required: true,
                                                 ForceNew: true,
+                                                ValidateFunc: validation.IntBetween(1, 2),
                                             },
                                             "metric_style": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "wide",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "narrow",
+                                                    "wide",
+                                                }, false),
                                             },
                                             "route_preference": {
                                                 Type:     schema.TypeList,
@@ -445,10 +502,12 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                         "external": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(1, 255),
                                                         },
                                                         "internal": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(1, 255),
                                                         },
                                                     },
                                                 },
@@ -462,6 +521,12 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                         "trace": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "adjacencies",
+                                                                "lsdb",
+                                                                "routes",
+                                                                "spf",
+                                                            }, false),
                                                         },
                                                     },
                                                 },
@@ -478,6 +543,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
+                                    ValidateFunc: validation.IntBetween(1, 64),
                                 },
                                 "name": {
                                     Type:     schema.TypeString,
@@ -540,6 +606,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                         "timeout": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(60, 1800),
                                                         },
                                                     },
                                                 },
@@ -568,16 +635,19 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "10",
+                                                            ValidateFunc: validation.IntBetween(10, 100000),
                                                         },
                                                         "max_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "5000",
+                                                            ValidateFunc: validation.IntBetween(10, 120000),
                                                         },
                                                         "second_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1000",
+                                                            ValidateFunc: validation.IntBetween(10, 100000),
                                                         },
                                                     },
                                                 },
@@ -586,6 +656,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1200",
+                                                ValidateFunc: validation.IntBetween(350, 65535),
                                             },
                                             "lsp_refresh": {
                                                 Type:     schema.TypeList,
@@ -602,6 +673,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "600",
+                                                            ValidateFunc: validation.IntBetween(150, 65535),
                                                         },
                                                     },
                                                 },
@@ -616,16 +688,19 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1000",
+                                                            ValidateFunc: validation.IntBetween(10, 100000),
                                                         },
                                                         "max_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "10000",
+                                                            ValidateFunc: validation.IntBetween(10, 120000),
                                                         },
                                                         "second_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1000",
+                                                            ValidateFunc: validation.IntBetween(10, 100000),
                                                         },
                                                     },
                                                 },
@@ -642,6 +717,23 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                             "trace": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "adjacencies",
+                                                    "graceful-restart",
+                                                    "interfaces",
+                                                    "packets-all",
+                                                    "packets-l1-csnp",
+                                                    "packets-l1-hello",
+                                                    "packets-l1-lsp",
+                                                    "packets-l1-psnp",
+                                                    "packets-l2-csnp",
+                                                    "packets-l2-hello",
+                                                    "packets-l2-lsp",
+                                                    "packets-l2-psnp",
+                                                    "packets-p2p-hello",
+                                                    "routes",
+                                                    "summary-addresses",
+                                                }, false),
                                             },
                                         },
                                     },
@@ -656,6 +748,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1492",
+                                                ValidateFunc: validation.IntBetween(490, 9490),
                                             },
                                         },
                                     },

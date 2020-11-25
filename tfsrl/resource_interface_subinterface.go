@@ -23,6 +23,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -67,6 +68,10 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
+                        ValidateFunc: validation.StringInSlice([]string{
+                            "disable",
+                            "enable",
+                        }, false),
                     },
                     "bridge_table": {
                         Type:     schema.TypeList,
@@ -89,6 +94,12 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "use-net-instance-action",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "blackhole",
+                                                    "oper-down",
+                                                    "stop-learning",
+                                                    "use-net-instance-action",
+                                                }, false),
                                             },
                                         },
                                     },
@@ -103,6 +114,10 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                             "aging": {
                                                 Type:     schema.TypeList,
@@ -114,6 +129,10 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "disable",
+                                                                "enable",
+                                                            }, false),
                                                         },
                                                     },
                                                 },
@@ -131,11 +150,13 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "250",
+                                                ValidateFunc: validation.IntBetween(1, 8192),
                                             },
                                             "warning_threshold_pct": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "95",
+                                                ValidateFunc: validation.IntBetween(6, 100),
                                             },
                                         },
                                     },
@@ -151,14 +172,17 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeInt,
                         Required: true,
                         ForceNew: true,
+                        ValidateFunc: validation.IntBetween(0, 9999),
                     },
                     "ip_mtu": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(1280, 9486),
                     },
                     "l2_mtu": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(1500, 9500),
                     },
                     "qos": {
                         Type:     schema.TypeList,
@@ -262,6 +286,7 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                         "vlan_id": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
+                                                            ValidateFunc: validation.IntBetween(1, 4094),
                                                         },
                                                     },
                                                 },

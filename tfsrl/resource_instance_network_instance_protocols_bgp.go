@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -65,15 +66,21 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
+                        ValidateFunc: validation.StringInSlice([]string{
+                            "disable",
+                            "enable",
+                        }, false),
                     },
                     "autonomous_system": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(1, 4294967295),
                     },
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Optional: true,
                         Default: "100",
+                        ValidateFunc: validation.IntBetween(0, 4294967295),
                     },
                     "router_id": {
                         Type:     schema.TypeString,

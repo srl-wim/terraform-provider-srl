@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -60,6 +61,10 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
+                        ValidateFunc: validation.StringInSlice([]string{
+                            "disable",
+                            "enable",
+                        }, false),
                     },
                     "aft": {
                         Type:     schema.TypeList,
@@ -96,26 +101,38 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "stop-learning",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "blackhole",
+                                                    "oper-down",
+                                                    "stop-learning",
+                                                }, false),
                                             },
                                             "admin_state": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                             "hold_down_time": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "9",
+                                                ValidateFunc: validation.IntBetween(2, 60),
                                             },
                                             "monitoring_window": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "3",
+                                                ValidateFunc: validation.IntBetween(1, 15),
                                             },
                                             "num_moves": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "5",
+                                                ValidateFunc: validation.IntBetween(3, 10),
                                             },
                                         },
                                     },
@@ -130,6 +147,10 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "disable",
+                                                    "enable",
+                                                }, false),
                                             },
                                             "aging": {
                                                 Type:     schema.TypeList,
@@ -141,11 +162,16 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
+                                                            ValidateFunc: validation.StringInSlice([]string{
+                                                                "disable",
+                                                                "enable",
+                                                            }, false),
                                                         },
                                                         "age_time": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "300",
+                                                            ValidateFunc: validation.IntBetween(60, 86400),
                                                         },
                                                     },
                                                 },
@@ -163,11 +189,13 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "250",
+                                                ValidateFunc: validation.IntBetween(1, 8192),
                                             },
                                             "warning_threshold_pct": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "95",
+                                                ValidateFunc: validation.IntBetween(6, 100),
                                             },
                                         },
                                     },
@@ -253,6 +281,7 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1",
+                                                ValidateFunc: validation.IntBetween(1, 32),
                                             },
                                             "ip_prefix": {
                                                 Type:     schema.TypeString,
@@ -263,6 +292,7 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1",
+                                                ValidateFunc: validation.IntBetween(1, 64),
                                             },
                                         },
                                     },
@@ -280,6 +310,10 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "disable",
+                                        "enable",
+                                    }, false),
                                 },
                                 "static_mpls_entry": {
                                     Type:     schema.TypeList,
@@ -300,11 +334,16 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "swap",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "pop",
+                                                    "swap",
+                                                }, false),
                                             },
                                             "preference": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "5",
+                                                ValidateFunc: validation.IntBetween(0, 255),
                                             },
                                             "top_label": {
                                                 Type:     schema.TypeString,

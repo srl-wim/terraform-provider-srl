@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -60,6 +61,10 @@ func resourceInterfaces() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
+                        ValidateFunc: validation.StringInSlice([]string{
+                            "disable",
+                            "enable",
+                        }, false),
                     },
                     "description": {
                         Type:     schema.TypeString,
@@ -91,10 +96,24 @@ func resourceInterfaces() *schema.Resource {
                                 "lacp_port_priority": {
                                     Type:     schema.TypeInt,
                                     Optional: true,
+                                    ValidateFunc: validation.IntBetween(0, 65535),
                                 },
                                 "port_speed": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "100G",
+                                        "100M",
+                                        "10G",
+                                        "10M",
+                                        "1G",
+                                        "1T",
+                                        "200G",
+                                        "25G",
+                                        "400G",
+                                        "40G",
+                                        "50G",
+                                    }, false),
                                 },
                             },
                         },
@@ -114,16 +133,25 @@ func resourceInterfaces() *schema.Resource {
                                             "admin_key": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
+                                                ValidateFunc: validation.IntBetween(1, 65535),
                                             },
                                             "interval": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "SLOW",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "FAST",
+                                                    "SLOW",
+                                                }, false),
                                             },
                                             "lacp_mode": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "ACTIVE",
+                                                ValidateFunc: validation.StringInSlice([]string{
+                                                    "ACTIVE",
+                                                    "PASSIVE",
+                                                }, false),
                                             },
                                             "system_id_mac": {
                                                 Type:     schema.TypeString,
@@ -132,6 +160,7 @@ func resourceInterfaces() *schema.Resource {
                                             "system_priority": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
+                                                ValidateFunc: validation.IntBetween(0, 65535),
                                             },
                                         },
                                     },
@@ -140,15 +169,28 @@ func resourceInterfaces() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "static",
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "lacp",
+                                        "static",
+                                    }, false),
                                 },
                                 "member_speed": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "100G",
+                                        "10G",
+                                        "1G",
+                                        "25G",
+                                        "400G",
+                                        "40G",
+                                    }, false),
                                 },
                                 "min_links": {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
+                                    ValidateFunc: validation.IntBetween(1, 64),
                                 },
                             },
                         },
@@ -160,6 +202,7 @@ func resourceInterfaces() *schema.Resource {
                     "mtu": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(1500, 9500),
                     },
                     "name": {
                         Type:     schema.TypeString,
@@ -188,6 +231,7 @@ func resourceInterfaces() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Required: true,
                                                             ForceNew: true,
+                                                            ValidateFunc: validation.IntBetween(0, 7),
                                                         },
                                                         "queue_parameters": {
                                                             Type:     schema.TypeList,
@@ -199,6 +243,7 @@ func resourceInterfaces() *schema.Resource {
                                                                         Type:     schema.TypeInt,
                                                                         Optional: true,
                                                                         Default: "100",
+                                                                        ValidateFunc: validation.IntBetween(1, 100),
                                                                     },
                                                                     "strict_priority": {
                                                                         Type:     schema.TypeBool,
@@ -209,6 +254,7 @@ func resourceInterfaces() *schema.Resource {
                                                                         Type:     schema.TypeInt,
                                                                         Optional: true,
                                                                         Default: "1",
+                                                                        ValidateFunc: validation.IntBetween(1, 255),
                                                                     },
                                                                 },
                                                             },
@@ -231,6 +277,10 @@ func resourceInterfaces() *schema.Resource {
                                 "admin_state": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "disable",
+                                        "enable",
+                                    }, false),
                                 },
                                 "ddm_events": {
                                     Type:     schema.TypeBool,
@@ -239,6 +289,13 @@ func resourceInterfaces() *schema.Resource {
                                 "forward_error_correction": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                    ValidateFunc: validation.StringInSlice([]string{
+                                        "base-r",
+                                        "disabled",
+                                        "rs-108",
+                                        "rs-528",
+                                        "rs-544",
+                                    }, false),
                                 },
                                 "tx_laser": {
                                     Type:     schema.TypeBool,

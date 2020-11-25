@@ -21,6 +21,7 @@ import (
 	
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	log "github.com/sirupsen/logrus"
@@ -70,6 +71,10 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
+                        ValidateFunc: validation.StringInSlice([]string{
+                            "disable",
+                            "enable",
+                        }, false),
                     },
                     "description": {
                         Type:     schema.TypeString,
@@ -90,6 +95,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Required: true,
                                     ForceNew: true,
+                                    ValidateFunc: validation.IntBetween(1, 4294967295),
                                 },
                                 "prepend_global_as": {
                                     Type:     schema.TypeBool,
@@ -107,6 +113,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(0, 4294967295),
                     },
                     "next_hop_self": {
                         Type:     schema.TypeBool,
@@ -116,6 +123,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                     "peer_as": {
                         Type:     schema.TypeInt,
                         Optional: true,
+                        ValidateFunc: validation.IntBetween(1, 4294967295),
                     },
                 },
             },
