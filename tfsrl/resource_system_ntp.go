@@ -59,10 +59,12 @@ func resourceSystemNtp() *schema.Resource {
                     "admin_state": {
                         Type:     schema.TypeString,
                         Optional: true,
-                        ValidateFunc: validation.StringInSlice([]string{
-                            "disable",
-                            "enable",
-                        }, false),
+                        ValidateFunc: validation.All(
+                            validation.StringInSlice([]string{
+                                "disable",
+                                "enable",
+                            }, false),
+                        ),
                     },
                     "network_instance": {
                         Type:     schema.TypeString,

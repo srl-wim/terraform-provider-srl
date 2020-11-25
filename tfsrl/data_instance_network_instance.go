@@ -360,6 +360,9 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 					case "protocols":
 						delete(x, k)
 					
+					case "aggregate_routes":
+						delete(x, k)
+					
 					case "next_hop_groups":
 						delete(x, k)
 					
@@ -373,9 +376,6 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 						delete(x, k)
 					
 					case "static_routes":
-						delete(x, k)
-					
-					case "aggregate_routes":
 						delete(x, k)
 					
 					default:

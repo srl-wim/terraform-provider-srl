@@ -72,16 +72,20 @@ func resourceNetworkInstanceInstanceStaticRoutes() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "enable",
-                                    ValidateFunc: validation.StringInSlice([]string{
-                                        "disable",
-                                        "enable",
-                                    }, false),
+                                    ValidateFunc: validation.All(
+                                        validation.StringInSlice([]string{
+                                            "disable",
+                                            "enable",
+                                        }, false),
+                                    ),
                                 },
                                 "metric": {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
-                                    ValidateFunc: validation.IntBetween(0, 4294967295),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(0, 4294967295),
+                                    ),
                                 },
                                 "next_hop_group": {
                                     Type:     schema.TypeString,
@@ -91,7 +95,9 @@ func resourceNetworkInstanceInstanceStaticRoutes() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "5",
-                                    ValidateFunc: validation.IntBetween(0, 255),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(0, 255),
+                                    ),
                                 },
                                 "prefix": {
                                     Type:     schema.TypeString,

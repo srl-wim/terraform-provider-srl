@@ -16,7 +16,8 @@ import (
 	
 	"fmt"
 	
-	"strconv"
+    "strconv"
+    "regexp"
 	
 	
 	"time"
@@ -76,20 +77,24 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
-                                    ValidateFunc: validation.StringInSlice([]string{
-                                        "disable",
-                                        "enable",
-                                    }, false),
+                                    ValidateFunc: validation.All(
+                                        validation.StringInSlice([]string{
+                                            "disable",
+                                            "enable",
+                                        }, false),
+                                    ),
                                 },
                                 "advertise_router_capability": {
                                     Type:     schema.TypeString,
                                     Optional: true,
-                                    ValidateFunc: validation.StringInSlice([]string{
-                                        "area",
-                                        "as",
-                                        "false",
-                                        "link",
-                                    }, false),
+                                    ValidateFunc: validation.All(
+                                        validation.StringInSlice([]string{
+                                            "area",
+                                            "as",
+                                            "false",
+                                            "link",
+                                        }, false),
+                                    ),
                                 },
                                 "area": {
                                     Type:     schema.TypeList,
@@ -106,6 +111,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Required: true,
                                                 ForceNew: true,
+                                                ValidateFunc: validation.All(
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                                                ),
                                             },
                                             "area_range": {
                                                 Type:     schema.TypeList,
@@ -144,10 +152,12 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.StringInSlice([]string{
-                                                                "disable",
-                                                                "enable",
-                                                            }, false),
+                                                            ValidateFunc: validation.All(
+                                                                validation.StringInSlice([]string{
+                                                                    "disable",
+                                                                    "enable",
+                                                                }, false),
+                                                            ),
                                                         },
                                                         "advertise_router_capability": {
                                                             Type:     schema.TypeBool,
@@ -176,7 +186,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "40",
-                                                            ValidateFunc: validation.IntBetween(2, 65535),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(2, 65535),
+                                                            ),
                                                         },
                                                         "failure_detection": {
                                                             Type:     schema.TypeList,
@@ -196,7 +208,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "10",
-                                                            ValidateFunc: validation.IntBetween(1, 65535),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(1, 65535),
+                                                            ),
                                                         },
                                                         "interface_name": {
                                                             Type:     schema.TypeString,
@@ -206,31 +220,39 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                         "interface_type": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
-                                                            ValidateFunc: validation.StringInSlice([]string{
-                                                                "broadcast",
-                                                                "point-to-point",
-                                                            }, false),
+                                                            ValidateFunc: validation.All(
+                                                                validation.StringInSlice([]string{
+                                                                    "broadcast",
+                                                                    "point-to-point",
+                                                                }, false),
+                                                            ),
                                                         },
                                                         "lsa_filter_out": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "none",
-                                                            ValidateFunc: validation.StringInSlice([]string{
-                                                                "all",
-                                                                "except-own-rtrlsa",
-                                                                "except-own-rtrlsa-and-defaults",
-                                                                "none",
-                                                            }, false),
+                                                            ValidateFunc: validation.All(
+                                                                validation.StringInSlice([]string{
+                                                                    "all",
+                                                                    "except-own-rtrlsa",
+                                                                    "except-own-rtrlsa-and-defaults",
+                                                                    "none",
+                                                                }, false),
+                                                            ),
                                                         },
                                                         "metric": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
-                                                            ValidateFunc: validation.IntBetween(0, 65535),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(0, 65535),
+                                                            ),
                                                         },
                                                         "mtu": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
-                                                            ValidateFunc: validation.IntBetween(512, 9198),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(512, 9198),
+                                                            ),
                                                         },
                                                         "passive": {
                                                             Type:     schema.TypeBool,
@@ -240,19 +262,25 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1",
-                                                            ValidateFunc: validation.IntBetween(0, 255),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(0, 255),
+                                                            ),
                                                         },
                                                         "retransmit_interval": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "5",
-                                                            ValidateFunc: validation.IntBetween(1, 1800),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(1, 1800),
+                                                            ),
                                                         },
                                                         "transit_delay": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1",
-                                                            ValidateFunc: validation.IntBetween(1, 1800),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(1, 1800),
+                                                            ),
                                                         },
                                                     },
                                                 },
@@ -321,7 +349,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                         "default_metric": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
-                                                            ValidateFunc: validation.IntBetween(0, 65535),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(0, 65535),
+                                                            ),
                                                         },
                                                         "summaries": {
                                                             Type:     schema.TypeBool,
@@ -356,12 +386,16 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                             "log_percent": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
-                                                ValidateFunc: validation.IntBetween(1, 100),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(1, 100),
+                                                ),
                                             },
                                             "number": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
-                                                ValidateFunc: validation.IntBetween(1, 0),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(1, 0),
+                                                ),
                                             },
                                         },
                                     },
@@ -380,13 +414,17 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "0",
-                                                ValidateFunc: validation.IntBetween(0, 2147483647),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 2147483647),
+                                                ),
                                             },
                                             "limit": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "0",
-                                                ValidateFunc: validation.IntBetween(0, 2147483647),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 2147483647),
+                                                ),
                                             },
                                         },
                                     },
@@ -395,7 +433,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "150",
-                                    ValidateFunc: validation.IntBetween(0, 255),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(0, 255),
+                                    ),
                                 },
                                 "graceful_restart": {
                                     Type:     schema.TypeList,
@@ -420,12 +460,17 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
-                                    ValidateFunc: validation.IntBetween(1, 64),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(1, 64),
+                                    ),
                                 },
                                 "name": {
                                     Type:     schema.TypeString,
                                     Required: true,
                                     ForceNew: true,
+                                    ValidateFunc: validation.All(
+                                        validation.StringLenBetween(1, 255),
+                                    ),
                                 },
                                 "overload": {
                                     Type:     schema.TypeList,
@@ -463,7 +508,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "60",
-                                                            ValidateFunc: validation.IntBetween(1, 1800),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(1, 1800),
+                                                            ),
                                                         },
                                                     },
                                                 },
@@ -481,7 +528,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                         "max_lsa_count": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
-                                                            ValidateFunc: validation.IntBetween(1, 4294967295),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(1, 4294967295),
+                                                            ),
                                                         },
                                                         "overload_timeout": {
                                                             Type:     schema.TypeString,
@@ -491,7 +540,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "0",
-                                                            ValidateFunc: validation.IntBetween(0, 100),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(0, 100),
+                                                            ),
                                                         },
                                                     },
                                                 },
@@ -503,17 +554,24 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "10",
-                                    ValidateFunc: validation.IntBetween(1, 255),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(1, 255),
+                                    ),
                                 },
                                 "reference_bandwidth": {
                                     Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "100000000",
-                                    ValidateFunc: validation.IntBetween(1, 4000000000),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(1, 4000000000),
+                                    ),
                                 },
                                 "router_id": {
                                     Type:     schema.TypeString,
                                     Optional: true,
+                                    ValidateFunc: validation.All(
+                                        validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                                    ),
                                 },
                                 "timers": {
                                     Type:     schema.TypeList,
@@ -525,19 +583,25 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1000",
-                                                ValidateFunc: validation.IntBetween(0, 1000),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 1000),
+                                                ),
                                             },
                                             "lsa_accumulate": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1000",
-                                                ValidateFunc: validation.IntBetween(0, 1000),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 1000),
+                                                ),
                                             },
                                             "lsa_arrival": {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1000",
-                                                ValidateFunc: validation.IntBetween(0, 600000),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 600000),
+                                                ),
                                             },
                                             "lsa_generate": {
                                                 Type:     schema.TypeList,
@@ -549,19 +613,25 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "5000",
-                                                            ValidateFunc: validation.IntBetween(10, 600000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 600000),
+                                                            ),
                                                         },
                                                         "lsa_second_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "5000",
-                                                            ValidateFunc: validation.IntBetween(10, 600000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 600000),
+                                                            ),
                                                         },
                                                         "max_lsa_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "5000",
-                                                            ValidateFunc: validation.IntBetween(10, 600000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 600000),
+                                                            ),
                                                         },
                                                     },
                                                 },
@@ -570,7 +640,9 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Type:     schema.TypeInt,
                                                 Optional: true,
                                                 Default: "1000",
-                                                ValidateFunc: validation.IntBetween(0, 1000),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 1000),
+                                                ),
                                             },
                                             "spf_wait": {
                                                 Type:     schema.TypeList,
@@ -582,19 +654,25 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1000",
-                                                            ValidateFunc: validation.IntBetween(10, 100000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 100000),
+                                                            ),
                                                         },
                                                         "spf_max_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "10000",
-                                                            ValidateFunc: validation.IntBetween(10, 120000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 120000),
+                                                            ),
                                                         },
                                                         "spf_second_wait": {
                                                             Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "1000",
-                                                            ValidateFunc: validation.IntBetween(10, 100000),
+                                                            ValidateFunc: validation.All(
+                                                                validation.IntBetween(10, 100000),
+                                                            ),
                                                         },
                                                     },
                                                 },

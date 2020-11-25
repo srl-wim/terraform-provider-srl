@@ -12,6 +12,7 @@ package tfsrl
 
 import (
 	"context"
+	"regexp"
 	"strings"
 
 	"strconv"
@@ -20,6 +21,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -56,10 +58,18 @@ func resourceSystemName() *schema.Resource {
 						"domain_name": {
 							Type:     schema.TypeString,
 							Optional: true,
+							ValidateFunc: validation.All(
+								validation.StringLenBetween(1, 253),
+								validation.StringMatch(regexp.MustCompile(`((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)|\.`), "must match regex"),
+							),
 						},
 						"host_name": {
 							Type:     schema.TypeString,
 							Optional: true,
+							ValidateFunc: validation.All(
+								validation.StringLenBetween(1, 63),
+								validation.StringMatch(regexp.MustCompile(`(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])`), "must match regex"),
+							),
 						},
 					},
 				},

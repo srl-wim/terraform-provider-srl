@@ -71,14 +71,19 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.StringInSlice([]string{
-                            "disable",
-                            "enable",
-                        }, false),
+                        ValidateFunc: validation.All(
+                            validation.StringInSlice([]string{
+                                "disable",
+                                "enable",
+                            }, false),
+                        ),
                     },
                     "description": {
                         Type:     schema.TypeString,
                         Optional: true,
+                        ValidateFunc: validation.All(
+                            validation.StringLenBetween(1, 255),
+                        ),
                     },
                     "local_as": {
                         Type:     schema.TypeList,
@@ -90,7 +95,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                                     Type:     schema.TypeInt,
                                     Required: true,
                                     ForceNew: true,
-                                    ValidateFunc: validation.IntBetween(1, 4294967295),
+                                    ValidateFunc: validation.All(
+                                        validation.IntBetween(1, 4294967295),
+                                    ),
                                 },
                                 "prepend_global_as": {
                                     Type:     schema.TypeBool,
@@ -106,7 +113,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Optional: true,
-                        ValidateFunc: validation.IntBetween(0, 4294967295),
+                        ValidateFunc: validation.All(
+                            validation.IntBetween(0, 4294967295),
+                        ),
                     },
                     "next_hop_self": {
                         Type:     schema.TypeBool,
@@ -120,7 +129,9 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                     "peer_as": {
                         Type:     schema.TypeInt,
                         Optional: true,
-                        ValidateFunc: validation.IntBetween(1, 4294967295),
+                        ValidateFunc: validation.All(
+                            validation.IntBetween(1, 4294967295),
+                        ),
                     },
                     "peer_group": {
                         Type:     schema.TypeString,

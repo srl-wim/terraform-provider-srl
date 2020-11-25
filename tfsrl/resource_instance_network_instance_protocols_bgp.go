@@ -15,6 +15,7 @@ import (
 	"strings"
 	
 	"fmt"
+	"regexp"
 	
 	"strconv"
 	
@@ -66,25 +67,34 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.StringInSlice([]string{
-                            "disable",
-                            "enable",
-                        }, false),
+                        ValidateFunc: validation.All(
+                            validation.StringInSlice([]string{
+                                "disable",
+                                "enable",
+                            }, false),
+                        ),
                     },
                     "autonomous_system": {
                         Type:     schema.TypeInt,
                         Optional: true,
-                        ValidateFunc: validation.IntBetween(1, 4294967295),
+                        ValidateFunc: validation.All(
+                            validation.IntBetween(1, 4294967295),
+                        ),
                     },
                     "local_preference": {
                         Type:     schema.TypeInt,
                         Optional: true,
                         Default: "100",
-                        ValidateFunc: validation.IntBetween(0, 4294967295),
+                        ValidateFunc: validation.All(
+                            validation.IntBetween(0, 4294967295),
+                        ),
                     },
                     "router_id": {
                         Type:     schema.TypeString,
                         Optional: true,
+                        ValidateFunc: validation.All(
+                            validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                        ),
                     },
                 },
             },

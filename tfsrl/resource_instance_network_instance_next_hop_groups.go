@@ -72,10 +72,12 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "enable",
-                                    ValidateFunc: validation.StringInSlice([]string{
-                                        "disable",
-                                        "enable",
-                                    }, false),
+                                    ValidateFunc: validation.All(
+                                        validation.StringInSlice([]string{
+                                            "disable",
+                                            "enable",
+                                        }, false),
+                                    ),
                                 },
                                 "blackhole": {
                                     Type:     schema.TypeList,
@@ -95,6 +97,9 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                     ForceNew: true,
+                                    ValidateFunc: validation.All(
+                                        validation.StringLenBetween(1, 255),
+                                    ),
                                 },
                                 "nexthop": {
                                     Type:     schema.TypeList,
@@ -106,16 +111,20 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.StringInSlice([]string{
-                                                    "disable",
-                                                    "enable",
-                                                }, false),
+                                                ValidateFunc: validation.All(
+                                                    validation.StringInSlice([]string{
+                                                        "disable",
+                                                        "enable",
+                                                    }, false),
+                                                ),
                                             },
                                             "index": {
                                                 Type:     schema.TypeInt,
                                                 Required: true,
                                                 ForceNew: true,
-                                                ValidateFunc: validation.IntBetween(0, 65535),
+                                                ValidateFunc: validation.All(
+                                                    validation.IntBetween(0, 65535),
+                                                ),
                                             },
                                             "ip_address": {
                                                 Type:     schema.TypeString,
