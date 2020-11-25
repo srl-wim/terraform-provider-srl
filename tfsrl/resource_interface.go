@@ -185,7 +185,7 @@ func resourceInterfaces() *schema.Resource {
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "queue_id": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Required: true,
                                                             ForceNew: true,
                                                         },

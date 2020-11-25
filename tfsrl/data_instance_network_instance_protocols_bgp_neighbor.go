@@ -65,10 +65,6 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "export_policy": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
                     "local_as": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -171,6 +167,9 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighborRead(ctx context.Context, d 
 					switch sk {
 					
 					case "import_policy":
+						delete(x, k)
+					
+					case "export_policy":
 						delete(x, k)
 					
 					case "dynamic_neighbors":

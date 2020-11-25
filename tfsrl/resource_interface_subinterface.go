@@ -260,7 +260,7 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "vlan_id": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Optional: true,
                                                         },
                                                     },

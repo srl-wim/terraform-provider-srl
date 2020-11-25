@@ -83,7 +83,7 @@ func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
                                                 Optional: true,
                                             },
                                             "as_number": {
-                                                Type:     schema.TypeString,
+                                                Type:     schema.TypeInt,
                                                 Optional: true,
                                             },
                                         },

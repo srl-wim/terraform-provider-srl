@@ -171,7 +171,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                                         ForceNew: true,
                                                                     },
                                                                     "route_tag": {
-                                                                        Type:     schema.TypeString,
+                                                                        Type:     schema.TypeInt,
                                                                         Optional: true,
                                                                     },
                                                                 },
@@ -288,16 +288,16 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Default: false,
                                                         },
                                                         "ipv6_unicast_metric": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Optional: true,
                                                         },
                                                         "level_number": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Required: true,
                                                             ForceNew: true,
                                                         },
                                                         "metric": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Optional: true,
                                                         },
                                                         "priority": {
@@ -427,7 +427,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 },
                                             },
                                             "level_number": {
-                                                Type:     schema.TypeString,
+                                                Type:     schema.TypeInt,
                                                 Required: true,
                                                 ForceNew: true,
                                             },
@@ -475,7 +475,7 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                     Default: "L2",
                                 },
                                 "max_ecmp_paths": {
-                                    Type:     schema.TypeString,
+                                    Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
                                 },

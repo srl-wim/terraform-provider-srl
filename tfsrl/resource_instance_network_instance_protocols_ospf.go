@@ -379,7 +379,7 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     },
                                 },
                                 "max_ecmp_paths": {
-                                    Type:     schema.TypeString,
+                                    Type:     schema.TypeInt,
                                     Optional: true,
                                     Default: "1",
                                 },
@@ -447,7 +447,7 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Optional: true,
                                                         },
                                                         "warning_threshold": {
-                                                            Type:     schema.TypeString,
+                                                            Type:     schema.TypeInt,
                                                             Optional: true,
                                                             Default: "0",
                                                         },
