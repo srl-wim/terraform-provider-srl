@@ -44,6 +44,10 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
+        "network_instance_id": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
         "bgp_id": {
             Type:     schema.TypeString,
             Required: true,
