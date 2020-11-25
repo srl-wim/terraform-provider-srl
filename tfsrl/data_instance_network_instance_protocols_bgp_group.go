@@ -75,7 +75,7 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "as_number": {
-                                    Type:     schema.TypeInt,
+                                    Type:     schema.TypeString,
                                     Required: true,
                                 },
                                 "prepend_global_as": {
@@ -98,7 +98,7 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Computed: true,
                     },
                     "peer_as": {
-                        Type:     schema.TypeInt,
+                        Type:     schema.TypeString,
                         Computed: true,
                     },
                 },

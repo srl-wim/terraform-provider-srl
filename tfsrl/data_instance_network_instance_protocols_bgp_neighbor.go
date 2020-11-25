@@ -65,13 +65,17 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
+                    "export_policy": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
                     "local_as": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
                                 "as_number": {
-                                    Type:     schema.TypeInt,
+                                    Type:     schema.TypeString,
                                     Required: true,
                                 },
                                 "prepend_global_as": {
@@ -98,7 +102,7 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Required: true,
                     },
                     "peer_as": {
-                        Type:     schema.TypeInt,
+                        Type:     schema.TypeString,
                         Computed: true,
                     },
                     "peer_group": {
@@ -167,9 +171,6 @@ func dataNetworkInstanceInstanceProtocolsBgpNeighborRead(ctx context.Context, d 
 					switch sk {
 					
 					case "import_policy":
-						delete(x, k)
-					
-					case "export_policy":
 						delete(x, k)
 					
 					case "dynamic_neighbors":
