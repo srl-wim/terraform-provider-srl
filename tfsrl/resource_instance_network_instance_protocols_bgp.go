@@ -67,7 +67,7 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Default: "enable",
                     },
                     "autonomous_system": {
-                        Type:     schema.TypeString,
+                        Type:     schema.TypeInt,
                         Optional: true,
                     },
                     "local_preference": {

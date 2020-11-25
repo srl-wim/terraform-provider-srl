@@ -57,165 +57,13 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "as_path_options": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "allow_own_as": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                                "remove_private_as": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "ignore_peer_as": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "leading_only": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "mode": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "replace_peer_as": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "authentication": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "keychain": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "description": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "export_policy": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "failure_detection": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "enable_bfd": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "fast_failover": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "graceful_restart": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "stale_routes_time": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
                     "group_name": {
                         Type:     schema.TypeString,
                         Required: true,
-                    },
-                    "import_policy": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "ipv4_unicast": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "advertise_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "prefix_limit": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_received_routes": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "warning_threshold_pct": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "receive_ipv6_next_hops": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "ipv6_unicast": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "prefix_limit": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "max_received_routes": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "warning_threshold_pct": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
                     },
                     "local_as": {
                         Type:     schema.TypeList,
@@ -248,38 +96,6 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                     "peer_as": {
                         Type:     schema.TypeString,
                         Computed: true,
-                    },
-                    "route_reflector": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "client": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "cluster_id": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "send_community": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "large": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "standard": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                            },
-                        },
                     },
                     "send_default_route": {
                         Type:     schema.TypeList,
@@ -319,50 +135,6 @@ func dataNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                                     Computed: true,
                                 },
                                 "minimum_advertisement_interval": {
-                                    Type:     schema.TypeInt,
-                                    Computed: true,
-                                },
-                            },
-                        },
-                    },
-                    "trace_options": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "flag": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "modifier": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "name": {
-                                                Type:     schema.TypeString,
-                                                Required: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "transport": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "local_address": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "passive_mode": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "tcp_mss": {
                                     Type:     schema.TypeInt,
                                     Computed: true,
                                 },
@@ -429,6 +201,57 @@ func dataNetworkInstanceInstanceProtocolsBgpGroupRead(ctx context.Context, d *sc
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "import_policy":
+						delete(x, k)
+					
+					case "export_policy":
+						delete(x, k)
+					
+					case "dynamic_neighbors":
+						delete(x, k)
+					
+					case "transport":
+						delete(x, k)
+					
+					case "ipv4_unicast":
+						delete(x, k)
+					
+					case "ipv6_unicast":
+						delete(x, k)
+					
+					case "failure_detection":
+						delete(x, k)
+					
+					case "send_community":
+						delete(x, k)
+					
+					case "route_reflector":
+						delete(x, k)
+					
+					case "as_path_options":
+						delete(x, k)
+					
+					case "ebgp_default_policy":
+						delete(x, k)
+					
+					case "route_advertisement":
+						delete(x, k)
+					
+					case "authentication":
+						delete(x, k)
+					
+					case "convergence":
+						delete(x, k)
+					
+					case "graceful_restart":
+						delete(x, k)
+					
+					case "trace_options":
+						delete(x, k)
+					
+					case "preference":
+						delete(x, k)
 					
 					default:
 						if k != sk {
