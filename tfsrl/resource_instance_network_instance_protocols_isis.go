@@ -687,7 +687,12 @@ func resourceNetworkInstanceInstanceProtocolsIsisCreate(ctx context.Context, d *
 	v := "isis"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -808,7 +813,12 @@ func resourceNetworkInstanceInstanceProtocolsIsisUpdate(ctx context.Context, d *
 	v := "isis"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

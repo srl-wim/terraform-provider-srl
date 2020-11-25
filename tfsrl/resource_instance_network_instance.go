@@ -373,7 +373,8 @@ func resourceNetworkInstanceInstanceCreate(ctx context.Context, d *schema.Resour
 	v := ""
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -518,7 +519,8 @@ func resourceNetworkInstanceInstanceUpdate(ctx context.Context, d *schema.Resour
 	v := ""
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

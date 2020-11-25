@@ -120,7 +120,7 @@ func loadCerts(tlscfg *tls.Config, c *TargetConfig) error {
 }
 
 // CreateSetRequest function
-func (t *Target) CreateSetRequest(path, data, hid *string, d *schema.ResourceData) (*gnmi.SetRequest, error) {
+func (t *Target) CreateSetRequest(path, data *string, hid *[]string, d *schema.ResourceData) (*gnmi.SetRequest, error) {
 	// parse input data from provider
 	update := d.Get(*data)
 	log.Debugf("Set Req update before json: %s \n", update)
@@ -128,10 +128,15 @@ func (t *Target) CreateSetRequest(path, data, hid *string, d *schema.ResourceDat
 	case map[string]interface{}:
 		for k, v := range x {
 			log.Debugf("CREATE/SET BEFORE KEY: %s, VALUE: %v", k, v)
-			switch k {
-			case *hid:
-				delete(x, k)
+			for _, h := range *hid {
+				if k == h {
+					delete(x, k)
+				}
 			}
+			//switch k {
+			//case *hid:
+			//	delete(x, k)
+			//}
 		}
 		for k, v := range x {
 			log.Debugf("CREATE/SET AFTER KEY: %s, VALUE: %v", k, v)

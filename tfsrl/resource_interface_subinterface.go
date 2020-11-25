@@ -300,7 +300,12 @@ func resourceInterfacesSubinterfaceCreate(ctx context.Context, d *schema.Resourc
 	v := ""
 	
 	
-	hid := "interface_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "interface_id")
+	
+	//hid = append(hid, "interface_id")
+	//hid := "interface_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -443,7 +448,12 @@ func resourceInterfacesSubinterfaceUpdate(ctx context.Context, d *schema.Resourc
 	v := ""
 	
 	
-	hid := "interface_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "interface_id")
+	
+	//hid = append(hid, "interface_id")
+	//hid := "interface_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

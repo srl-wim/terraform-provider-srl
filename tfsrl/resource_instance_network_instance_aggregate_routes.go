@@ -143,7 +143,12 @@ func resourceNetworkInstanceInstanceAggregateRoutesCreate(ctx context.Context, d
 	v := "aggregate_routes"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -264,7 +269,12 @@ func resourceNetworkInstanceInstanceAggregateRoutesUpdate(ctx context.Context, d
 	v := "aggregate_routes"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

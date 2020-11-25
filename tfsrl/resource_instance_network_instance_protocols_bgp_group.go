@@ -196,7 +196,14 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupCreate(ctx context.Context,
 	v := ""
 	
 	
-	hid := "bgp_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+    hid = append(hid, "bgp_id")
+	
+	//hid = append(hid, "bgp_id")
+	//hid := "bgp_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -381,7 +388,14 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroupUpdate(ctx context.Context,
 	v := ""
 	
 	
-	hid := "bgp_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+    hid = append(hid, "bgp_id")
+	
+	//hid = append(hid, "bgp_id")
+	//hid := "bgp_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

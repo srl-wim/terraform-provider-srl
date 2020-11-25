@@ -67,7 +67,7 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Default: "enable",
                     },
                     "autonomous_system": {
-                        Type:     schema.TypeInt,
+                        Type:     schema.TypeString,
                         Optional: true,
                     },
                     "local_preference": {
@@ -103,7 +103,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpCreate(ctx context.Context, d *s
 	v := "bgp"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -281,7 +286,12 @@ func resourceNetworkInstanceInstanceProtocolsBgpUpdate(ctx context.Context, d *s
 	v := "bgp"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

@@ -58,7 +58,7 @@ func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Computed: true,
                     },
                     "autonomous_system": {
-                        Type:     schema.TypeInt,
+                        Type:     schema.TypeString,
                         Computed: true,
                     },
                     "local_preference": {

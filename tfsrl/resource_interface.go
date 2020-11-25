@@ -275,7 +275,8 @@ func resourceInterfacesCreate(ctx context.Context, d *schema.ResourceData, meta 
 	v := ""
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -405,7 +406,8 @@ func resourceInterfacesUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	v := ""
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

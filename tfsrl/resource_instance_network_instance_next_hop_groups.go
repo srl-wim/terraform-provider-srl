@@ -150,7 +150,12 @@ func resourceNetworkInstanceInstanceNextHopGroupsCreate(ctx context.Context, d *
 	v := "next_hop_groups"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -271,7 +276,12 @@ func resourceNetworkInstanceInstanceNextHopGroupsUpdate(ctx context.Context, d *
 	v := "next_hop_groups"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

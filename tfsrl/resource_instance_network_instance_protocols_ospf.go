@@ -579,7 +579,12 @@ func resourceNetworkInstanceInstanceProtocolsOspfCreate(ctx context.Context, d *
 	v := "ospf"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -700,7 +705,12 @@ func resourceNetworkInstanceInstanceProtocolsOspfUpdate(ctx context.Context, d *
 	v := "ospf"
 	
 	
-	hid := "network_instance_id"
+	hid := make([]string, 0)
+	
+    hid = append(hid, "network_instance_id")
+	
+	//hid = append(hid, "network_instance_id")
+	//hid := "network_instance_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {

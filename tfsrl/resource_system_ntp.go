@@ -106,7 +106,8 @@ func resourceSystemNtpCreate(ctx context.Context, d *schema.ResourceData, meta i
 	v := "ntp"
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -216,7 +217,8 @@ func resourceSystemNtpUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	v := "ntp"
 	
 	
-	hid := ""
+	hid := make([]string, 0)
+	//hid := ""
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
