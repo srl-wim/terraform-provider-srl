@@ -360,6 +360,9 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 					case "protocols":
 						delete(x, k)
 					
+					case "protocols/isis":
+						delete(x, k)
+					
 					case "protocols/ospf":
 						delete(x, k)
 					
@@ -373,9 +376,6 @@ func dataNetworkInstanceInstanceRead(ctx context.Context, d *schema.ResourceData
 						delete(x, k)
 					
 					case "protocols/bgp":
-						delete(x, k)
-					
-					case "protocols/isis":
 						delete(x, k)
 					
 					default:

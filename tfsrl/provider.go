@@ -94,6 +94,14 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface": dataInterfacesSubinterface(),
             
+            "srl_interfaces_subinterface_acl": dataInterfacesSubinterfaceAcl(),
+            
+            "srl_interfaces_subinterface_ipv4": dataInterfacesSubinterfaceIpv4(),
+            
+            "srl_interfaces_subinterface_ipv6": dataInterfacesSubinterfaceIpv6(),
+            
+            "srl_interfaces_subinterface_vlan": dataInterfacesSubinterfaceVlan(),
+            
             "srl_network_instance_instance": dataNetworkInstanceInstance(),
             
             "srl_network_instance_instance_aggregate_routes": dataNetworkInstanceInstanceAggregateRoutes(),
@@ -122,6 +130,14 @@ func Provider() *schema.Provider {
             "srl_interfaces": resourceInterfaces(),
             
             "srl_interfaces_subinterface": resourceInterfacesSubinterface(),
+            
+            "srl_interfaces_subinterface_acl": resourceInterfacesSubinterfaceAcl(),
+            
+            "srl_interfaces_subinterface_ipv4": resourceInterfacesSubinterfaceIpv4(),
+            
+            "srl_interfaces_subinterface_ipv6": resourceInterfacesSubinterfaceIpv6(),
+            
+            "srl_interfaces_subinterface_vlan": resourceInterfacesSubinterfaceVlan(),
             
             "srl_network_instance_instance": resourceNetworkInstanceInstance(),
             
