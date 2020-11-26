@@ -112,6 +112,24 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface_vlan": dataInterfacesSubinterfaceVlan(),
             
+            "srl_network_instance_instance": dataNetworkInstanceInstance(),
+            
+            "srl_network_instance_instance_aggregate_routes": dataNetworkInstanceInstanceAggregateRoutes(),
+            
+            "srl_network_instance_instance_next_hop_groups": dataNetworkInstanceInstanceNextHopGroups(),
+            
+            "srl_network_instance_instance_protocols_bgp": dataNetworkInstanceInstanceProtocolsBgp(),
+            
+            "srl_network_instance_instance_protocols_bgp_group": dataNetworkInstanceInstanceProtocolsBgpGroup(),
+            
+            "srl_network_instance_instance_protocols_bgp_neighbor": dataNetworkInstanceInstanceProtocolsBgpNeighbor(),
+            
+            "srl_network_instance_instance_protocols_isis": dataNetworkInstanceInstanceProtocolsIsis(),
+            
+            "srl_network_instance_instance_protocols_ospf": dataNetworkInstanceInstanceProtocolsOspf(),
+            
+            "srl_network_instance_instance_static_routes": dataNetworkInstanceInstanceStaticRoutes(),
+            
             "srl_system_name": dataSystemName(),
             
             "srl_system_ntp": dataSystemNtp(),
@@ -140,6 +158,24 @@ func Provider() *schema.Provider {
             "srl_interfaces_subinterface_ipv6": resourceInterfacesSubinterfaceIpv6(),
             
             "srl_interfaces_subinterface_vlan": resourceInterfacesSubinterfaceVlan(),
+            
+            "srl_network_instance_instance": resourceNetworkInstanceInstance(),
+            
+            "srl_network_instance_instance_aggregate_routes": resourceNetworkInstanceInstanceAggregateRoutes(),
+            
+            "srl_network_instance_instance_next_hop_groups": resourceNetworkInstanceInstanceNextHopGroups(),
+            
+            "srl_network_instance_instance_protocols_bgp": resourceNetworkInstanceInstanceProtocolsBgp(),
+            
+            "srl_network_instance_instance_protocols_bgp_group": resourceNetworkInstanceInstanceProtocolsBgpGroup(),
+            
+            "srl_network_instance_instance_protocols_bgp_neighbor": resourceNetworkInstanceInstanceProtocolsBgpNeighbor(),
+            
+            "srl_network_instance_instance_protocols_isis": resourceNetworkInstanceInstanceProtocolsIsis(),
+            
+            "srl_network_instance_instance_protocols_ospf": resourceNetworkInstanceInstanceProtocolsOspf(),
+            
+            "srl_network_instance_instance_static_routes": resourceNetworkInstanceInstanceStaticRoutes(),
             
             "srl_system_name": resourceSystemName(),
             

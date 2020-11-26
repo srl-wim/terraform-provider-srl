@@ -26,15 +26,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataInterfacesSubinterfaceIpv4String function
-func dataInterfacesSubinterfaceIpv4String(d resourceIDStringer) string {
-	return resourceIDString(d, "interfaces_subinterface_ipv4")
+// dataNetworkInstanceInstanceStaticRoutesString function
+func dataNetworkInstanceInstanceStaticRoutesString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_static_routes")
 }
 
-// dataInterfacesSubinterfaceIpv4 function
-func dataInterfacesSubinterfaceIpv4() *schema.Resource {
+// dataNetworkInstanceInstanceStaticRoutes function
+func dataNetworkInstanceInstanceStaticRoutes() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataInterfacesSubinterfaceIpv4Read,
+		ReadContext:   dataNetworkInstanceInstanceStaticRoutesRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,33 +44,53 @@ func dataInterfacesSubinterfaceIpv4() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "interface_id": {
+        "network_instance_id": {
             Type:     schema.TypeString,
             Required: true,
         },
-        "subinterface_id": {
-            Type:     schema.TypeString,
-            Required: true,
-        },
-        "ipv4": {
+        "static_routes": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "allow_directed_broadcast": {
-                        Type:     schema.TypeBool,
+                    "route": {
+                        Type:     schema.TypeList,
                         Computed: true,
-                    },
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "metric": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "next_hop_group": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "preference": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "prefix": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
                             },
                         },
                     },
+                },
+            },
+        },
 
         },
     }
 }
 
-func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataInterfacesSubinterfaceIpv4String(d))
+func dataNetworkInstanceInstanceStaticRoutesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceStaticRoutesString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
@@ -78,17 +98,15 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 
 	
 	
-	hkey0 := d.Get("interface_id").(string)
+	hkey0 := d.Get("network_instance_id").(string)
     
-	hkey1 := d.Get("subinterface_id").(string)
-    
-	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	//hkey := d.Get("[network_instance_id]").(string)
 	
 
 	
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)", hkey)
-	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)
+	//p := fmt.Sprintf("fmt.Sprintf("/network-instance[name=%s]/static-routes",hkey0)", hkey)
+	p := fmt.Sprintf("/network-instance[name=%s]/static-routes",hkey0)
 	
 	
 
@@ -112,28 +130,13 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["ipv4"].(type) {
+			switch x := upd.Values["static-routes"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
-					
-					case "dhcp_relay":
-						delete(x, k)
-					
-					case "vrrp":
-						delete(x, k)
-					
-					case "address":
-						delete(x, k)
-					
-					case "arp":
-						delete(x, k)
-					
-					case "dhcp_client":
-						delete(x, k)
 					
 					default:
 						if k != sk {
@@ -149,7 +152,7 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("ipv4", data); err != nil {
+			if err := d.Set("static_routes", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

@@ -26,15 +26,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataInterfacesSubinterfaceIpv4String function
-func dataInterfacesSubinterfaceIpv4String(d resourceIDStringer) string {
-	return resourceIDString(d, "interfaces_subinterface_ipv4")
+// dataNetworkInstanceInstanceProtocolsBgpString function
+func dataNetworkInstanceInstanceProtocolsBgpString(d resourceIDStringer) string {
+	return resourceIDString(d, "network_instance_instance_protocols_bgp")
 }
 
-// dataInterfacesSubinterfaceIpv4 function
-func dataInterfacesSubinterfaceIpv4() *schema.Resource {
+// dataNetworkInstanceInstanceProtocolsBgp function
+func dataNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataInterfacesSubinterfaceIpv4Read,
+		ReadContext:   dataNetworkInstanceInstanceProtocolsBgpRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,33 +44,41 @@ func dataInterfacesSubinterfaceIpv4() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "interface_id": {
+        "network_instance_id": {
             Type:     schema.TypeString,
             Required: true,
         },
-        "subinterface_id": {
-            Type:     schema.TypeString,
-            Required: true,
-        },
-        "ipv4": {
+        "bgp": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "allow_directed_broadcast": {
-                        Type:     schema.TypeBool,
+                    "admin_state": {
+                        Type:     schema.TypeString,
                         Computed: true,
                     },
-                            },
-                        },
+                    "autonomous_system": {
+                        Type:     schema.TypeString,
+                        Computed: true,
                     },
+                    "local_preference": {
+                        Type:     schema.TypeInt,
+                        Computed: true,
+                    },
+                    "router_id": {
+                        Type:     schema.TypeString,
+                        Computed: true,
+                    },
+                },
+            },
+        },
 
         },
     }
 }
 
-func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataInterfacesSubinterfaceIpv4String(d))
+func dataNetworkInstanceInstanceProtocolsBgpRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataNetworkInstanceInstanceProtocolsBgpString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
@@ -78,17 +86,15 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 
 	
 	
-	hkey0 := d.Get("interface_id").(string)
+	hkey0 := d.Get("network_instance_id").(string)
     
-	hkey1 := d.Get("subinterface_id").(string)
-    
-	//hkey := d.Get("[interface_id subinterface_id]").(string)
+	//hkey := d.Get("[network_instance_id]").(string)
 	
 
 	
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)", hkey)
-	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)
+	//p := fmt.Sprintf("fmt.Sprintf("/network-instance[name=%s]/protocols/bgp",hkey0)", hkey)
+	p := fmt.Sprintf("/network-instance[name=%s]/protocols/bgp",hkey0)
 	
 	
 
@@ -112,7 +118,7 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["ipv4"].(type) {
+			switch x := upd.Values["bgp"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
@@ -120,19 +126,61 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 
 					switch sk {
 					
-					case "dhcp_relay":
+					case "import_policy":
 						delete(x, k)
 					
-					case "vrrp":
+					case "export_policy":
 						delete(x, k)
 					
-					case "address":
+					case "dynamic_neighbors":
 						delete(x, k)
 					
-					case "arp":
+					case "transport":
 						delete(x, k)
 					
-					case "dhcp_client":
+					case "ipv4_unicast":
+						delete(x, k)
+					
+					case "ipv6_unicast":
+						delete(x, k)
+					
+					case "failure_detection":
+						delete(x, k)
+					
+					case "send_community":
+						delete(x, k)
+					
+					case "route_reflector":
+						delete(x, k)
+					
+					case "as_path_options":
+						delete(x, k)
+					
+					case "ebgp_default_policy":
+						delete(x, k)
+					
+					case "route_advertisement":
+						delete(x, k)
+					
+					case "authentication":
+						delete(x, k)
+					
+					case "convergence":
+						delete(x, k)
+					
+					case "graceful_restart":
+						delete(x, k)
+					
+					case "trace_options":
+						delete(x, k)
+					
+					case "preference":
+						delete(x, k)
+					
+					case "group":
+						delete(x, k)
+					
+					case "neighbor":
 						delete(x, k)
 					
 					default:
@@ -149,7 +197,7 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("ipv4", data); err != nil {
+			if err := d.Set("bgp", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
