@@ -52,6 +52,10 @@ func dataInterfacesSubinterfaceIpv4DhcpClient() *schema.Resource {
             Type:     schema.TypeString,
             Required: true,
         },
+        "ipv4_id": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
         "dhcp_client": {
             Type:     schema.TypeList,
             Computed: true,

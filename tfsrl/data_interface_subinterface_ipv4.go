@@ -61,9 +61,9 @@ func dataInterfacesSubinterfaceIpv4() *schema.Resource {
                         Type:     schema.TypeBool,
                         Computed: true,
                     },
-                },
-            },
-        },
+                            },
+                        },
+                    },
 
         },
     }
@@ -120,6 +120,9 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 
 					switch sk {
 					
+					case "vrrp":
+						delete(x, k)
+					
 					case "address":
 						delete(x, k)
 					
@@ -130,9 +133,6 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "dhcp_relay":
-						delete(x, k)
-					
-					case "vrrp":
 						delete(x, k)
 					
 					default:

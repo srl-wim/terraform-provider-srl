@@ -52,6 +52,10 @@ func dataInterfacesSubinterfaceIpv4Address() *schema.Resource {
             Type:     schema.TypeString,
             Required: true,
         },
+        "ipv4_id": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
         "address": {
             Type:     schema.TypeList,
             Required: true,

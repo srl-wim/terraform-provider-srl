@@ -52,6 +52,10 @@ func dataInterfacesSubinterfaceIpv4DhcpRelay() *schema.Resource {
             Type:     schema.TypeString,
             Required: true,
         },
+        "ipv4_id": {
+            Type:     schema.TypeString,
+            Required: true,
+        },
         "dhcp_relay": {
             Type:     schema.TypeList,
             Computed: true,

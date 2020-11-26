@@ -98,27 +98,19 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface_ipv4": dataInterfacesSubinterfaceIpv4(),
             
+            "srl_interfaces_subinterface_ipv4_address": dataInterfacesSubinterfaceIpv4Address(),
+            
+            "srl_interfaces_subinterface_ipv4_arp": dataInterfacesSubinterfaceIpv4Arp(),
+            
+            "srl_interfaces_subinterface_ipv4_dhcp_client": dataInterfacesSubinterfaceIpv4DhcpClient(),
+            
+            "srl_interfaces_subinterface_ipv4_dhcp_relay": dataInterfacesSubinterfaceIpv4DhcpRelay(),
+            
+            "srl_interfaces_subinterface_ipv4_vrrp": dataInterfacesSubinterfaceIpv4Vrrp(),
+            
             "srl_interfaces_subinterface_ipv6": dataInterfacesSubinterfaceIpv6(),
             
             "srl_interfaces_subinterface_vlan": dataInterfacesSubinterfaceVlan(),
-            
-            "srl_network_instance_instance": dataNetworkInstanceInstance(),
-            
-            "srl_network_instance_instance_aggregate_routes": dataNetworkInstanceInstanceAggregateRoutes(),
-            
-            "srl_network_instance_instance_next_hop_groups": dataNetworkInstanceInstanceNextHopGroups(),
-            
-            "srl_network_instance_instance_protocols_bgp": dataNetworkInstanceInstanceProtocolsBgp(),
-            
-            "srl_network_instance_instance_protocols_bgp_group": dataNetworkInstanceInstanceProtocolsBgpGroup(),
-            
-            "srl_network_instance_instance_protocols_bgp_neighbor": dataNetworkInstanceInstanceProtocolsBgpNeighbor(),
-            
-            "srl_network_instance_instance_protocols_isis": dataNetworkInstanceInstanceProtocolsIsis(),
-            
-            "srl_network_instance_instance_protocols_ospf": dataNetworkInstanceInstanceProtocolsOspf(),
-            
-            "srl_network_instance_instance_static_routes": dataNetworkInstanceInstanceStaticRoutes(),
             
             "srl_system_name": dataSystemName(),
             
@@ -135,27 +127,19 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface_ipv4": resourceInterfacesSubinterfaceIpv4(),
             
+            "srl_interfaces_subinterface_ipv4_address": resourceInterfacesSubinterfaceIpv4Address(),
+            
+            "srl_interfaces_subinterface_ipv4_arp": resourceInterfacesSubinterfaceIpv4Arp(),
+            
+            "srl_interfaces_subinterface_ipv4_dhcp_client": resourceInterfacesSubinterfaceIpv4DhcpClient(),
+            
+            "srl_interfaces_subinterface_ipv4_dhcp_relay": resourceInterfacesSubinterfaceIpv4DhcpRelay(),
+            
+            "srl_interfaces_subinterface_ipv4_vrrp": resourceInterfacesSubinterfaceIpv4Vrrp(),
+            
             "srl_interfaces_subinterface_ipv6": resourceInterfacesSubinterfaceIpv6(),
             
             "srl_interfaces_subinterface_vlan": resourceInterfacesSubinterfaceVlan(),
-            
-            "srl_network_instance_instance": resourceNetworkInstanceInstance(),
-            
-            "srl_network_instance_instance_aggregate_routes": resourceNetworkInstanceInstanceAggregateRoutes(),
-            
-            "srl_network_instance_instance_next_hop_groups": resourceNetworkInstanceInstanceNextHopGroups(),
-            
-            "srl_network_instance_instance_protocols_bgp": resourceNetworkInstanceInstanceProtocolsBgp(),
-            
-            "srl_network_instance_instance_protocols_bgp_group": resourceNetworkInstanceInstanceProtocolsBgpGroup(),
-            
-            "srl_network_instance_instance_protocols_bgp_neighbor": resourceNetworkInstanceInstanceProtocolsBgpNeighbor(),
-            
-            "srl_network_instance_instance_protocols_isis": resourceNetworkInstanceInstanceProtocolsIsis(),
-            
-            "srl_network_instance_instance_protocols_ospf": resourceNetworkInstanceInstanceProtocolsOspf(),
-            
-            "srl_network_instance_instance_static_routes": resourceNetworkInstanceInstanceStaticRoutes(),
             
             "srl_system_name": resourceSystemName(),
             

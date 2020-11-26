@@ -62,6 +62,11 @@ func resourceInterfacesSubinterfaceIpv4Arp() *schema.Resource {
             Required: true,
             ForceNew: true,
         },
+        "ipv4_id": {
+            Type:     schema.TypeString,
+            Required: true,
+            ForceNew: true,
+        },
         "arp": {
             Type:     schema.TypeList,
             Optional: true,
@@ -132,8 +137,10 @@ func resourceInterfacesSubinterfaceIpv4ArpCreate(ctx context.Context, d *schema.
 	
     hid = append(hid, "subinterface_id")
 	
-	//hid = append(hid, "subinterface_id")
-	//hid := "subinterface_id"
+    hid = append(hid, "ipv4_id")
+	
+	//hid = append(hid, "ipv4_id")
+	//hid := "ipv4_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
@@ -264,8 +271,10 @@ func resourceInterfacesSubinterfaceIpv4ArpUpdate(ctx context.Context, d *schema.
 	
     hid = append(hid, "subinterface_id")
 	
-	//hid = append(hid, "subinterface_id")
-	//hid := "subinterface_id"
+    hid = append(hid, "ipv4_id")
+	
+	//hid = append(hid, "ipv4_id")
+	//hid := "ipv4_id"
 	req, err := target.CreateSetRequest(&p, &v, &hid, d)
 	
 	if err != nil {
