@@ -13,6 +13,7 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	"regexp"
 	
 	"fmt"
 	
@@ -181,6 +182,7 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Optional: true,
                         ValidateFunc: validation.All(
                             validation.StringLenBetween(1, 255),
+                            validation.StringMatch(regexp.MustCompile("[A-Za-z0-9 !@#$%!^(MISSING)&()|+=`~.,'/_:;?-]*"), "must match regex"),
                         ),
                     },
                     "index": {
@@ -196,13 +198,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Optional: true,
                         ValidateFunc: validation.All(
                             validation.IntBetween(1280, 9486),
-                        ),
-                    },
-                    "l2_mtu": {
-                        Type:     schema.TypeInt,
-                        Optional: true,
-                        ValidateFunc: validation.All(
-                            validation.IntBetween(1500, 9500),
                         ),
                     },
                     "qos": {
@@ -432,6 +427,9 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "ipv6":
+						delete(x, k)
+					
+					case "l2_mtu":
 						delete(x, k)
 					
 					default:

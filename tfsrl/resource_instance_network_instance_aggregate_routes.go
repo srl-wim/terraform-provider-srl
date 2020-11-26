@@ -13,9 +13,9 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	"regexp"
 	
 	"fmt"
-	"regexp"
 	
 	"strconv"
 	

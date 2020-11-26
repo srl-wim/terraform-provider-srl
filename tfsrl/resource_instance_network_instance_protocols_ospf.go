@@ -13,11 +13,11 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	"regexp"
 	
 	"fmt"
 	
-    "strconv"
-    "regexp"
+	"strconv"
 	
 	
 	"time"
@@ -112,6 +112,8 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Required: true,
                                                 ForceNew: true,
                                                 ValidateFunc: validation.All(
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
                                                     validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
                                                 ),
                                             },
@@ -470,6 +472,7 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     ForceNew: true,
                                     ValidateFunc: validation.All(
                                         validation.StringLenBetween(1, 255),
+                                        validation.StringMatch(regexp.MustCompile("[A-Za-z0-9 !@#$%!^(MISSING)&()|+=`~.,'/_:;?-]*"), "must match regex"),
                                     ),
                                 },
                                 "overload": {

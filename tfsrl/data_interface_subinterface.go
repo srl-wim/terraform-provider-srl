@@ -135,10 +135,6 @@ func dataInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeInt,
                         Computed: true,
                     },
-                    "l2_mtu": {
-                        Type:     schema.TypeInt,
-                        Computed: true,
-                    },
                     "qos": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -311,6 +307,9 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 						delete(x, k)
 					
 					case "ipv6":
+						delete(x, k)
+					
+					case "l2_mtu":
 						delete(x, k)
 					
 					default:

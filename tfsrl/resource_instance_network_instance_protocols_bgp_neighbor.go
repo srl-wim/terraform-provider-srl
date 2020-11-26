@@ -13,6 +13,7 @@ package tfsrl
 import (
 	"context"
 	"strings"
+	"regexp"
 	
 	"fmt"
 	
@@ -83,6 +84,7 @@ func resourceNetworkInstanceInstanceProtocolsBgpNeighbor() *schema.Resource {
                         Optional: true,
                         ValidateFunc: validation.All(
                             validation.StringLenBetween(1, 255),
+                            validation.StringMatch(regexp.MustCompile("[A-Za-z0-9 !@#$%!^(MISSING)&()|+=`~.,'/_:;?-]*"), "must match regex"),
                         ),
                     },
                     "local_as": {
