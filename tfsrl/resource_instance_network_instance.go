@@ -62,12 +62,6 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.All(
-                            validation.StringInSlice([]string{
-                                "disable",
-                                "enable",
-                            }, false),
-                        ),
                     },
                     "aft": {
                         Type:     schema.TypeList,
@@ -116,12 +110,6 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                             "hold_down_time": {
                                                 Type:     schema.TypeInt,
@@ -160,12 +148,6 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                             "aging": {
                                                 Type:     schema.TypeList,
@@ -177,12 +159,6 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "disable",
-                                                                    "enable",
-                                                                }, false),
-                                                            ),
                                                         },
                                                         "age_time": {
                                                             Type:     schema.TypeInt,
@@ -323,6 +299,10 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Required: true,
                                                 ForceNew: true,
+                                                ValidateFunc: validation.Any(
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
+                                                ),
                                             },
                                             "max_paths": {
                                                 Type:     schema.TypeInt,
@@ -348,12 +328,6 @@ func resourceNetworkInstanceInstance() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "static_mpls_entry": {
                                     Type:     schema.TypeList,

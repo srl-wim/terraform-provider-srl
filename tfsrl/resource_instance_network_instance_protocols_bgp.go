@@ -67,12 +67,6 @@ func resourceNetworkInstanceInstanceProtocolsBgp() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.All(
-                            validation.StringInSlice([]string{
-                                "disable",
-                                "enable",
-                            }, false),
-                        ),
                     },
                     "autonomous_system": {
                         Type:     schema.TypeInt,

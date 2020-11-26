@@ -62,12 +62,6 @@ func resourceInterfaces() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.All(
-                            validation.StringInSlice([]string{
-                                "disable",
-                                "enable",
-                            }, false),
-                        ),
                     },
                     "description": {
                         Type:     schema.TypeString,
@@ -152,23 +146,11 @@ func resourceInterfaces() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "SLOW",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "FAST",
-                                                        "SLOW",
-                                                    }, false),
-                                                ),
                                             },
                                             "lacp_mode": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "ACTIVE",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "ACTIVE",
-                                                        "PASSIVE",
-                                                    }, false),
-                                                ),
                                             },
                                             "system_id_mac": {
                                                 Type:     schema.TypeString,
@@ -191,26 +173,10 @@ func resourceInterfaces() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "static",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "lacp",
-                                            "static",
-                                        }, false),
-                                    ),
                                 },
                                 "member_speed": {
                                     Type:     schema.TypeString,
                                     Optional: true,
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "100G",
-                                            "10G",
-                                            "1G",
-                                            "25G",
-                                            "400G",
-                                            "40G",
-                                        }, false),
-                                    ),
                                 },
                                 "min_links": {
                                     Type:     schema.TypeInt,
@@ -317,12 +283,6 @@ func resourceInterfaces() *schema.Resource {
                                 "admin_state": {
                                     Type:     schema.TypeString,
                                     Optional: true,
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "ddm_events": {
                                     Type:     schema.TypeBool,
@@ -445,9 +405,6 @@ func resourceInterfacesRead(ctx context.Context, d *schema.ResourceData, meta in
 					switch sk {
 					
 					case "sflow":
-						delete(x, k)
-					
-					case "l2_mtu":
 						delete(x, k)
 					
 					case "subinterface":

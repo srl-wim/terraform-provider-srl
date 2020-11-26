@@ -73,12 +73,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "attached_bit": {
                                     Type:     schema.TypeList,
@@ -180,6 +174,10 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                                         Type:     schema.TypeString,
                                                                         Required: true,
                                                                         ForceNew: true,
+                                                                        ValidateFunc: validation.Any(
+                                                                            validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))`), "must match regex"),
+                                                                            validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
+                                                                        ),
                                                                     },
                                                                     "route_tag": {
                                                                         Type:     schema.TypeInt,
@@ -207,12 +205,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                             "authentication": {
                                                 Type:     schema.TypeList,
@@ -234,12 +226,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                             "circuit_type": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "broadcast",
-                                                        "point-to-point",
-                                                    }, false),
-                                                ),
                                             },
                                             "hello_padding": {
                                                 Type:     schema.TypeString,
@@ -261,12 +247,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "disable",
-                                                                    "enable",
-                                                                }, false),
-                                                            ),
                                                         },
                                                         "enable_bfd": {
                                                             Type:     schema.TypeBool,
@@ -291,12 +271,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "disable",
-                                                                    "enable",
-                                                                }, false),
-                                                            ),
                                                         },
                                                     },
                                                 },
@@ -454,12 +428,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                         },
                                     },
@@ -474,12 +442,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                         },
                                     },
@@ -527,12 +489,6 @@ func resourceNetworkInstanceInstanceProtocolsIsis() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "wide",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "narrow",
-                                                        "wide",
-                                                    }, false),
-                                                ),
                                             },
                                             "route_preference": {
                                                 Type:     schema.TypeList,

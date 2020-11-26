@@ -72,12 +72,6 @@ func resourceNetworkInstanceInstanceProtocolsBgpGroup() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.All(
-                            validation.StringInSlice([]string{
-                                "disable",
-                                "enable",
-                            }, false),
-                        ),
                     },
                     "description": {
                         Type:     schema.TypeString,

@@ -284,9 +284,6 @@ func dataInterfacesRead(ctx context.Context, d *schema.ResourceData, meta interf
 					case "sflow":
 						delete(x, k)
 					
-					case "l2_mtu":
-						delete(x, k)
-					
 					case "subinterface":
 						delete(x, k)
 					

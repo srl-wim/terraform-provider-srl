@@ -69,12 +69,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                         Default: "enable",
-                        ValidateFunc: validation.All(
-                            validation.StringInSlice([]string{
-                                "disable",
-                                "enable",
-                            }, false),
-                        ),
                     },
                     "bridge_table": {
                         Type:     schema.TypeList,
@@ -119,12 +113,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                             "aging": {
                                                 Type:     schema.TypeList,
@@ -136,12 +124,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "disable",
-                                                                    "enable",
-                                                                }, false),
-                                                            ),
                                                         },
                                                     },
                                                 },
@@ -281,40 +263,6 @@ func resourceInterfacesSubinterface() *schema.Resource {
                         Type:     schema.TypeString,
                         Optional: true,
                     },
-                    "vlan": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "encap": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "single_tagged": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "vlan_id": {
-                                                            Type:     schema.TypeInt,
-                                                            Optional: true,
-                                                            ValidateFunc: validation.All(
-                                                                validation.IntBetween(1, 4094),
-                                                            ),
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                 },
             },
         },
@@ -430,6 +378,9 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "l2_mtu":
+						delete(x, k)
+					
+					case "vlan":
 						delete(x, k)
 					
 					default:

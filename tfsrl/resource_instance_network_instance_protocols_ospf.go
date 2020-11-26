@@ -77,12 +77,6 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "disable",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "advertise_router_capability": {
                                     Type:     schema.TypeString,
@@ -113,8 +107,8 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 ForceNew: true,
                                                 ValidateFunc: validation.All(
                                                     validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
-                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
-                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`[0-9\.]*`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%!+(BADINDEX))?`), "must match regex"),
                                                 ),
                                             },
                                             "area_range": {
@@ -132,6 +126,10 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Required: true,
                                                             ForceNew: true,
+                                                            ValidateFunc: validation.Any(
+                                                                validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))`), "must match regex"),
+                                                                validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
+                                                            ),
                                                         },
                                                     },
                                                 },
@@ -154,12 +152,6 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "enable",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "disable",
-                                                                    "enable",
-                                                                }, false),
-                                                            ),
                                                         },
                                                         "advertise_router_capability": {
                                                             Type:     schema.TypeBool,
@@ -222,25 +214,11 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                         "interface_type": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "broadcast",
-                                                                    "point-to-point",
-                                                                }, false),
-                                                            ),
                                                         },
                                                         "lsa_filter_out": {
                                                             Type:     schema.TypeString,
                                                             Optional: true,
                                                             Default: "none",
-                                                            ValidateFunc: validation.All(
-                                                                validation.StringInSlice([]string{
-                                                                    "all",
-                                                                    "except-own-rtrlsa",
-                                                                    "except-own-rtrlsa-and-defaults",
-                                                                    "none",
-                                                                }, false),
-                                                            ),
                                                         },
                                                         "metric": {
                                                             Type:     schema.TypeInt,
@@ -308,6 +286,10 @@ func resourceNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                                         Type:     schema.TypeString,
                                                                         Required: true,
                                                                         ForceNew: true,
+                                                                        ValidateFunc: validation.Any(
+                                                                            validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))`), "must match regex"),
+                                                                            validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
+                                                                        ),
                                                                     },
                                                                 },
                                                             },

@@ -169,7 +169,7 @@ func dataNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                             Computed: true,
                                                         },
                                                         "metric": {
-                                                            Type:     schema.TypeInt,
+                                                            Type:     schema.TypeString,
                                                             Computed: true,
                                                         },
                                                         "mtu": {
@@ -249,7 +249,7 @@ func dataNetworkInstanceInstanceProtocolsOspf() *schema.Resource {
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
                                                         "default_metric": {
-                                                            Type:     schema.TypeInt,
+                                                            Type:     schema.TypeString,
                                                             Computed: true,
                                                         },
                                                         "summaries": {

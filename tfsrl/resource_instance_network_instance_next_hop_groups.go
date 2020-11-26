@@ -73,12 +73,6 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "enable",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "blackhole": {
                                     Type:     schema.TypeList,
@@ -113,12 +107,6 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
                                                 Default: "enable",
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "disable",
-                                                        "enable",
-                                                    }, false),
-                                                ),
                                             },
                                             "index": {
                                                 Type:     schema.TypeInt,
@@ -131,6 +119,10 @@ func resourceNetworkInstanceInstanceNextHopGroups() *schema.Resource {
                                             "ip_address": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
+                                                ValidateFunc: validation.Any(
+                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))`), "must match regex"),
+                                                ),
                                             },
                                             "pushed_mpls_label_stack": {
                                                 Type:     schema.TypeString,

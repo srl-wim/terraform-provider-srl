@@ -73,12 +73,6 @@ func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Optional: true,
                                     Default: "enable",
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "disable",
-                                            "enable",
-                                        }, false),
-                                    ),
                                 },
                                 "aggregator": {
                                     Type:     schema.TypeList,
@@ -112,6 +106,12 @@ func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
                                             "add": {
                                                 Type:     schema.TypeString,
                                                 Optional: true,
+                                                ValidateFunc: validation.Any(
+                                                    validation.StringMatch(regexp.MustCompile(`(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`.*:.*`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`([1-9][0-9]{0,9}):([1-9][0-9]{0,9}):([1-9][0-9]{0,9})`), "must match regex"),
+                                                    validation.StringMatch(regexp.MustCompile(`.*:.*:.*`), "must match regex"),
+                                                ),
                                             },
                                         },
                                     },
@@ -124,6 +124,10 @@ func resourceNetworkInstanceInstanceAggregateRoutes() *schema.Resource {
                                     Type:     schema.TypeString,
                                     Required: true,
                                     ForceNew: true,
+                                    ValidateFunc: validation.Any(
+                                        validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))`), "must match regex"),
+                                        validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
+                                    ),
                                 },
                                 "summary_only": {
                                     Type:     schema.TypeBool,
