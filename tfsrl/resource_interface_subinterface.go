@@ -371,22 +371,10 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 					case "l2_mtu":
 						delete(x, k)
 					
-					case "ipv4/vrrp":
-						delete(x, k)
-					
-					case "acl":
-						delete(x, k)
-					
-					case "ipv4":
-						delete(x, k)
-					
 					case "ipv4/arp":
 						delete(x, k)
 					
 					case "ipv4/dhcp_client":
-						delete(x, k)
-					
-					case "ipv4/address":
 						delete(x, k)
 					
 					case "ipv4/dhcp_relay":
@@ -396,6 +384,18 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "vlan":
+						delete(x, k)
+					
+					case "acl":
+						delete(x, k)
+					
+					case "ipv4":
+						delete(x, k)
+					
+					case "ipv4/address":
+						delete(x, k)
+					
+					case "ipv4/vrrp":
 						delete(x, k)
 					
 					default:
