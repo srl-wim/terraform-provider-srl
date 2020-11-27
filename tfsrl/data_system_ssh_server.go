@@ -14,7 +14,6 @@ import (
 	"context"
 	"strings"
 	
-	"fmt"
 	
 	"strconv"
 	
@@ -26,15 +25,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataInterfacesSubinterfaceIpv4String function
-func dataInterfacesSubinterfaceIpv4String(d resourceIDStringer) string {
-	return resourceIDString(d, "interfaces_subinterface_ipv4")
+// dataSystemSshServerString function
+func dataSystemSshServerString(d resourceIDStringer) string {
+	return resourceIDString(d, "system_ssh_server")
 }
 
-// dataInterfacesSubinterfaceIpv4 function
-func dataInterfacesSubinterfaceIpv4() *schema.Resource {
+// dataSystemSshServer function
+func dataSystemSshServer() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataInterfacesSubinterfaceIpv4Read,
+		ReadContext:   dataSystemSshServerRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -44,51 +43,59 @@ func dataInterfacesSubinterfaceIpv4() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "interface_id": {
-            Type:     schema.TypeString,
-            Required: true,
-        },
-        "subinterface_id": {
-            Type:     schema.TypeString,
-            Required: true,
-        },
-        "ipv4": {
+        "ssh_server": {
             Type:     schema.TypeList,
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "allow_directed_broadcast": {
-                        Type:     schema.TypeBool,
+                    "network_instance": {
+                        Type:     schema.TypeList,
                         Computed: true,
-                    },
+                        Elem: &schema.Resource{
+                        	Schema: map[string]*schema.Schema{
+                                "admin_state": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "name": {
+                                    Type:     schema.TypeString,
+                                    Required: true,
+                                },
+                                "rate_limit": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
+                                "source_address": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "timeout": {
+                                    Type:     schema.TypeInt,
+                                    Computed: true,
+                                },
                             },
                         },
                     },
+                },
+            },
+        },
 
         },
     }
 }
 
-func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataInterfacesSubinterfaceIpv4String(d))
+func dataSystemSshServerRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataSystemSshServerString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	
-	hkey0 := d.Get("interface_id").(string)
-    
-	hkey1 := d.Get("subinterface_id").(string)
-    
-	//hkey := d.Get("[interface_id subinterface_id]").(string)
-	
 
 	
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)", hkey)
-	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]/ipv4",hkey0,hkey1)
+	p := "/system/ssh-server"
 	
 	
 
@@ -112,28 +119,13 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["ipv4"].(type) {
+			switch x := upd.Values["ssh-server"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
-					
-					case "dhcp_client":
-						delete(x, k)
-					
-					case "dhcp_relay":
-						delete(x, k)
-					
-					case "vrrp":
-						delete(x, k)
-					
-					case "address":
-						delete(x, k)
-					
-					case "arp":
-						delete(x, k)
 					
 					default:
 						if k != sk {
@@ -149,7 +141,7 @@ func dataInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.ResourceD
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("ipv4", data); err != nil {
+			if err := d.Set("ssh_server", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run

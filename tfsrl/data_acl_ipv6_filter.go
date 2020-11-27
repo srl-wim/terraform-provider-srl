@@ -14,11 +14,9 @@ import (
 	"context"
 	"strings"
 	
+	
+	
 	"fmt"
-	
-	
-	"strconv"
-	
 	
 	
 	"time"
@@ -28,15 +26,15 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// dataInterfacesSubinterfaceString function
-func dataInterfacesSubinterfaceString(d resourceIDStringer) string {
-	return resourceIDString(d, "interfaces_subinterface")
+// dataAclIpv6FilterString function
+func dataAclIpv6FilterString(d resourceIDStringer) string {
+	return resourceIDString(d, "acl_ipv6_filter")
 }
 
-// dataInterfacesSubinterface function
-func dataInterfacesSubinterface() *schema.Resource {
+// dataAclIpv6Filter function
+func dataAclIpv6Filter() *schema.Resource {
 	return &schema.Resource{
-		ReadContext:   dataInterfacesSubinterfaceRead,
+		ReadContext:   dataAclIpv6FilterRead,
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -46,124 +44,44 @@ func dataInterfacesSubinterface() *schema.Resource {
 			Read:   schema.DefaultTimeout(5 * time.Minute),
 		},
 		Schema: map[string]*schema.Schema{
-        "interface_id": {
-            Type:     schema.TypeString,
-            Required: true,
-        },
-        "subinterface": {
+        "ipv6_filter": {
             Type:     schema.TypeList,
             Required: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "admin_state": {
-                        Type:     schema.TypeString,
-                        Computed: true,
-                    },
-                    "bridge_table": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "discard_unknown_src_mac": {
-                                    Type:     schema.TypeBool,
-                                    Computed: true,
-                                },
-                                "mac_duplication": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "action": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                                "mac_learning": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "admin_state": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "aging": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "admin_state": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                                "mac_limit": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "maximum_entries": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "warning_threshold_pct": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "description": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                    "index": {
-                        Type:     schema.TypeInt,
-                        Required: true,
-                    },
-                    "ip_mtu": {
-                        Type:     schema.TypeInt,
-                        Computed: true,
-                    },
-                    "qos": {
+                    "entry": {
                         Type:     schema.TypeList,
                         Computed: true,
                         Elem: &schema.Resource{
                         	Schema: map[string]*schema.Schema{
-                                "input": {
+                                "action": {
                                     Type:     schema.TypeList,
                                     Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "classifiers": {
+                                            "accept": {
                                                 Type:     schema.TypeList,
                                                 Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
-                                                        "dscp": {
-                                                            Type:     schema.TypeString,
+                                                        "log": {
+                                                            Type:     schema.TypeBool,
                                                             Computed: true,
                                                         },
-                                                        "ipv4_dscp": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "ipv6_dscp": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "mpls_traffic_class": {
-                                                            Type:     schema.TypeString,
+                                                    },
+                                                },
+                                            },
+                                            "drop": {
+                                                Type:     schema.TypeList,
+                                                Computed: true,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "log": {
+                                                            Type:     schema.TypeBool,
                                                             Computed: true,
                                                         },
                                                     },
@@ -172,75 +90,158 @@ func dataInterfacesSubinterface() *schema.Resource {
                                         },
                                     },
                                 },
-                                "output": {
+                                "description": {
+                                    Type:     schema.TypeString,
+                                    Computed: true,
+                                },
+                                "match": {
                                     Type:     schema.TypeList,
                                     Computed: true,
                                     Elem: &schema.Resource{
                                     	Schema: map[string]*schema.Schema{
-                                            "rewrite_rules": {
+                                            "destination_address": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "destination_port": {
                                                 Type:     schema.TypeList,
                                                 Computed: true,
                                                 Elem: &schema.Resource{
                                                 	Schema: map[string]*schema.Schema{
-                                                        "dscp": {
+                                                        "operator": {
                                                             Type:     schema.TypeString,
                                                             Computed: true,
                                                         },
-                                                        "ipv4_dscp": {
-                                                            Type:     schema.TypeString,
+                                                        "range": {
+                                                            Type:     schema.TypeList,
                                                             Computed: true,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "end": {
+                                                                        Type:     schema.TypeString,
+                                                                        Computed: true,
+                                                                    },
+                                                                    "start": {
+                                                                        Type:     schema.TypeString,
+                                                                        Computed: true,
+                                                                    },
+                                                                },
+                                                            },
                                                         },
-                                                        "ipv6_dscp": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                        "mpls_traffic_class": {
+                                                        "value": {
                                                             Type:     schema.TypeString,
                                                             Computed: true,
                                                         },
                                                     },
                                                 },
                                             },
+                                            "icmp6": {
+                                                Type:     schema.TypeList,
+                                                Computed: true,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "code": {
+                                                            Type:     schema.TypeInt,
+                                                            Computed: true,
+                                                        },
+                                                        "type": {
+                                                            Type:     schema.TypeString,
+                                                            Computed: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "next_header": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "source_address": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
+                                            "source_port": {
+                                                Type:     schema.TypeList,
+                                                Computed: true,
+                                                Elem: &schema.Resource{
+                                                	Schema: map[string]*schema.Schema{
+                                                        "operator": {
+                                                            Type:     schema.TypeString,
+                                                            Computed: true,
+                                                        },
+                                                        "range": {
+                                                            Type:     schema.TypeList,
+                                                            Computed: true,
+                                                            Elem: &schema.Resource{
+                                                            	Schema: map[string]*schema.Schema{
+                                                                    "end": {
+                                                                        Type:     schema.TypeString,
+                                                                        Computed: true,
+                                                                    },
+                                                                    "start": {
+                                                                        Type:     schema.TypeString,
+                                                                        Computed: true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                        "value": {
+                                                            Type:     schema.TypeString,
+                                                            Computed: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                            "tcp_flags": {
+                                                Type:     schema.TypeString,
+                                                Computed: true,
+                                            },
                                         },
                                     },
+                                },
+                                "sequence_id": {
+                                    Type:     schema.TypeInt,
+                                    Required: true,
                                 },
                             },
                         },
                     },
-                    "type": {
+                    "name": {
+                        Type:     schema.TypeString,
+                        Required: true,
+                    },
+                    "statistics_per_entry": {
+                        Type:     schema.TypeBool,
+                        Computed: true,
+                    },
+                    "subinterface_specific": {
                         Type:     schema.TypeString,
                         Computed: true,
                     },
-                            },
-                        },
-                    },
+                },
+            },
+        },
 
         },
     }
 }
 
-func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	log.Infof("Beginning Read: %s", dataInterfacesSubinterfaceString(d))
+func dataAclIpv6FilterRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	log.Infof("Beginning Read: %s", dataAclIpv6FilterString(d))
 	target := meta.(*Target)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	
-	
-	hkey0 := d.Get("interface_id").(string)
-    
-	//hkey := d.Get("[interface_id]").(string)
-	
 
 	 
-	rn := "subinterface"
-	rk := "index"
+	rn := "ipv6_filter"
+	rk := "name"
 	key, err := getResourceListKey(&rn, &rk, d)
 
 	
-	//p := fmt.Sprintf("fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]",hkey0, key)", hkey, key)
-	p := fmt.Sprintf("/interface[name=%s]/subinterface[index=%s]",hkey0, key)
+	//p := fmt.Sprintf("fmt.Sprintf("/acl/ipv6-filter[name=%s]", key)", key)
+	p := fmt.Sprintf("/acl/ipv6-filter[name=%s]", key)
 	
 	
 
@@ -264,28 +265,13 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 		log.Debugf("get response: index: %d, update: %v", i, upd)
 		if i <= 0 {
 			data := make([]map[string]interface{}, 0)
-			switch x := upd.Values["subinterface"].(type) {
+			switch x := upd.Values["ipv6-filter"].(type) {
 			case map[string]interface{}:
 				for k, v := range x {
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
-					
-					case "l2_mtu":
-						delete(x, k)
-					
-					case "vlan":
-						delete(x, k)
-					
-					case "acl":
-						delete(x, k)
-					
-					case "ipv4":
-						delete(x, k)
-					
-					case "ipv6":
-						delete(x, k)
 					
 					default:
 						if k != sk {
@@ -299,13 +285,13 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 				}
 				 
 				// add key to the get resp data since it is not returned in the gnmi data
-				x[rk], err = strconv.ParseInt(key, 10, 32)
+				x[rk] = key
 				// append the get resp to data
 				
 				data = append(data, x)
 			}
 			log.Debugf("get response: index: %d, data: %v", i, data)
-			if err := d.Set("subinterface", data); err != nil {
+			if err := d.Set("ipv6_filter", data); err != nil {
 				return diag.FromErr(err)
 			}
 			// always run
