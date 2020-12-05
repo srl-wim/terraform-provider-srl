@@ -248,6 +248,9 @@ func dataInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.ResourceD
 
 					switch sk {
 					
+					case "vrrp":
+						delete(x, k)
+					
 					case "address":
 						delete(x, k)
 					
@@ -261,9 +264,6 @@ func dataInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.ResourceD
 						delete(x, k)
 					
 					case "dhcp_relay":
-						delete(x, k)
-					
-					case "vrrp":
 						delete(x, k)
 					
 					default:

@@ -275,16 +275,16 @@ func dataInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceData,
 					case "l2_mtu":
 						delete(x, k)
 					
-					case "ipv6":
-						delete(x, k)
-					
-					case "vlan":
-						delete(x, k)
-					
 					case "acl":
 						delete(x, k)
 					
 					case "ipv4":
+						delete(x, k)
+					
+					case "ipv6":
+						delete(x, k)
+					
+					case "vlan":
 						delete(x, k)
 					
 					default:

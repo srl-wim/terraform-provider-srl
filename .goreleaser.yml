@@ -6,6 +6,8 @@ builds:
       - -s -w -X github.com/srl-wim/terraform-provider-srl/cmd.version={{.Version}} -X github.com/srl-wim/terraform-provider-srl/cmd.commit={{.ShortCommit}} -X github.com/srl-wim/terraform-provider-srl/cmd.date={{.Date}}
     goos:
       - linux
+    goarch:
+      - amd64
 archives:
   - replacements:
       linux: Linux
