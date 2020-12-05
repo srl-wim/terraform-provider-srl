@@ -1,0 +1,21 @@
+project_name: terraform-provider-srl
+builds:
+  - env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X github.com/srl-wim/terraform-provider-srl/cmd.version={{.Version}} -X github.com/srl-wim/terraform-provider-srl/cmd.commit={{.ShortCommit}} -X github.com/srl-wim/terraform-provider-srl/cmd.date={{.Date}}
+    goos:
+      - linux
+archives:
+  - replacements:
+      linux: Linux
+checksum:
+  name_template: checksums.txt
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
