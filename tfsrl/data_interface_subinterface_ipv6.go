@@ -57,74 +57,6 @@ func dataInterfacesSubinterfaceIpv6() *schema.Resource {
             Computed: true,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "address": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "ip_prefix": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                },
-                            },
-                        },
-                    },
-                    "dhcp_client": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "trace_options": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "dhcp_relay": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "option": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "server": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "source_address": {
-                                    Type:     schema.TypeString,
-                                    Computed: true,
-                                },
-                                "trace_options": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "neighbor_discovery": {
                         Type:     schema.TypeList,
                         Computed: true,
@@ -257,109 +189,9 @@ func dataInterfacesSubinterfaceIpv6() *schema.Resource {
                             },
                         },
                     },
-                    "vrrp": {
-                        Type:     schema.TypeList,
-                        Computed: true,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "vrrp_group": {
-                                    Type:     schema.TypeList,
-                                    Computed: true,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "accept_mode": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "advertise_interval": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "authentication": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "keychain": {
-                                                            Type:     schema.TypeString,
-                                                            Computed: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "init_delay": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "interface_tracking": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "track_interface": {
-                                                            Type:     schema.TypeList,
-                                                            Computed: true,
-                                                            Elem: &schema.Resource{
-                                                            	Schema: map[string]*schema.Schema{
-                                                                    "interface": {
-                                                                        Type:     schema.TypeString,
-                                                                        Required: true,
-                                                                    },
-                                                                    "priority_decrement": {
-                                                                        Type:     schema.TypeInt,
-                                                                        Computed: true,
-                                                                    },
-                                                                },
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "oper_interval": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "preempt": {
-                                                Type:     schema.TypeBool,
-                                                Computed: true,
-                                            },
-                                            "preempt_delay": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "priority": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "statistics": {
-                                                Type:     schema.TypeList,
-                                                Computed: true,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                    },
-                                                },
-                                            },
-                                            "version": {
-                                                Type:     schema.TypeInt,
-                                                Computed: true,
-                                            },
-                                            "virtual_address": {
-                                                Type:     schema.TypeString,
-                                                Computed: true,
-                                            },
-                                            "virtual_router_id": {
-                                                Type:     schema.TypeInt,
-                                                Required: true,
-                                            },
-                                        },
-                                    },
-                                },
                             },
                         },
                     },
-                },
-            },
-        },
 
         },
     }
@@ -415,6 +247,24 @@ func dataInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.ResourceD
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "address":
+						delete(x, k)
+					
+					case "router_advertisement":
+						delete(x, k)
+					
+					case "neighbor_discovery":
+						delete(x, k)
+					
+					case "dhcp_client":
+						delete(x, k)
+					
+					case "dhcp_relay":
+						delete(x, k)
+					
+					case "vrrp":
+						delete(x, k)
 					
 					default:
 						if k != sk {

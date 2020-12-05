@@ -126,6 +126,14 @@ func Provider() *schema.Provider {
             
             "srl_interfaces_subinterface_ipv6": dataInterfacesSubinterfaceIpv6(),
             
+            "srl_interfaces_subinterface_ipv6_address": dataInterfacesSubinterfaceIpv6Address(),
+            
+            "srl_interfaces_subinterface_ipv6_dhcp_client": dataInterfacesSubinterfaceIpv6DhcpClient(),
+            
+            "srl_interfaces_subinterface_ipv6_dhcp_relay": dataInterfacesSubinterfaceIpv6DhcpRelay(),
+            
+            "srl_interfaces_subinterface_ipv6_vrrp": dataInterfacesSubinterfaceIpv6Vrrp(),
+            
             "srl_interfaces_subinterface_vlan": dataInterfacesSubinterfaceVlan(),
             
             "srl_network_instance_instance": dataNetworkInstanceInstance(),
@@ -230,6 +238,14 @@ func Provider() *schema.Provider {
             "srl_interfaces_subinterface_ipv4_vrrp": resourceInterfacesSubinterfaceIpv4Vrrp(),
             
             "srl_interfaces_subinterface_ipv6": resourceInterfacesSubinterfaceIpv6(),
+            
+            "srl_interfaces_subinterface_ipv6_address": resourceInterfacesSubinterfaceIpv6Address(),
+            
+            "srl_interfaces_subinterface_ipv6_dhcp_client": resourceInterfacesSubinterfaceIpv6DhcpClient(),
+            
+            "srl_interfaces_subinterface_ipv6_dhcp_relay": resourceInterfacesSubinterfaceIpv6DhcpRelay(),
+            
+            "srl_interfaces_subinterface_ipv6_vrrp": resourceInterfacesSubinterfaceIpv6Vrrp(),
             
             "srl_interfaces_subinterface_vlan": resourceInterfacesSubinterfaceVlan(),
             

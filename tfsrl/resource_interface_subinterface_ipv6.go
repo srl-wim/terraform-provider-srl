@@ -68,107 +68,6 @@ func resourceInterfacesSubinterfaceIpv6() *schema.Resource {
             MaxItems: 1,
             Elem: &schema.Resource{
             	Schema: map[string]*schema.Schema{
-                    "address": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 16,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "ip_prefix": {
-                                    Type:     schema.TypeString,
-                                    Required: true,
-                                    ForceNew: true,
-                                    ValidateFunc: validation.All(
-                                        validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))`), "must match regex"),
-                                    ),
-                                },
-                            },
-                        },
-                    },
-                    "dhcp_client": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "trace_options": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "messages",
-                                                    }, false),
-                                                ),
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "dhcp_relay": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "admin_state": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    Default: "enable",
-                                },
-                                "option": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    ValidateFunc: validation.All(
-                                        validation.StringInSlice([]string{
-                                            "interface-id",
-                                            "remote-id",
-                                        }, false),
-                                    ),
-                                },
-                                "server": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    ValidateFunc: validation.Any(
-                                        validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))`), "must match regex"),
-                                        validation.StringMatch(regexp.MustCompile(`((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)|\.`), "must match regex"),
-                                    ),
-                                },
-                                "source_address": {
-                                    Type:     schema.TypeString,
-                                    Optional: true,
-                                    ValidateFunc: validation.All(
-                                        validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))`), "must match regex"),
-                                    ),
-                                },
-                                "trace_options": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 1,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "trace": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.StringInSlice([]string{
-                                                        "messages",
-                                                    }, false),
-                                                ),
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
                     "neighbor_discovery": {
                         Type:     schema.TypeList,
                         Optional: true,
@@ -365,145 +264,9 @@ func resourceInterfacesSubinterfaceIpv6() *schema.Resource {
                             },
                         },
                     },
-                    "vrrp": {
-                        Type:     schema.TypeList,
-                        Optional: true,
-                        MaxItems: 1,
-                        Elem: &schema.Resource{
-                        	Schema: map[string]*schema.Schema{
-                                "vrrp_group": {
-                                    Type:     schema.TypeList,
-                                    Optional: true,
-                                    MaxItems: 256,
-                                    Elem: &schema.Resource{
-                                    	Schema: map[string]*schema.Schema{
-                                            "accept_mode": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                            },
-                                            "advertise_interval": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 65535),
-                                                ),
-                                            },
-                                            "authentication": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "keychain": {
-                                                            Type:     schema.TypeString,
-                                                            Optional: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "init_delay": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 65535),
-                                                ),
-                                            },
-                                            "interface_tracking": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                        "track_interface": {
-                                                            Type:     schema.TypeList,
-                                                            Optional: true,
-                                                            MaxItems: 1,
-                                                            Elem: &schema.Resource{
-                                                            	Schema: map[string]*schema.Schema{
-                                                                    "interface": {
-                                                                        Type:     schema.TypeString,
-                                                                        Required: true,
-                                                                        ForceNew: true,
-                                                                    },
-                                                                    "priority_decrement": {
-                                                                        Type:     schema.TypeInt,
-                                                                        Optional: true,
-                                                                        ValidateFunc: validation.All(
-                                                                            validation.IntBetween(0, 255),
-                                                                        ),
-                                                                    },
-                                                                },
-                                                            },
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            "oper_interval": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 65535),
-                                                ),
-                                            },
-                                            "preempt": {
-                                                Type:     schema.TypeBool,
-                                                Optional: true,
-                                            },
-                                            "preempt_delay": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 65535),
-                                                ),
-                                            },
-                                            "priority": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 255),
-                                                ),
-                                            },
-                                            "statistics": {
-                                                Type:     schema.TypeList,
-                                                Optional: true,
-                                                MaxItems: 1,
-                                                Elem: &schema.Resource{
-                                                	Schema: map[string]*schema.Schema{
-                                                    },
-                                                },
-                                            },
-                                            "version": {
-                                                Type:     schema.TypeInt,
-                                                Optional: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 255),
-                                                ),
-                                            },
-                                            "virtual_address": {
-                                                Type:     schema.TypeString,
-                                                Optional: true,
-                                                ValidateFunc: validation.Any(
-                                                    validation.StringMatch(regexp.MustCompile(`(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])`), "must match regex"),
-                                                    validation.StringMatch(regexp.MustCompile(`((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))`), "must match regex"),
-                                                ),
-                                            },
-                                            "virtual_router_id": {
-                                                Type:     schema.TypeInt,
-                                                Required: true,
-                                                ForceNew: true,
-                                                ValidateFunc: validation.All(
-                                                    validation.IntBetween(0, 255),
-                                                ),
-                                            },
-                                        },
-                                    },
-                                },
                             },
                         },
                     },
-                },
-            },
-        },
 
         },
     }
@@ -603,6 +366,24 @@ func resourceInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.Resou
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
 					switch sk {
+					
+					case "address":
+						delete(x, k)
+					
+					case "router_advertisement":
+						delete(x, k)
+					
+					case "neighbor_discovery":
+						delete(x, k)
+					
+					case "dhcp_client":
+						delete(x, k)
+					
+					case "dhcp_relay":
+						delete(x, k)
+					
+					case "vrrp":
+						delete(x, k)
 					
 					default:
 						if k != sk {

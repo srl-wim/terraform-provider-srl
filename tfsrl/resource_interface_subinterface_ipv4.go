@@ -176,6 +176,12 @@ func resourceInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.Resou
 
 					switch sk {
 					
+					case "address":
+						delete(x, k)
+					
+					case "arp":
+						delete(x, k)
+					
 					case "dhcp_client":
 						delete(x, k)
 					
@@ -183,12 +189,6 @@ func resourceInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.Resou
 						delete(x, k)
 					
 					case "vrrp":
-						delete(x, k)
-					
-					case "address":
-						delete(x, k)
-					
-					case "arp":
 						delete(x, k)
 					
 					default:
