@@ -7,6 +7,5 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.3.0
 	github.com/openconfig/gnmi v0.0.0-20200617225440-d2b4e6a45802
 	github.com/sirupsen/logrus v1.7.0
-	github.com/tf-wim/srl v0.1.0
 	google.golang.org/grpc v1.34.0
 )
