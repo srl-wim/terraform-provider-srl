@@ -366,6 +366,12 @@ func resourceInterfacesSubinterfaceRead(ctx context.Context, d *schema.ResourceD
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
+					if _, ok := v.(string); ok {
+                        log.Debugf("BEFORE VALUE: %s, %s", k, x[k])
+                        x[k] = strings.Split(v.(string), ":")[len(strings.Split(v.(string), ":"))-1]
+                        log.Debugf("AFTER VALUE: %s, %s", k, x[k])
+					}
+
 					switch sk {
 					
 					case "l2_mtu":

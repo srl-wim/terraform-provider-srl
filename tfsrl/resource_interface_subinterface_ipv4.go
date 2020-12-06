@@ -174,7 +174,19 @@ func resourceInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.Resou
 					log.Debugf("BEFORE KEY: %s, VALUE: %v", k, v)
 					sk := strings.Split(k, ":")[len(strings.Split(k, ":"))-1]
 
+					if _, ok := v.(string); ok {
+                        log.Debugf("BEFORE VALUE: %s, %s", k, x[k])
+                        x[k] = strings.Split(v.(string), ":")[len(strings.Split(v.(string), ":"))-1]
+                        log.Debugf("AFTER VALUE: %s, %s", k, x[k])
+					}
+
 					switch sk {
+					
+					case "dhcp_relay":
+						delete(x, k)
+					
+					case "vrrp":
+						delete(x, k)
 					
 					case "address":
 						delete(x, k)
@@ -183,12 +195,6 @@ func resourceInterfacesSubinterfaceIpv4Read(ctx context.Context, d *schema.Resou
 						delete(x, k)
 					
 					case "dhcp_client":
-						delete(x, k)
-					
-					case "dhcp_relay":
-						delete(x, k)
-					
-					case "vrrp":
 						delete(x, k)
 					
 					default:

@@ -1,11 +1,15 @@
 # terraform-provider-srl
 
-## build
+## pre-requisite
 
-Build the provider and move it to the example directory
+install golang on the machine as per procedure [golang install](https://golang.org/doc/install)
+
+## build and install
+
+Given this is a private provider you can build and install it locally. This is aetup for linux 64bit architectures
 
 ```
-go build -o example/terraform-provider-srl
+make install
 ```
 
 ## terraform
@@ -23,6 +27,6 @@ terraform destroy --auto-approve
 ### terraform debugging
 
 ```
-export TF_LOG=TRACE
+export TF_LOG=DEBUG
 export TF_LOG_PATH=$PWD/tf.log
 ```

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     srl = {
-      source  = "terraform.io/srl-wim/srl"
+      source  = "henderiw.be/srl/srl"
       version = "0.1.0"
     }
   }

@@ -271,6 +271,7 @@ func ParsePath(p string) (*gnmi.Path, error) {
 
 // Get sends a gnmi.GetRequest to the target *t and returns a gnmi.GetResponse and an error
 func (t *Target) Get(ctx context.Context, req *gnmi.GetRequest) (response *gnmi.GetResponse, err error) {
+	time.Sleep(5 * time.Second)
 	nctx, cancel := context.WithTimeout(ctx, t.Config.Timeout)
 	defer cancel()
 	nctx = metadata.AppendToOutgoingContext(nctx, "username", *t.Config.Username, "password", *t.Config.Password)
@@ -283,6 +284,7 @@ func (t *Target) Get(ctx context.Context, req *gnmi.GetRequest) (response *gnmi.
 
 // Set sends a gnmi.SetRequest to the target *t and returns a gnmi.SetResponse and an error
 func (t *Target) Set(ctx context.Context, req *gnmi.SetRequest) (response *gnmi.SetResponse, err error) {
+	time.Sleep(5 * time.Second)
 	nctx, cancel := context.WithTimeout(ctx, t.Config.Timeout)
 	defer cancel()
 	nctx = metadata.AppendToOutgoingContext(nctx, "username", *t.Config.Username, "password", *t.Config.Password)
