@@ -367,15 +367,6 @@ func resourceInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.Resou
 
 					switch sk {
 					
-					case "vrrp":
-						delete(x, k)
-					
-					case "address":
-						delete(x, k)
-					
-					case "router_advertisement":
-						delete(x, k)
-					
 					case "neighbor_discovery":
 						delete(x, k)
 					
@@ -383,6 +374,15 @@ func resourceInterfacesSubinterfaceIpv6Read(ctx context.Context, d *schema.Resou
 						delete(x, k)
 					
 					case "dhcp_relay":
+						delete(x, k)
+					
+					case "vrrp":
+						delete(x, k)
+					
+					case "address":
+						delete(x, k)
+					
+					case "router_advertisement":
 						delete(x, k)
 					
 					default:

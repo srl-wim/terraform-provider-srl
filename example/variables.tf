@@ -1,9 +1,18 @@
-variable "username" {
+variable username {
     default = "admin"
 }
-variable "password" {
+variable password {
     default = "admin"
 }
-variable "target" {
-    default = "172.19.19.2:57400"
+variable targetwan01 {
+    default = "172.20.20.6:57400"
+}
+variable targetwan02 {
+    default = "172.20.20.7:57400"
+}
+variable targetwan03 {
+    default = "172.20.20.3:57400"
+}
+variable targetwan04 {
+    default = "172.20.20.9:57400"
 }
